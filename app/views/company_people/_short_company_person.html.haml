@@ -1,0 +1,4 @@
+%div{:class=>"company_person_entry"}
+  = render partial: "people/short_person", locals: {person: company_person.person}
+  %p
+    = company_person.role

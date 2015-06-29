@@ -1,0 +1,51 @@
+= bootstrap_nested_form_for @person do |f|
+  - if @person.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@person.errors.count, "error")} prohibited this person from being saved:"
+      %ul
+        - @person.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field{:class=>"form_field form-group"}
+    Avatar picture:
+    = @person.ava if @person.ava?
+    = f.file_field :ava, :class=>"ava_loader", :label=>"Avatar"
+  .field{:class=>"form_field form-group"}
+    = f.text_field :name, :id=>"person_name"
+  .field{:class=>"form_field form-group"}
+    = f.text_area :about, :id=>"person_about"
+  .field{:class=>"form_field form-group"}
+    = f.collection_select :user_id, User.active, :id, :name, :label=>"Curator"
+  .field{:class=>"form_field form-group"}
+    = f.text_field :phone, :id=>"person_phone"
+  .field{:class=>"form_field form-group"}
+    = f.text_field :facebook, :id=>"person_facebook"
+  .field{:class=>"form_field form-group"}
+    = f.text_field :twitter, :id=>"person_twitter"
+  .field{:class=>"form_field form-group"}
+    = f.text_field :web, :id=>"person_web"
+  .field{:class=>"form_field form-group"}
+    = f.text_field :group_list, :label=>"List All Tags, separate each tag by a comma", :id=>"person_tags"
+  %h2
+    Companies:
+  = f.fields_for :company_people do |c|
+    .field{:class=>"form_field form-group"}
+      = c.label :company
+      - if c.object.id
+        %input{:type=>"text", :class=>"form-control", :disabled=>"disabled", :value=>"#{get_company_name(c.object.company_id)}"}
+      - else
+        .input-group
+          %input{:type=>"text", :class=>"form-control live_search_text", :disabled=>"disabled", :autocomplete=>"off"}
+          %span{:class=>"input-group-btn live_search_span"}
+            %button{:class=>"glyphicon glyphicon-refresh btn btn-default live_search_button", :type=>"button"}
+
+      %div{:class=>"live_search_results"}  
+      = c.hidden_field :company_id, :class => "out_live_search"
+    .field{:class=>"form_field form-group"}
+      = c.text_field :role, :class=>'role_field'
+    = c.link_to_remove "- Remote company", :class=>"btn btn-link"
+  = f.link_to_add "+ Add company", :company_people, :class=>"btn btn-link"
+
+
+  .actions
+    = f.submit 'Save', :class=>"form_accept_button btn btn-success"

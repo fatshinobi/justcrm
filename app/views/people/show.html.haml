@@ -1,0 +1,58 @@
+%p#notice= notice
+
+%h1
+  = @person.name
+%h2
+  Companies:
+- @companies.each do |company_person|
+  = render partial: "company_people/short_person_company", locals: {company_person: company_person}
+%p{:class=>'clearfix'}
+
+%h2
+  Opportunities:
+%div{:id => "opportunity_entries"}
+  - @person.opportunities.each do |opportunity|
+    = render opportunity, locals: {person: @person}
+
+%p{:class=>'clearfix'}
+
+%h2
+  Appointments:
+= link_to 'New appointment',new_appointments_from_person_path(@person)
+
+%div{:id => 'appointment_entries'}
+  - @person.appointments.each do |appointment|
+    = render partial: "appointments/appointment", locals: {appointment: appointment}
+
+- content_for :sidebar do
+  - ava_pic = @person.ava.normal.url ? @person.ava.normal.url: 'anonymous.png'
+  .ava_holder
+    = image_tag ava_pic, :class=>"ava_big_pic"
+  %div{:class=>"well"}
+    %p{:class=>"show_field"}
+      %b About:
+      = @person.about
+  %p{:class=>"show_field"}
+    %b Phone:
+    = @person.phone
+  %p{:class=>"show_field"}
+    %b Facebook:
+    = @person.facebook
+  %p{:class=>"show_field"}
+    %b Twitter:
+    = @person.twitter
+  %p{:class=>"show_field"}
+    %b Web:
+    = @person.web
+
+  %p{:class=>"show_field"}
+    %b Curator:
+    = @person.user.name
+
+  %p{:id=>"show_tags_field"}
+    %b Tags:
+    = raw @person.groups.map(&:name).map {|t| link_to t, person_tag_path(t)}.join(', ')
+
+  = link_to 'Edit', edit_person_path(@person)
+  \|
+  = link_to 'Back', people_path

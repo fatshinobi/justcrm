@@ -1,0 +1,38 @@
+- is_root_parent = (!@parent_company and !@parent_person and !@parent_opportunity)? true: false
+
+- statuses_paths = set_appointment_status_paths(appointment, @parent_company, @parent_person, @parent_opportunity)
+
+
+- if @parent_company
+  - path_string = edit_appointments_from_company_path(appointment, @parent_company)
+- elsif @parent_person
+  - path_string = edit_appointments_from_person_path(appointment, @parent_person)
+- elsif @parent_opportunity
+  - path_string = edit_appointments_from_opportunity_path(appointment, @parent_opportunity)
+- else
+  - path_string = edit_appointment_path(appointment)
+  - is_root_parent = true
+
+.appointments_entry
+  = appointment_ico(appointment)
+  
+  = state_button(statuses_paths)
+
+  %h3 
+    = statusable_caption(appointment, link_to(appointment.when.to_formatted_s(:long), path_string, :class => "appointment_show_button", :title => appointment.get_communication_type.to_s))
+  With:
+  - if (@parent_company or @parent_opportunity or is_root_parent) and appointment.person
+    = link_to appointment.person.name, appointment.person, :title => appointment.person.name
+
+  - if (is_root_parent or @parent_opportunity) and appointment.company
+    from 
+
+  - if (@parent_person or @parent_opportunity or is_root_parent) and appointment.company
+    = link_to appointment.company.name, appointment.company, :title => appointment.company.name
+  .appointment_curator_field
+    = 'Curator: ' + appointment.user.name
+  .well
+    %p{:class => "appointment_body_field"}
+      = appointment.body
+
+

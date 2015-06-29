@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  body: MyText
+  company: goggle
+  person:
+  when: 2015-02-20 12:24:43
+  user_id: 1
+
+two:
+  body: MyText
+  company: goggle
+  person: 
+  when: 2015-02-21 12:24:43
+  user_id: 1

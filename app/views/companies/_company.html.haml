@@ -1,0 +1,9 @@
+%div{:class=>"entry thumbnail"}
+  - ava_pic = company.ava.thumb.url ? company.ava.thumb.url: 'thumb_anonym_company.png'
+
+  = link_to(image_tag(ava_pic, :class=>"ava_pic"),company, :title=>company.name)
+
+  = action_button(company, lambda {|u| activate_company_path(u)}, lambda {|u| stop_company_path(u)})  
+
+  = conditionable_caption(company, link_to(company.name, company, :class=>"index_show_button"))
+  %p{:class=>"about_text"}= company.about

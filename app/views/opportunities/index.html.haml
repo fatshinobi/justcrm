@@ -1,0 +1,21 @@
+%h1 Listing opportunities
+%div{:id => "by_stage"}
+
+%div{:id => "opportunity_entries"}
+  - @opportunities.each do |opportunity|
+    = render opportunity
+
+- content_for :sidebar do
+  %h4 Add:
+  = render partial: '/shared/new_menu'
+
+  %h4 Funnel:
+  %div{:id=>"content"}
+    %h3{:id=>"title"}
+      .demo-container
+        %div{:id=>"placeholder", :class=>"demo-placeholder"}
+
+  %h4 Overdue:
+  - Opportunity.overdue(current_user).each do |overdue_opportunity|
+    = render partial: "overdue", locals: {overdue_opportunity: overdue_opportunity }
+

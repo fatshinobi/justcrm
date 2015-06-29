@@ -1,0 +1,28 @@
+= bootstrap_form_for @opportunity do |f|
+  - if @opportunity.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@opportunity.errors.count, "error")} prohibited this opportunity from being saved:"
+      %ul
+        - @opportunity.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.text_field :title
+  .field
+    = f.collection_select :company_id, Company.active, :id, :name
+  .field
+    = f.collection_select :person_id, Person.active, :id, :name
+  .field
+    = f.text_field :amount
+    
+  .field
+    = f.date_select :start
+  .field
+    = f.date_select :finish
+  .field
+    = f.text_area :description
+  .field
+    = f.collection_select :user_id, User.active, :id, :name, :label=>"Curator"
+
+  .actions
+    = f.submit 'Save', :class=>"form_accept_button btn btn-success"

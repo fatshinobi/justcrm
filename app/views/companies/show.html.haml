@@ -1,0 +1,49 @@
+%h1
+  = @company.name
+%h2
+  People:
+- @people.each do |company_person|
+  = render partial: "company_people/short_company_person", locals: {company_person: company_person}
+
+%p{:class=>'clearfix'}
+
+%h2
+  Opportunities:
+%div{:id => "opportunity_entries"}
+  - @company.opportunities.each do |opportunity|
+    = render opportunity, locals: {company: @company}
+
+%p{:class=>'clearfix'}
+%h2
+  Appointments:
+= link_to 'New appointment', new_appointments_from_company_path(@company)
+
+%div{:id => 'appointment_entries'}
+  - @company.appointments.each do |appointment|
+    = render partial: "appointments/appointment", locals: {appointment: appointment}
+
+- content_for :sidebar do
+  - ava_pic = @company.ava.normal.url ? @company.ava.normal.url: 'anonym_company.png'
+  .ava_holder
+    = image_tag ava_pic, :class=>"ava_big_pic"
+  .well
+    %p{:class=>"show_field"}
+      %b About:
+      = @company.about
+  %p{:class=>"show_field"}
+    %b Phone:
+    = @company.phone
+  %p{:class=>"show_field"}
+    %b Web:
+    = @company.web
+  %p{:class=>"show_field"}
+    %b Curator:
+    = @company.user.name
+
+  %p{:id=>"show_tags_field"}
+    %b Tags:
+    = raw @company.groups.map(&:name).map {|t| link_to t, company_tag_path(t)}.join(', ')
+
+  = link_to 'Edit', edit_company_path(@company)
+  \|
+  = link_to 'Back', companies_path

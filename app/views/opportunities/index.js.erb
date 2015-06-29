@@ -1,0 +1,4 @@
+<% if @stage %>
+	$('#by_stage').html("<h4>By stage: <%= @stage %></h4>");
+<% end %>
+$('#opportunity_entries').html("<%= escape_javascript render(@opportunities) %>");

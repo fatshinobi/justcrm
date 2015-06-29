@@ -1,0 +1,58 @@
+%h1
+  = @opportunity.title
+
+%h2 
+  Stage:
+
+= stage_pager(@opportunity)
+
+%h2 Appointments:
+= link_to 'New appointment',new_appointments_from_opportunity_path(@opportunity)
+
+%div{:id => 'appointment_entries'}
+  - @opportunity.appointments.each do |appointment|
+    = render partial: "appointments/appointment", locals: {appointment: appointment}
+
+- content_for :sidebar do
+  .stage_ava_holder
+    = opportunity_ico(@opportunity)
+
+  .well
+    %p{:class=>"show_field"}
+      %b Description:
+      = @opportunity.description
+  
+  %p{:class=>"show_field"}
+    %b Status:
+  - statuses_paths = set_opportunity_status_paths(@opportunity, nil, nil, nil)
+  
+  = opportunity_status_selector(@opportunity, statuses_paths)
+
+  %p{:class=>"show_field"}
+    %b Start:
+    = @opportunity.start.to_formatted_s(:my_short_dt_format)
+
+  %p{:class=>"show_field"}
+    %b Finish:
+    = @opportunity.finish.to_formatted_s(:my_short_dt_format)
+
+  %b Amount:
+  .amount_field
+    = @opportunity.amount.to_s
+
+  %b Company:
+  .expand_field
+    = render partial: "companies/short_company", locals: {company: @opportunity.company}
+  - if @opportunity.person
+    %b Person:
+    .expand_field
+      = render partial: "people/short_person", locals: {person: @opportunity.person}
+
+  %p{:class=>"show_field"}
+    %b Curator:
+    = @opportunity.user.name
+
+
+  = link_to 'Edit', edit_opportunity_path(@opportunity)
+  \|
+  = link_to 'Back', opportunities_path

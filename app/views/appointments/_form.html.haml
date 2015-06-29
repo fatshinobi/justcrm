@@ -1,0 +1,31 @@
+= bootstrap_form_for @appointment do |f|
+  - if @appointment.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@appointment.errors.count, "error")} prohibited this company from being saved:"
+      %ul
+        - @appointment.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field{:class=>"form_field form-group"}
+    = f.collection_select :communication_type, Appointment.communication_types, :index, :value, :label => "Type"
+  .field{:class=>"form_field form-group"}
+    = f.datetime_select :when
+  .field{:class=>"form_field form-group"}
+    = f.collection_select :company_id, Company.active, :id, :name
+  .field{:class=>"form_field form-group"}
+    = f.collection_select :person_id, Person.active, :id, :name
+  .field{:class=>"form_field form-group"}
+    = f.collection_select :opportunity_id, Opportunity.all, :id, :title
+  .field{:class=>"form_field form-group"}
+    = f.collection_select :user_id, User.active, :id, :name, :label=>"Curator"
+  .field{:class=>"form_field form-group"}
+    = f.text_area :body, :label => 'About', :id => 'appointment_body'
+  - if @parent_company
+    = hidden_field_tag :company_parent_id, @parent_company.id
+  - if @parent_person
+    = hidden_field_tag :person_parent_id, @parent_person.id
+  - if @parent_opportunity
+    = hidden_field_tag :opportunity_parent_id, @parent_opportunity.id
+
+  .actions
+    = f.submit 'Save', :class=>"form_accept_button btn btn-success"

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+mycrosoft:
+  name: Mycrosoft
+  about: MyText
+  phone: MyString
+  web: MyString
+  ava: /test/test.jpg
+  user_id: 1
+
+goggle:
+  name: Goggle
+  about: MyText
+  phone: MyString
+  web: MyString
+  ava: /test/test2.jpg
+  user_id: 1

@@ -1,0 +1,3 @@
+- @companies.each do |company|
+  %p
+    = link_to(company.name, "#", id: "live-choice-#{company.id.to_s}", class: "live-choice", remote: true)

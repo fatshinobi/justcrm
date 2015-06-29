@@ -1,0 +1,14 @@
+%h1 Today's appointments:
+%div{:id => 'appointment_entries'}
+  - @appointments.each do |appointment|
+    = render partial: "appointments/appointment", locals: {appointment: appointment}
+
+- content_for :sidebar do
+  %h4 Add:
+  = render partial: '/shared/new_menu'
+  %br
+  = link_to 'New Appointment', new_appointment_path
+  %h4 Overdue:
+  - @overdue_appointments.each do |overdue_appointment|
+    = render partial: "appointments/overdue", locals: {overdue_appointment: overdue_appointment }
+

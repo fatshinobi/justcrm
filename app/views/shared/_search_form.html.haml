@@ -1,0 +1,5 @@
+= form_tag @path, method: :get, :enforce_utf8=>false do
+  .input-group
+    = text_field_tag :contains, params[:contains], :class=>"form-control", :placeholder=>"Search for..."
+    %span{:class=>"input-group-btn"}
+      = submit_tag 'Go!', :name=>nil, :class=>"btn btn-default"

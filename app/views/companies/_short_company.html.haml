@@ -1,0 +1,4 @@
+- ava_pic = company.ava.thumb.url ? company.ava.thumb.url : 'thumb_anonym_company.png'
+= link_to(image_tag(ava_pic, :class=>"company_ava_pic"), company, :title=>company.name, :class => "thumb_ava")
+%h3
+  = link_to company.name, company

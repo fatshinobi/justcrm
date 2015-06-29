@@ -1,0 +1,19 @@
+%h1 Listing people
+- if params[:tag]
+  %h4 
+    = "By tag: " << params[:tag]
+      
+- @people.each do |person|
+  = render person
+
+%p{:class=>'clearfix'}
+  = paginate @people
+
+- content_for :sidebar do
+  = render partial: '/shared/search_form', path: people_path
+  %h4 Add:
+  = render partial: '/shared/new_menu'
+  %h4 Select:
+  = link_to 'Removed', removed_people_path
+  %h4 Tags:
+  = tag_cloud_maker (@tags) { |t| person_tag_path(t)}       

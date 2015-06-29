@@ -1,0 +1,6 @@
+- @users.each do |user|
+  = render user
+
+- content_for :sidebar do
+  %h4 Add:
+  = link_to 'New User', new_user_registration_path

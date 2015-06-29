@@ -1,0 +1,11 @@
+- statuses_paths = set_opportunity_status_paths(opportunity, @parent_company, @parent_person, @stage)
+
+%div{:class=>"entry thumbnail"}
+  .ava_pic
+    = link_to(opportunity_ico(opportunity), opportunity, :class=>"index_show_button")
+
+  = state_button(statuses_paths)
+
+  = opportunity_statusable_caption(opportunity, link_to(opportunity.title, opportunity, :class=>"index_show_button"))
+  
+  %p{:class=>"about_text"}= opportunity.description

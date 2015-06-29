@@ -1,0 +1,7 @@
+%div{:class=>"user_entry", :id => user.id}
+  = action_button(user, lambda {|u| activate_user_path(u)}, lambda {|u| stop_user_path(u)})
+
+  = conditionable_caption(user, user.name)
+  %h4 
+    = user.email
+  = link_to 'Update', edit_user_path(user)

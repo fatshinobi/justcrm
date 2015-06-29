@@ -1,0 +1,7 @@
+%div{:class=>"entry thumbnail"}
+  - ava_pic = person.ava.thumb.url ? person.ava.thumb.url: 'thumb_anonymous.png'
+  = link_to(image_tag(ava_pic, :class=>"ava_pic"), person, :title=>person.name)
+  = action_button(person, lambda {|u| activate_person_path(u)}, lambda {|u| stop_person_path(u)})
+  
+  = conditionable_caption(person, link_to(person.name, person, :class=>"index_show_button"))
+  %p{:class=>"about_text"}= sanitize(person.about)  

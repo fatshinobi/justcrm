@@ -1,0 +1,8 @@
+%h4
+  = link_to(overdue_opportunity.title, overdue_opportunity, :title => overdue_opportunity.get_stage.to_s)
+
+%p 
+  Must finished:
+  = overdue_opportunity.finish.to_formatted_s(:my_short_dt_format)
+.well
+  = overdue_opportunity.description

@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+%html
+  %head
+    = render partial: '/shared/header'
+  %body{:data_controller=>"#{controller_name}"}
+    = render partial: '/shared/menu'
+    %div{:class=>"main-form container"}
+      = yield
+    = render partial: '/shared/footer'      

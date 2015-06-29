@@ -1,0 +1,18 @@
+.short_appointments_entry
+  = done_button(overdue_appointment, appointment_set_status_path(overdue_appointment, 'done'))
+  = appointment_ico(overdue_appointment)  
+  %h4
+    = link_to(overdue_appointment.when.to_formatted_s(:my_short_dt_format), edit_appointment_path(overdue_appointment), :title => overdue_appointment.get_communication_type.to_s)
+  - if overdue_appointment.company
+    %p
+      Company:
+      = link_to overdue_appointment.company.name, overdue_appointment.company, :title => overdue_appointment.company.name
+
+  - if overdue_appointment.person
+    %p
+      Person:
+      = link_to overdue_appointment.person.name, overdue_appointment.person, :title => overdue_appointment.person.name
+
+  .well
+    %p{:class => "appointment_body_field"}
+      = overdue_appointment.body
