@@ -41,11 +41,13 @@
 
       %div{:class=>"live_search_results"}  
       = c.hidden_field :company_id, :class => "out_live_search"
+      = c.hidden_field :new_company_name, :class=>"live_search_name_results"
+
+
     .field{:class=>"form_field form-group"}
       = c.text_field :role, :class=>'role_field'
     = c.link_to_remove "- Remote company", :class=>"btn btn-link"
   = f.link_to_add "+ Add company", :company_people, :class=>"btn btn-link"
-
 
   .actions
     = f.submit 'Save', :class=>"form_accept_button btn btn-success"

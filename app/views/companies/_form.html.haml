@@ -1,4 +1,4 @@
-= bootstrap_nested_form_for @company do |f|
+= bootstrap_form_for @company do |f|
   - if @company.errors.any?
     #error_explanation
       %h2= "#{pluralize(@company.errors.count, "error")} prohibited this company from being saved:"
@@ -22,25 +22,6 @@
     = f.text_field :web, :id=>"company_web"
   .field{:class=>"form_field form-group"}
     = f.text_field :group_list, :label=>"List All Tags, separate each tag by a comma", :id=>"company_tags"
-  %h2
-    People:
-  = f.fields_for :company_people do |p|
-    .field{:class=>"form_field form-group"}
-      = p.label :person
-      - if p.object.id
-        %input{:type=>"text", :class=>"form-control", :disabled=>"disabled", :value=>"#{get_person_name(p.object.person_id)}"}
-      - else
-        .input-group
-          %input{:type=>"text", :class=>"form-control live_search_text", :disabled=>"disabled", :autocomplete=>"off"}
-          %span{:class=>"input-group-btn live_search_span"}
-            %button{:class=>"glyphicon glyphicon-refresh btn btn-default live_search_button", :type=>"button"}
-
-      %div{:class=>"live_search_results"}  
-      = p.hidden_field :person_id, :class => "out_live_search"          
-    .field{:class=>"form_field form-group"}
-      = p.text_field :role, :class=>'role_field'
-    = p.link_to_remove "- Remote person", :class=>"btn btn-link"
-  = f.link_to_add "+ Add person", :company_people, :class=>"btn btn-link"
 
   .actions
     = f.submit 'Save', :class=>"form_accept_button btn btn-success"

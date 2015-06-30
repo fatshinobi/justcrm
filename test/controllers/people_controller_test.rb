@@ -359,6 +359,17 @@ class PeopleControllerTest < ActionController::TestCase
         assert_equal opportunity_path(opportunity), anchor.attributes["href"]
       end
     end
-
   end  
+
+  test "should update person whith new company" do
+    @person.company_people.delete_all
+    patch :update, id: @person, person: { about: @person.about, facebook: @person.facebook, name: @person.name, phone: @person.phone, twitter: @person.twitter, web: @person.web, :company_people_attributes=>{'0'=>{id: '', role: 'Manager', company_id: '', new_company_name: 'New Company Name', _destroy: 'false'}}}
+    assert_redirected_to person_path(assigns(:person))
+    assert_equal 'David', Person.find(@person).name
+    result_person = assigns(:person)
+    assert_equal 1, result_person.company_people.size
+    assert_equal 'New Company Name', result_person.company_people.first.company.name
+
+  end
+
 end

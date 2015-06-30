@@ -38,7 +38,17 @@ class PeopleController < ApplicationController
   end
 
   def update
-    @person.update(person_params)
+    #byebug
+    #@person.update(person_params)
+    
+    @person.assign_attributes(person_params)
+    @person.company_people.each do |link|
+      if !link.company then
+        company = Company.create(name: link.new_company_name, user: current_user);
+        link.company = company
+      end
+    end
+    @person.save
     respond_with(@person)
   end
 
@@ -58,7 +68,7 @@ class PeopleController < ApplicationController
     end
 
     def person_params
-      params.require(:person).permit(:name, :about, :phone, :facebook, :twitter, :web, :ava, :group_list, :user_id, :company_people_attributes => [:id, :role, :company_id, :_destroy])
+      params.require(:person).permit(:name, :about, :phone, :facebook, :twitter, :web, :ava, :group_list, :user_id, :company_people_attributes => [:id, :role, :company_id, :new_company_name, :_destroy])
     end
 
     def list_initialize

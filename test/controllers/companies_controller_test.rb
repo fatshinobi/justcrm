@@ -234,15 +234,7 @@ class CompaniesControllerTest < ActionController::TestCase
     assert_response :success
     assert_template :edit
     assert_equal 2, assigns(:company).company_people.size
-    assert_select '.fields', 2
-    assert_select '.fields' do
-      @company.company_people.each do |person_link|
-        assert_select 'input.role_field[value=?]', person_link.role
-        #assert_select 'select.form-control' do
-        #  assert_select 'option[selected="selected"]', :text => person_link.person.name
-        #end
-      end
-    end
+
     assert_select 'form' do
       assert_select '.form_field' do
         assert_select '.control-label', 'Avatar'

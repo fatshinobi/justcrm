@@ -1,7 +1,6 @@
 class Company < ActiveRecord::Base
 	include Conditionable
 	has_many :company_people, :inverse_of => :company
-	accepts_nested_attributes_for :company_people, allow_destroy: true
 	
 	has_many :appointments
 	has_many :opportunities

@@ -21,13 +21,13 @@
 
 $(document).on('nested:fieldAdded', function(event){
   var data_controller = $('body').attr('data_controller');
-  //alert(data_controller);
   var field = event.field; 
   var choiceField = field.find('.live_search_text')[0];
   var outField = field.find('.out_live_search');
   var srcBtn = field.find('.live_search_button')[0];
   var result = field.find('.live_search_results')[0];
-  
+  var resultName = field.find('.live_search_name_results')[0];
+
   init_search_field(choiceField);
 
   srcBtn.onclick = function() {
@@ -42,12 +42,14 @@ $(document).on('nested:fieldAdded', function(event){
       controller_path = 'people';
 
     var formData = choiceField.value;
+    resultName.value = formData;
     var url = "/" + controller_path + "/live_search?q=" + formData; // live_search action.       
     $.get(url, formData, function(html) { // perform an AJAX get
       result.innerHTML = html; // replace the "results" div with the results
       set_choice(outField, choiceField, result);
     });
   };
+
 });
 
 function init_search_field(choiceField) {
