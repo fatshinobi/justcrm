@@ -58,8 +58,12 @@ class PeopleController < ApplicationController
     def set_new_company_if_id_is_nill(person)
       person.company_people.each do |link|
         if !link.company then
-          company = Company.create(name: link.new_company_name, user: current_user);
-          link.company = company
+          if link.new_company_name.blank?
+            person.company_people.delete(link)
+          else
+            company = Company.create(name: link.new_company_name, user: current_user);
+            link.company = company
+          end
         end
       end
       person

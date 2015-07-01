@@ -405,4 +405,24 @@ class PeopleControllerTest < ActionController::TestCase
     assert_equal 'New Company Name', result_person.company_people.first.company.name
   end
 
+  test "should update person whithout company id and name" do
+    @person.company_people.delete_all
+    patch :update, id: @person, person: { about: @person.about, facebook: @person.facebook, name: @person.name, phone: @person.phone, twitter: @person.twitter, web: @person.web, :company_people_attributes=>{'0'=>{id: '', role: 'Manager', company_id: '', new_company_name: '', _destroy: 'false'}}}
+    assert_redirected_to person_path(assigns(:person))
+    assert_equal 'David', Person.find(@person).name
+    result_person = assigns(:person)
+    assert_equal 0, result_person.company_people.size
+  end
+
+  test "should create person whithout company id and name" do
+    assert_difference('Person.count') do
+      post :create, person: { about: @person.about, facebook: @person.facebook, name: @person.name, phone: @person.phone, twitter: @person.twitter, web: @person.web, user_id: users(:one).id, :company_people_attributes=>{'0'=>{id: '', role: 'Manager', company_id: '', new_company_name: '', _destroy: 'false'}}}
+    end
+
+    assert_redirected_to person_path(assigns(:person))
+    result_person = assigns(:person)
+    assert_equal 'David', result_person.name
+    assert_equal 0, result_person.company_people.size
+  end
+
 end
