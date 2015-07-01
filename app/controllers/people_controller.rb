@@ -33,21 +33,14 @@ class PeopleController < ApplicationController
 
   def create
     @person = Person.new(person_params)
+    @person = set_new_company_if_id_is_nill(@person)
     @person.save
     respond_with(@person)
   end
 
   def update
-    #byebug
-    #@person.update(person_params)
-    
     @person.assign_attributes(person_params)
-    @person.company_people.each do |link|
-      if !link.company then
-        company = Company.create(name: link.new_company_name, user: current_user);
-        link.company = company
-      end
-    end
+    @person = set_new_company_if_id_is_nill(@person)
     @person.save
     respond_with(@person)
   end
@@ -62,6 +55,16 @@ class PeopleController < ApplicationController
   end
 
   private
+    def set_new_company_if_id_is_nill(person)
+      person.company_people.each do |link|
+        if !link.company then
+          company = Company.create(name: link.new_company_name, user: current_user);
+          link.company = company
+        end
+      end
+      person
+    end
+
     def set_person
       @person = Person.find(params[:id])
       conditionable_init @person, people_path      

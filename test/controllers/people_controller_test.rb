@@ -361,6 +361,16 @@ class PeopleControllerTest < ActionController::TestCase
     end
   end  
 
+  test "should update person whith chosen company" do
+    @person.company_people.delete_all
+    patch :update, id: @person, person: { about: @person.about, facebook: @person.facebook, name: @person.name, phone: @person.phone, twitter: @person.twitter, web: @person.web, :company_people_attributes=>{'0'=>{id: '', role: 'Manager', company_id: companies(:mycrosoft), new_company_name: 'New Company Name', _destroy: 'false'}}}
+    assert_redirected_to person_path(assigns(:person))
+    assert_equal 'David', Person.find(@person).name
+    result_person = assigns(:person)
+    assert_equal 1, result_person.company_people.size
+    assert_equal companies(:mycrosoft), result_person.company_people.first.company
+  end
+
   test "should update person whith new company" do
     @person.company_people.delete_all
     patch :update, id: @person, person: { about: @person.about, facebook: @person.facebook, name: @person.name, phone: @person.phone, twitter: @person.twitter, web: @person.web, :company_people_attributes=>{'0'=>{id: '', role: 'Manager', company_id: '', new_company_name: 'New Company Name', _destroy: 'false'}}}
@@ -369,7 +379,30 @@ class PeopleControllerTest < ActionController::TestCase
     result_person = assigns(:person)
     assert_equal 1, result_person.company_people.size
     assert_equal 'New Company Name', result_person.company_people.first.company.name
+  end
 
+  test "should create person whith chosen company" do
+    assert_difference('Person.count') do
+      post :create, person: { about: @person.about, facebook: @person.facebook, name: @person.name, phone: @person.phone, twitter: @person.twitter, web: @person.web, user_id: users(:one).id, :company_people_attributes=>{'0'=>{id: '', role: 'Manager', company_id: companies(:mycrosoft), new_company_name: 'New Company Name', _destroy: 'false'}}}
+    end
+
+    assert_redirected_to person_path(assigns(:person))
+    result_person = assigns(:person)
+    assert_equal 'David', result_person.name
+    assert_equal 1, result_person.company_people.size
+    assert_equal companies(:mycrosoft), result_person.company_people.first.company
+  end
+
+  test "should create person whith new company" do
+    assert_difference('Person.count') do
+      post :create, person: { about: @person.about, facebook: @person.facebook, name: @person.name, phone: @person.phone, twitter: @person.twitter, web: @person.web, user_id: users(:one).id, :company_people_attributes=>{'0'=>{id: '', role: 'Manager', company_id: '', new_company_name: 'New Company Name', _destroy: 'false'}}}
+    end
+
+    assert_redirected_to person_path(assigns(:person))
+    result_person = assigns(:person)
+    assert_equal 'David', result_person.name
+    assert_equal 1, result_person.company_people.size
+    assert_equal 'New Company Name', result_person.company_people.first.company.name
   end
 
 end
