@@ -6,12 +6,16 @@ class PeopleController < ApplicationController
   respond_to :html
   
   def index
-    if !params[:tag] and !params[:contains] and !params[:removed] then
-      @people = Person.unremoved.order(:created_at).page(params[:page])    
+    case 
+    when params[:tag]
+      @people = Person.unremoved.tagged_with(params[:tag], :on => :groups).order(:created_at).page(params[:page])      
+    when params[:contains]
+      @people = Person.unremoved.contains(params[:contains]).order(:created_at).page(params[:page])  
+    when params[:removed]
+      @people = Person.removed.order(:created_at).page(params[:page])  
+    else
+      @people = Person.unremoved.order(:created_at).page(params[:page])
     end
-    @people = Person.unremoved.tagged_with(params[:tag], :on => :groups).order(:created_at).page(params[:page]) if params[:tag]
-    @people = Person.unremoved.contains(params[:contains]).order(:created_at).page(params[:page]) if params[:contains]
-    @people = Person.removed.order(:created_at).page(params[:page]) if params[:removed]
 
     @tags = Person.group_counts    
     respond_with(@people)

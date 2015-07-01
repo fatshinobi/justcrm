@@ -6,12 +6,16 @@ class CompaniesController < ApplicationController
   respond_to :html
     
   def index
-    if !params[:tag] and !params[:contains] and !params[:removed] then
-      @companies = Company.unremoved.order(:created_at).page(params[:page])    
+    case
+    when params[:tag]
+      @companies = Company.unremoved.tagged_with(params[:tag], :on => :groups).order(:created_at).page(params[:page])      
+    when params[:contains]
+      @companies = Company.unremoved.contains(params[:contains]).order(:created_at).page(params[:page])  
+    when params[:removed]      
+      @companies = Company.removed.order(:created_at).page(params[:page])
+    else
+      @companies = Company.unremoved.order(:created_at).page(params[:page])      
     end
-    @companies = Company.unremoved.tagged_with(params[:tag], :on => :groups).order(:created_at).page(params[:page]) if params[:tag]
-    @companies = Company.unremoved.contains(params[:contains]).order(:created_at).page(params[:page]) if params[:contains]
-    @companies = Company.removed.order(:created_at).page(params[:page]) if params[:removed]
 
     @tags = Company.group_counts
     respond_with(@companies)
