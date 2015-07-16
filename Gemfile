@@ -32,7 +32,6 @@ gem 'devise'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'bootstrap_form'
 gem 'autoprefixer-rails'
-gem 'byebug'
 gem 'carrierwave'
 gem 'rmagick'
 gem 'nested_form'
@@ -41,6 +40,12 @@ gem 'acts-as-taggable-on', '~> 3.4'
 gem 'cancan'
 gem 'rolify', '~> 3.5.0'
 gem 'figaro'
+
+group :development, :test do
+  gem "teaspoon-jasmine"
+  gem 'byebug'
+end
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
