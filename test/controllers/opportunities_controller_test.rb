@@ -116,12 +116,8 @@ class OpportunitiesControllerTest < ActionController::TestCase
     assert_select 'form' do
       assert_select 'input#opportunity_title[value=?]', @opportunity.title
       assert_select 'textarea#opportunity_description', @opportunity.description
-      assert_select 'select#opportunity_company_id' do
-        assert_select 'option[selected="selected"]', :text => @opportunity.company.name
-      end
-      assert_select 'select#opportunity_person_id' do
-        assert_select 'option[selected="selected"]', :text => @opportunity.person.name
-      end
+      assert_select 'input#opportunity_company_id[value=?]', @opportunity.company.id
+      assert_select 'input#opportunity_person_id[value=?]', @opportunity.person.id
       assert_select 'select#opportunity_user_id' do
         assert_select 'option[selected="selected"]', :text => @opportunity.user.name
       end

@@ -1,10 +1,13 @@
 describe "LookUpView", ->
   beforeEach ->
     fixture.load('look_up_view.erb', append = false);
-    @look_up = new LookUpView('#look-up-view')
+    @look_up = new LookUpView('#look-up-view', 'people')
 
   it "get view element", ->
     expect(@look_up.element.attr("id")).toEqual $('#look-up-view').attr("id")
+
+  it "get path value", ->
+    expect(@look_up.path).toEqual 'people'
 
   it "have input text elem", ->
     expect(@look_up.text_field.attr('type')).toEqual 'text'

@@ -425,4 +425,22 @@ class PeopleControllerTest < ActionController::TestCase
     assert_equal 0, result_person.company_people.size
   end
 
+  test "shoud live search" do
+    get :live_search, q: "v"
+    assert_equal 1, assigns(:people).size
+
+    get :live_search, q: "a"
+    assert_equal 2, assigns(:people).size
+
+    assert_template 'live_search'
+    assert_select 'a.live-choice', 2
+    assert_select 'a.live-choice', people(:one).name
+    assert_select 'a.live-choice', people(:two).name
+
+    assert_select 'a.live-choice[id=?]', "live-choice-#{people(:one).id.to_s}"
+    assert_select 'a.live-choice[id=?]', "live-choice-#{people(:two).id.to_s}"
+
+  end
+
+
 end

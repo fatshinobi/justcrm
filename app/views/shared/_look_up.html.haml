@@ -1,0 +1,7 @@
+%div{id: look_up_id}
+  .input-group
+    %input{:type=>"text", :class=>"form-control look-up-search-text", :autocomplete=>"off", :disabled=>"disabled", :value=>"#{default_value if default_value}"}
+    %span{:class=>"input-group-btn live_search_span"}
+      %button{:class=>"glyphicon glyphicon-refresh btn btn-default look-up-button", :type=>"button"}
+  .look-up-result
+  = field.hidden_field field_name, :class => 'look-up-result-id'

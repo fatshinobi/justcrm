@@ -28,8 +28,12 @@ $(document).on('page:load', function() {
 });
 
 function init_main() {
-  var view = new LookUpView('#opportunity_person_look_up');
-  view.init();
+  var person_view = new LookUpView('#opportunity_person_look_up', 'people');
+  person_view.init();
+
+  var company_view = new LookUpView('#opportunity_company_look_up', 'companies');
+  company_view.init();
+
 };
 
 $(document).on('nested:fieldAdded', function(event){

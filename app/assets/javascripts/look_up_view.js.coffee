@@ -1,6 +1,7 @@
 class @LookUpView
-  constructor: (selector) ->
+  constructor: (selector, path) ->
     @element = $(selector)
+    @path = path
     @text_field = @element.find('.look-up-search-text')
     @result_div = @element.find('.look-up-result')
     @result_id = @element.find('.look-up-result-id')
@@ -22,7 +23,8 @@ class @LookUpView
     that = @
 
     search_data = @text_field.val()
-    url = "/people/live_search?q=#{search_data}"
+    #url = "/people/live_search?q=#{search_data}"
+    url = "/#{@path}/live_search?q=#{search_data}"
 
     $.ajax
       url: url
@@ -33,7 +35,7 @@ class @LookUpView
 
   set_result: () ->
     that = @
-    $(".live-choice").each( ->
+    @result_div.find(".live-choice").each( ->
       $(this).click( ->
         res_id = $(this).attr("id");
         res_id = res_id.substring(12);

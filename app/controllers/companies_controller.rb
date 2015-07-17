@@ -48,7 +48,6 @@ class CompaniesController < ApplicationController
   end
 
   def live_search
-    #byebug
     if params[:q] != ''
       @companies = Company.unremoved.contains(params[:q]).order(:created_at) 
     else

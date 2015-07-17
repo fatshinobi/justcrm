@@ -127,4 +127,7 @@ module ApplicationHelper
   	end
   end
 
+  def not_null_property(value, property_name)
+    value ? value.send(property_name) : ''
+  end
 end
