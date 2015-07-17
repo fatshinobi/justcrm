@@ -19,6 +19,19 @@
 //= require jquery_nested_form
 //= require_tree .
 
+$(function() {
+  init_main();
+});
+
+$(document).on('page:load', function() {
+  init_main();
+});
+
+function init_main() {
+  var view = new LookUpView('#opportunity_person_look_up');
+  view.init();
+};
+
 $(document).on('nested:fieldAdded', function(event){
   var data_controller = $('body').attr('data_controller');
   var field = event.field; 

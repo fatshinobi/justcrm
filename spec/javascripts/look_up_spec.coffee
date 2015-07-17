@@ -15,6 +15,27 @@ describe "LookUpView", ->
   it "have result id input text", ->
     expect(@look_up.result_id.attr('type')).toEqual 'text'
 
+  it "have enable buton", ->
+    expect(@look_up.enable_button.attr('class')).toEqual 'look-up-button'
+
+  it "text elem id disabled", ->
+    expect(@look_up.text_field).toBeDisabled()
+
+  describe "after buton click", ->
+    beforeEach ->
+      @look_up.init()
+      @look_up.text_field.val('Test')
+      @look_up.enable_button.click()
+
+    it "text field stay enabled", ->
+      expect(@look_up.text_field).not.toBeDisabled()
+
+    it "text field is empty", ->
+      expect(@look_up.text_field.val()).toEqual ''
+
+    it "text field has focus", ->
+      expect(@look_up.text_field).toBeFocused()
+
   describe "when get data from server", ->
     beforeEach ->
       jasmine.Ajax.install()
@@ -72,8 +93,14 @@ describe "LookUpView", ->
       it "set right result id for first elem", ->
         expect(@look_up.result_id.val()).toEqual '1'
 
+      it "set right result name for first elem", ->
+        expect(@look_up.text_field.val()).toEqual 'Test'
+
       it "clear result div", ->
         expect(@look_up.result_div.html()).toEqual ''
+
+      it "set text_field disabled", ->
+        expect(@look_up.text_field).toBeDisabled()
 
     describe "after click at second choice", ->
       beforeEach ->
@@ -82,3 +109,6 @@ describe "LookUpView", ->
 
       it "set right result id for second elem", ->
         expect(@look_up.result_id.val()).toEqual '2'
+
+      it "set right result name for second elem", ->
+        expect(@look_up.text_field.val()).toEqual 'Test2'

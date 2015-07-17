@@ -4,11 +4,19 @@ class @LookUpView
     @text_field = @element.find('.look-up-search-text')
     @result_div = @element.find('.look-up-result')
     @result_id = @element.find('.look-up-result-id')
-  
+    @enable_button = @element.find('.look-up-button')
+
   init: ->
     that = @
     @text_field.keyup ->
       that.set_search_data()
+    @enable_button.click ->
+      that.set_enabled()
+
+  set_enabled: () ->
+    @text_field.removeAttr('disabled')
+    @text_field.val('')
+    @text_field.focus()   
 
   set_search_data: () ->
     that = @
@@ -31,6 +39,8 @@ class @LookUpView
         res_id = res_id.substring(12);
 
         that.result_id.val(res_id)
+        that.text_field.val($(this).text())
+        that.text_field.attr('disabled', 'disabled')        
         that.result_div.html('')
       )  
     )
