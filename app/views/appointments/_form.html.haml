@@ -10,10 +10,17 @@
     = f.collection_select :communication_type, Appointment.communication_types, :index, :value, :label => "Type"
   .field{:class=>"form_field form-group"}
     = f.datetime_select :when
-  .field{:class=>"form_field form-group"}
-    = f.collection_select :company_id, Company.active, :id, :name
-  .field{:class=>"form_field form-group"}
-    = f.collection_select :person_id, Person.active, :id, :name
+
+  .field
+    .form-group
+      = f.label :company_id, class: 'control-label'
+      = render partial: "shared/look_up", locals: {look_up_id: 'appointment_company_look_up', field: f, field_name: :company_id, default_value: not_null_property(@appointment.company, :name)}
+
+  .field
+    .form-group
+      = f.label :person_id, class: 'control-label'
+      = render partial: "shared/look_up", locals: {look_up_id: 'appointment_person_look_up', field: f, field_name: :person_id, default_value: not_null_property(@appointment.person, :name)}
+
   .field{:class=>"form_field form-group"}
     = f.collection_select :opportunity_id, Opportunity.all, :id, :title
   .field{:class=>"form_field form-group"}

@@ -43,12 +43,9 @@ class AppointmentsControllerTest < ActionController::TestCase
     assert_template :edit
     assert_select 'form' do
       assert_select 'textarea#appointment_body', @appointment.body    	
-      assert_select 'select#appointment_company_id' do
-      	assert_select 'option[selected="selected"]', :text => @appointment.company.name
-      end
-      assert_select 'select#appointment_person_id' do
-      	assert_select 'option[selected="selected"]', :text => @appointment.person.name if @appointment.person
-      end
+      assert_select 'input#appointment_company_id[value=?]', @appointment.company.id
+      assert_select 'input#appointment_person_id', 1
+
       assert_select 'select#appointment_opportunity_id' do
         assert_select 'option[selected="selected"]', :text => @appointment.opportunity.title if @appointment.opportunity
       end

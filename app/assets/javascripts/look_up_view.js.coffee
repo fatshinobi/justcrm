@@ -13,11 +13,18 @@ class @LookUpView
       that.set_search_data()
     @enable_button.click ->
       that.set_enabled()
+    @text_field.focusout ->
+      that.empty_choice()
 
   set_enabled: () ->
     @text_field.removeAttr('disabled')
     @text_field.val('')
     @text_field.focus()   
+
+  empty_choice: () ->
+    that = @
+    that.text_field.attr('disabled', 'disabled')
+    that.result_id.val('')
 
   set_search_data: () ->
     that = @
@@ -42,7 +49,7 @@ class @LookUpView
 
         that.result_id.val(res_id)
         that.text_field.val($(this).text())
-        that.text_field.attr('disabled', 'disabled')        
+        that.text_field.attr('disabled', 'disabled')
         that.result_div.html('')
       )  
     )

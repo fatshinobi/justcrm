@@ -39,6 +39,18 @@ describe "LookUpView", ->
     it "text field has focus", ->
       expect(@look_up.text_field).toBeFocused()
 
+    describe "after focus losing", ->
+      beforeEach ->
+        @look_up.text_field.val('')
+        @look_up.result_id.val('3')
+        @look_up.text_field.focusout()
+
+      it "text field is disabled", ->
+        expect(@look_up.text_field).toBeDisabled()
+
+      it "result id is empty if text is empty", ->
+        expect(@look_up.result_id.val()).toEqual ''
+
   describe "when get data from server", ->
     beforeEach ->
       jasmine.Ajax.install()
