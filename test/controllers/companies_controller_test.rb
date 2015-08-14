@@ -357,13 +357,15 @@ class CompaniesControllerTest < ActionController::TestCase
     assert_equal 2, assigns(:companies).size
 
     assert_template 'live_search'
-    assert_select 'a.live-choice', 2
-    assert_select 'a.live-choice', companies(:mycrosoft).name
-    assert_select 'a.live-choice', companies(:goggle).name
+    assert_select '.choice_entry' do
+      assert_select 'a.live-choice', 2
+      assert_select 'a.live-choice', companies(:mycrosoft).name
+      assert_select 'a.live-choice', companies(:goggle).name
+      assert_select 'a.live-choice[id=?]', "live-choice-#{companies(:mycrosoft).id.to_s}"
+      assert_select 'a.live-choice[id=?]', "live-choice-#{companies(:goggle).id.to_s}"
 
-    assert_select 'a.live-choice[id=?]', "live-choice-#{companies(:mycrosoft).id.to_s}"
-    assert_select 'a.live-choice[id=?]', "live-choice-#{companies(:goggle).id.to_s}"
-
+      assert_select 'img.ava_pic', 2
+    end
   end
 
 end

@@ -92,17 +92,27 @@ body
  text-align: center
  font-size: 5em
 
-.entry
- padding: 10px
- min-height: 120px
+.base_entry
+ clear: left
  img.ava_pic, div.ava_pic
   float: left
   vertical-align: top  
  h2
   margin-top: 0
   line-height: 1
+
+.entry
+ @extend .base_entry
+ padding: 10px
+ min-height: 120px
  p, h2
   margin-left: 110px
+
+.choice_entry
+ @extend .base_entry
+ vertical-align: midle
+ h3
+  margin-left: 60px
 
 .company_person_entry, .person_company_entry, .expand_field
  float: left

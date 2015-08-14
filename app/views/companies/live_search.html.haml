@@ -1,3 +1,8 @@
 - @companies.each do |company|
-  %p
-    = link_to(company.name, "#", id: "live-choice-#{company.id.to_s}", class: "live-choice", remote: true)
+  .choice_entry
+    - ava_pic = company.ava.small.url ? company.ava.small.url : 'small_anonym_company.png'
+    = image_tag(ava_pic, :class=>"ava_pic")
+
+    %h3
+      = link_to(company.name, "#", id: "live-choice-#{company.id.to_s}", class: "live-choice", remote: true)
+  .clearfix

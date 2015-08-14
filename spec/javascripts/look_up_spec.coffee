@@ -54,6 +54,7 @@ describe "LookUpView", ->
   describe "when get data from server", ->
     beforeEach ->
       jasmine.Ajax.install()
+      @look_up.text_field.val('123')
 
     beforeEach ->
       @look_up.set_result = jasmine.createSpy('set_result').and.callThrough()
@@ -77,10 +78,10 @@ describe "LookUpView", ->
   describe "after keyup in text field", ->
     beforeEach ->
       jasmine.Ajax.install()
+      @look_up.text_field.val('123')      
 
     beforeEach ->
       @look_up.init()
-
       @look_up.text_field.keyup()
 
       jasmine.Ajax.requests.mostRecent().respondWith({
@@ -94,6 +95,21 @@ describe "LookUpView", ->
 
     it "result div have values", ->
       expect(@look_up.result_div.text()).toEqual 'test'
+
+  describe "text field too short", ->
+    beforeEach ->
+      @look_up.text_field.val('12')
+      @look_up.get_ajax = jasmine.createSpy('get_ajax').and.callThrough()
+
+    beforeEach ->
+      @look_up.init()
+      @look_up.text_field.keyup()
+
+    it "result div isnt visible", ->
+      expect(@look_up.result_div.html()).toEqual ''
+
+    it "data dont get from server", ->
+      expect(@look_up.get_ajax).not.toHaveBeenCalled()
 
   describe "set_result function", ->
     beforeEach ->

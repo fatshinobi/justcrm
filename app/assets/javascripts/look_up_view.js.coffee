@@ -27,12 +27,18 @@ class @LookUpView
     that.result_id.val('')
 
   set_search_data: () ->
-    that = @
-
     search_data = @text_field.val()
+
+    if (search_data.length < 3)
+      @result_div.html('')
+      return
+
     #url = "/people/live_search?q=#{search_data}"
     url = "/#{@path}/live_search?q=#{search_data}"
+    @get_ajax(url)
 
+  get_ajax: (url) ->
+    that = @
     $.ajax
       url: url
       dateType: "html"
