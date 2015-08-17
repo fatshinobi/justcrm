@@ -32,13 +32,13 @@ function init_main() {
   var person_view, company_view;
   
   if (data_controller == 'opportunities') {
-    person_view = new LookUpView('#opportunity_person_look_up', 'people');
-    company_view = new LookUpView('#opportunity_company_look_up', 'companies');  
+    company_view = new LookUpView('#opportunity_company_look_up', 'companies');    
+    person_view = new LookUpView('#opportunity_person_look_up', 'people', company_view.result_id);
   }
 
   if (data_controller == 'appointments') {
-    person_view = new LookUpView('#appointment_person_look_up', 'people');    
-    company_view = new LookUpView('#appointment_company_look_up', 'companies');  
+    company_view = new LookUpView('#appointment_company_look_up', 'companies');    
+    person_view = new LookUpView('#appointment_person_look_up', 'people', company_view.result_id);
   }
 
   if (typeof person_view != 'undefined') {

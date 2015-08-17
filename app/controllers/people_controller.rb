@@ -23,7 +23,7 @@ class PeopleController < ApplicationController
 
   def show
     @parent_person = @person
-    @companies = @person.company_people
+    @companies = @person.company_people.unremoved
     respond_with(@person)
   end
 
@@ -51,7 +51,12 @@ class PeopleController < ApplicationController
 
   def live_search
     if params[:q] != ''
-      @people = Person.unremoved.contains(params[:q]).order(:created_at) 
+      if (params[:p].present?)
+        company = Company.find(params[:p])
+        @people = company.people.unremoved.contains(params[:q]).order(:created_at)
+      else
+        @people = Person.unremoved.contains(params[:q]).order(:created_at) 
+      end
     else
       @people = []
     end

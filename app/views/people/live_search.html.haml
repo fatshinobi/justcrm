@@ -1,3 +1,7 @@
 - @people.each do |person|
-  %p
-    = link_to(person.name, "#", id: "live-choice-#{person.id.to_s}", class: "live-choice", remote: true)
+  .choice_entry
+    - ava_pic = person.ava.small.url ? person.ava.small.url : 'small_anonymous.png'
+    = image_tag(ava_pic, :class=>"ava_pic")
+
+    %h3
+      = link_to(person.name, "#", id: "live-choice-#{person.id.to_s}", class: "live-choice", remote: true)

@@ -432,14 +432,32 @@ class PeopleControllerTest < ActionController::TestCase
     get :live_search, q: "a"
     assert_equal 2, assigns(:people).size
 
-    assert_template 'live_search'
-    assert_select 'a.live-choice', 2
-    assert_select 'a.live-choice', people(:one).name
-    assert_select 'a.live-choice', people(:two).name
+    assert_select '.choice_entry' do
+      assert_template 'live_search'
+      assert_select 'a.live-choice', 2
+      assert_select 'a.live-choice', people(:one).name
+      assert_select 'a.live-choice', people(:two).name
 
-    assert_select 'a.live-choice[id=?]', "live-choice-#{people(:one).id.to_s}"
-    assert_select 'a.live-choice[id=?]', "live-choice-#{people(:two).id.to_s}"
+      assert_select 'a.live-choice[id=?]', "live-choice-#{people(:one).id.to_s}"
+      assert_select 'a.live-choice[id=?]', "live-choice-#{people(:two).id.to_s}"
 
+      assert_select 'img.ava_pic', 2      
+    end
+  end
+
+  test "shoud live search with parent" do
+    person = Person.create(name: "John Adam", user: users(:one))
+    link = CompanyPerson.create(company: companies(:goggle), person: person)
+
+    person = Person.create(name: "John Underwood", user: users(:one))
+    link = CompanyPerson.create(company: companies(:mycrosoft), person: person)
+
+    get :live_search, q: "a", p: companies(:mycrosoft).id
+    assert_equal 2, assigns(:people).size
+
+    get :live_search, q: "a", p: ""
+    assert_equal 3, assigns(:people).size
+      
   end
 
 

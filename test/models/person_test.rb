@@ -181,14 +181,14 @@ class PersonTest < ActiveSupport::TestCase
 		person.company_people << company_link
 		person.save
 		person.reload
-		assert_equal 2, person.company_people.size
+		assert_equal 2, person.company_people.unremoved.size
 
-		company = person.company_people.first.company
+		company = person.company_people.unremoved.first.company
 		company.set_condition :removed
 		company.save
 
 		person.reload
-		assert_equal 1, person.company_people.size		
+		assert_equal 1, person.company_people.unremoved.size
 	end
 
     test "has many appointments" do

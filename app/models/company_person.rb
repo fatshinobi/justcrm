@@ -4,7 +4,7 @@ class CompanyPerson < ActiveRecord::Base
   validates :company, presence: true
   validates :person, presence: true  
 
-  default_scope {joins(:person).where("people.condition != ?", Conditionable.condition_index(:removed)).joins(:company).where("companies.condition != ?", Conditionable.condition_index(:removed))}
+  scope :unremoved, -> {joins(:person).where("people.condition != ?", Conditionable.condition_index(:removed)).joins(:company).where("companies.condition != ?", Conditionable.condition_index(:removed))}  
 
   attr_accessor :new_company_name
 end

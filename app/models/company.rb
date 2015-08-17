@@ -1,7 +1,15 @@
 class Company < ActiveRecord::Base
 	include Conditionable
-	has_many :company_people, :inverse_of => :company
-	
+	has_many :company_people, 
+	  :inverse_of => :company
+	has_many :people, 
+	  -> { where.not(
+	  	   people: {
+	  	   	 condition: Conditionable.condition_index(:removed)
+	  	   }
+	  	 )},
+	  :through => :company_people
+
 	has_many :appointments
 	has_many :opportunities
 	belongs_to :user

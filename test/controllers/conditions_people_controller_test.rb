@@ -102,7 +102,7 @@ class ConditionsPeopleControllerTest < ActionController::TestCase
     get :edit, id: @person
     assert_response :success
     assert_template :edit
-    assert_equal 2, assigns(:person).company_people.size
+    assert_equal 2, assigns(:person).company_people.unremoved.size
 
     company.set_condition :removed
     company.save
@@ -110,15 +110,10 @@ class ConditionsPeopleControllerTest < ActionController::TestCase
     get :edit, id: @person
     assert_response :success
     assert_template :edit
-    assert_equal 1, assigns(:person).company_people.size
+    assert_equal 1, assigns(:person).company_people.unremoved.size
   
-    assert_select '.fields', 1
+    assert_select '.fields', 2  #in nested fields has removed persons too
 
-    #assert_select '.fields' do
-    #  assert_select 'select.form-control' do
-    #    assert_select 'option', {count: 0, :text => company.name}
-    #  end
-    #end
   end
 
   test "index whith removed companies" do

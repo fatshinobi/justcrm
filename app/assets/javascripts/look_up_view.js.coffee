@@ -1,11 +1,12 @@
 class @LookUpView
-  constructor: (selector, path) ->
+  constructor: (selector, path, parent) ->
     @element = $(selector)
     @path = path
     @text_field = @element.find('.look-up-search-text')
     @result_div = @element.find('.look-up-result')
     @result_id = @element.find('.look-up-result-id')
     @enable_button = @element.find('.look-up-button')
+    @parent = parent
 
   init: ->
     that = @
@@ -33,8 +34,11 @@ class @LookUpView
       @result_div.html('')
       return
 
-    #url = "/people/live_search?q=#{search_data}"
-    url = "/#{@path}/live_search?q=#{search_data}"
+    parent_id = ''
+    if (@parent)
+      parent_id = @parent.val()
+
+    url = "/#{@path}/live_search?q=#{search_data}&p=#{parent_id}"
     @get_ajax(url)
 
   get_ajax: (url) ->

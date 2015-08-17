@@ -143,3 +143,11 @@ describe "LookUpView", ->
 
       it "set right result name for second elem", ->
         expect(@look_up.text_field.val()).toEqual 'Test2'
+    
+  describe "if have parent id", ->
+    beforeEach ->
+      parent_input = $('#parent_id')
+      @look_up = new LookUpView('#look-up-view', 'people', parent_input)
+
+    it "should get parent_id", ->
+      expect(@look_up.parent.attr("id")).toEqual 'parent_id'
