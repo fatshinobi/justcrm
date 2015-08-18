@@ -30,15 +30,18 @@ $(document).on('page:load', function() {
 function init_main() {
   var data_controller = $('body').attr('data_controller');
   var person_view, company_view;
-  
+  var semaphore;
+
   if (data_controller == 'opportunities') {
     company_view = new LookUpView('#opportunity_company_look_up', 'companies');    
     person_view = new LookUpView('#opportunity_person_look_up', 'people', company_view.result_id);
+    semaphore = set_semaphore(company_view, person_view);
   }
 
   if (data_controller == 'appointments') {
     company_view = new LookUpView('#appointment_company_look_up', 'companies');    
     person_view = new LookUpView('#appointment_person_look_up', 'people', company_view.result_id);
+    semaphore = set_semaphore(company_view, person_view);    
   }
 
   if (typeof person_view != 'undefined') {
@@ -48,7 +51,19 @@ function init_main() {
   if (typeof company_view != 'undefined') {
     company_view.init();
   }
+
+  if (typeof semaphore != 'undefined') {
+    semaphore.init();
+  }
 };
+
+function set_semaphore(view1, view2) {
+  semaphore = new Semaphore();
+  semaphore.add(view1);
+  semaphore.add(view2);
+
+  return semaphore;
+}
 
 $(document).on('nested:fieldAdded', function(event){
   var data_controller = $('body').attr('data_controller');

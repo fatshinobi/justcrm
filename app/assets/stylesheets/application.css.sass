@@ -97,26 +97,26 @@ body
  img.ava_pic, div.ava_pic
   float: left
   vertical-align: top  
+
+.entry
+ @extend .base_entry
+ padding: 10px  
+ min-height: 120px
+ p, h2
+  margin-left: 110px
  h2
   margin-top: 0
   line-height: 1
 
-.entry
- @extend .base_entry
- padding: 10px
- min-height: 120px
- p, h2
-  margin-left: 110px
 
 .choice_entry
- img.ava_pic, div.ava_pic
-  float: left
-
- display: table-cell
- vertical-align: middle
- height: 60px
+ @extend .base_entry
+ display: table
+ padding: 3px  
  h3
-  margin-left: 60px
+  padding-left: 10px
+  display: table-cell
+  vertical-align: middle
 
 .company_person_entry, .person_company_entry, .expand_field
  float: left
