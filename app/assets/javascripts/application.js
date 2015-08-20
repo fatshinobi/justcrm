@@ -27,6 +27,23 @@ $(document).on('page:load', function() {
   init_main();
 });
 
+$(document).on('nested:fieldAdded', function(event) {
+  lookUpElem = event.field.find('.lookup-div');
+  id_elem = event.field.find('.look-up-result-id');
+  var id = id_elem.attr('id').match(/\d+/)[0];
+  lookUpElem.attr('id', id);
+
+  company_view = new LookUpView('#' + id, 'companies');
+  company_view.init();
+
+  if (typeof window.nested_semaphore == 'undefined') {
+    window.nested_semaphore = new Semaphore();
+  }
+  
+  window.nested_semaphore.add(company_view);  
+  window.nested_semaphore.init();
+});
+
 function init_main() {
   var data_controller = $('body').attr('data_controller');
   var person_view, company_view;
@@ -55,6 +72,7 @@ function init_main() {
   if (typeof semaphore != 'undefined') {
     semaphore.init();
   }
+
 };
 
 function set_semaphore(view1, view2) {
@@ -63,57 +81,4 @@ function set_semaphore(view1, view2) {
   semaphore.add(view2);
 
   return semaphore;
-}
-
-$(document).on('nested:fieldAdded', function(event){
-  var data_controller = $('body').attr('data_controller');
-  var field = event.field; 
-  var choiceField = field.find('.live_search_text')[0];
-  var outField = field.find('.out_live_search');
-  var srcBtn = field.find('.live_search_button')[0];
-  var result = field.find('.live_search_results')[0];
-  var resultName = field.find('.live_search_name_results')[0];
-
-  init_search_field(choiceField);
-
-  srcBtn.onclick = function() {
-    init_search_field(choiceField);
-  };
-
-  choiceField.onkeyup = function() {
-    var controller_path = "";
-    if (data_controller == 'people')
-      controller_path = 'companies';
-    else if (data_controller == 'companies')
-      controller_path = 'people';
-
-    var formData = choiceField.value;
-    resultName.value = formData;
-    var url = "/" + controller_path + "/live_search?q=" + formData; // live_search action.       
-    $.get(url, formData, function(html) { // perform an AJAX get
-      result.innerHTML = html; // replace the "results" div with the results
-      set_choice(outField, choiceField, result);
-    });
-  };
-
-});
-
-function init_search_field(choiceField) {
-    choiceField.value = '';
-    choiceField.disabled = false;
-    choiceField.focus();
-}
-
-function set_choice(out_field, out_text, result_div) {
-  $(".live-choice").each(function(i) {
-    $(this).click(function() {
-      var res_id = $(this).attr("id");
-      res_id = res_id.substring(12);
-
-      out_field.val(res_id);
-      out_text.value = $(this).text();
-      out_text.disabled = true;
-      result_div.innerHTML = '';
-    });
-  });
-}
+};
