@@ -23,7 +23,7 @@ class CompaniesController < ApplicationController
 
   def show
     @parent_company = @company
-    @people = @company.company_people.unremoved
+    @people = @company.company_people_unremoved
     respond_with(@company)
   end
 

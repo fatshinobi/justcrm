@@ -123,4 +123,20 @@ class AppointmentTest < ActiveSupport::TestCase
     #p appointments
     assert_equal 3, appointments.size
   end
+
+  test "should have person name" do
+    appointment = Appointment.create(company: companies(:goggle), person: people(:one), user: users(:two), when: DateTime.now)
+    assert_equal people(:one).name, appointment.person_name
+  end
+
+  test "should have company name" do
+    appointment = Appointment.create(company: companies(:goggle), person: people(:one), user: users(:two), when: DateTime.now)
+    assert_equal companies(:goggle).name, appointment.company_name
+  end
+
+  test "should have user name" do
+    appointment = Appointment.create(company: companies(:goggle), person: people(:one), user: users(:two), when: DateTime.now)
+    assert_equal users(:two).name, appointment.user_name
+  end
+
 end

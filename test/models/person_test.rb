@@ -226,5 +226,15 @@ class PersonTest < ActiveSupport::TestCase
     assert opportunity.start < dt, 'sorting 2 is not valid'
   end
 
+  test "have unremoved company delegate" do
+    person = people(:one)
+    assert_equal 1, person.company_people_unremoved.size
+  end
+
+  test "should have user name" do
+    person = people(:one)
+    assert_equal users(:one).name, person.user_name
+  end
+
 end
 

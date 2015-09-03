@@ -1,31 +1,31 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-	before_filter :check_permissions, :only=>[:new, :create, :cancel]
-	before_filter :configure_permitted_parameters, if: :devise_controller?
+  before_filter :check_permissions, :only=>[:new, :create, :cancel]
+  before_filter :configure_permitted_parameters, if: :devise_controller?
 
-	skip_before_filter :require_no_authentication
+  skip_before_filter :require_no_authentication
 
-	def new
-		super
-	end
+  def new
+    super
+  end
 
-	def update
-		super
-	end
+  def update
+    super
+  end
 
-	def check_permissions
-		if !current_user
-			redirect_to new_user_session_path
-		else
-			authorize! :create, User
-		end
-	end
+  def check_permissions
+    if !current_user
+      redirect_to new_user_session_path
+    else
+      authorize! :create, User
+    end
+  end
 
-	def sign_up(resource_name, resource)
-	end
+  def sign_up(resource_name, resource)
+  end
 
-	def after_sign_up_path_for(resource)
-		users_path
-	end
+  def after_sign_up_path_for(resource)
+    users_path
+  end
 
   private
   def configure_permitted_parameters

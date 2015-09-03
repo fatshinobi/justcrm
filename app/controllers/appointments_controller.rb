@@ -31,7 +31,6 @@ class AppointmentsController < ApplicationController
   private
 
   def parent_redirect
-    #byebug
     if @parent
       redirect_to @parent
     else

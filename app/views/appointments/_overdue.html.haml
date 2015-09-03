@@ -6,12 +6,12 @@
   - if overdue_appointment.company
     %p
       Company:
-      = link_to overdue_appointment.company.name, overdue_appointment.company, :title => overdue_appointment.company.name
+      = link_to overdue_appointment.company_name, overdue_appointment.company, :title => overdue_appointment.company_name
 
   - if overdue_appointment.person
     %p
       Person:
-      = link_to overdue_appointment.person.name, overdue_appointment.person, :title => overdue_appointment.person.name
+      = link_to overdue_appointment.person_name, overdue_appointment.person, :title => overdue_appointment.person_name
 
   .well
     %p{:class => "appointment_body_field"}

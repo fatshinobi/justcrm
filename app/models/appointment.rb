@@ -1,4 +1,5 @@
 class Appointment < ActiveRecord::Base
+  include HasUser
   belongs_to :company
   belongs_to :person
   belongs_to :user
@@ -9,6 +10,9 @@ class Appointment < ActiveRecord::Base
   validate :person_must_match_to_company
   validates :company, presence: true
   validates :user, presence: true
+
+  delegate :name, to: :person, allow_nil: true, prefix: true
+  delegate :name, to: :company, allow_nil: true, prefix: true
 
   class Status
     def self.value 

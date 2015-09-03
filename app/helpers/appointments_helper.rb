@@ -1,14 +1,14 @@
 module AppointmentsHelper
   def appointment_ico(appointment)
     class_name = 'glyphicon '
-	class_name << 'glyphicon-envelope' if appointment.is_message?
-	class_name << 'glyphicon-phone-alt' if appointment.is_call?
-	class_name << 'glyphicon-comment' if appointment.is_meet?
-	class_name << 'glyphicon-wrench' if appointment.is_task?
-	class_name << ' icon-large float_pic'
+    class_name << 'glyphicon-envelope' if appointment.is_message?
+    class_name << 'glyphicon-phone-alt' if appointment.is_call?
+    class_name << 'glyphicon-comment' if appointment.is_meet?
+    class_name << 'glyphicon-wrench' if appointment.is_task?
+    class_name << ' icon-large float_pic'
 
-	content_tag(:span, :class => class_name, "aria-hidden" => "true", :title => appointment.get_communication_type.to_s) {
-	}
+    content_tag(:span, :class => class_name, "aria-hidden" => "true", :title => appointment.get_communication_type.to_s) {
+    }
   end
 
   def set_appointment_status_paths(appointment, company, person, opportunity)

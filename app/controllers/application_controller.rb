@@ -4,10 +4,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   layout 'edit', only: [:edit, :new]  
 
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
 
   #fix cancan bug
-  before_filter do
+  before_action do
     resource = controller_name.singularize.to_sym
     method = "#{resource}_params"
     params[resource] &&= send(method) if respond_to?(method, true)

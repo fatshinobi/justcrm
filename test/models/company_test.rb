@@ -234,6 +234,16 @@ class CompanyTest < ActiveSupport::TestCase
 
     company = companies(:goggle)
     assert_equal 0, company.people.size
-
   end
+
+  test "have unremoved people delegate" do
+    company = companies(:mycrosoft)
+    assert_equal 2, company.company_people_unremoved.size
+  end
+
+  test "should have user name" do
+    company = companies(:mycrosoft)
+    assert_equal users(:one).name, company.user_name
+  end
+
 end

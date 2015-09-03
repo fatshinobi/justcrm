@@ -1,31 +1,31 @@
 module OpportunitiesHelper
   def opportunity_ico(opportunity)
     class_name = 'glyphicon '
-	class_name << 'glyphicon-eye-open' if opportunity.get_stage == :awareness
-	class_name << 'glyphicon-search' if opportunity.get_stage == :interest
-	class_name << 'glyphicon-fire' if opportunity.get_stage == :decision
-	class_name << 'glyphicon-usd' if opportunity.get_stage == :buy		
+    class_name << 'glyphicon-eye-open' if opportunity.get_stage == :awareness
+    class_name << 'glyphicon-search' if opportunity.get_stage == :interest
+    class_name << 'glyphicon-fire' if opportunity.get_stage == :decision
+    class_name << 'glyphicon-usd' if opportunity.get_stage == :buy		
 
-	content_tag(:span, :class => class_name, "aria-hidden" => "true", :title => opportunity.get_stage.to_s) {
-	}
+    content_tag(:span, :class => class_name, "aria-hidden" => "true", :title => opportunity.get_stage.to_s) {
+    }
   end
 
   def stage_pager(opportunity)	
     disable_prev_style = opportunity.is_first_stage? ? ' disabled': ''
-	disable_prev_style = "previous" + disable_prev_style
+    disable_prev_style = "previous" + disable_prev_style
 
-	disable_next_style = opportunity.is_last_stage? ? ' disabled': ''
-	disable_next_style = "next" + disable_next_style
+    disable_next_style = opportunity.is_last_stage? ? ' disabled': ''
+    disable_next_style = "next" + disable_next_style
 
-	content_tag(:ul, :class => "pager") {
-	  concat content_tag(:li, :class => disable_prev_style) {
+    content_tag(:ul, :class => "pager") {
+      concat content_tag(:li, :class => disable_prev_style) {
         concat link_to("&larr; Prev stage".html_safe, prev_stage_opportunity_path(opportunity), :method => :post)
-	  }
-	  concat @opportunity.get_stage.to_s
-	  concat content_tag(:li, :class => disable_next_style) {
+      }
+      concat @opportunity.get_stage.to_s
+      concat content_tag(:li, :class => disable_next_style) {
         concat link_to("Next stage &rarr;".html_safe, next_stage_opportunity_path(opportunity), :method => :post)
-	  }
-	}
+      }
+    }
   end
 
   def set_opportunity_status_paths(opportunity, company, person, stage)

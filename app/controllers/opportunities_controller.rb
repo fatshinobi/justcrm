@@ -17,7 +17,6 @@ class OpportunitiesController < ApplicationController
         render :index
       end
     end
-
   end
 
   def show
@@ -45,8 +44,6 @@ class OpportunitiesController < ApplicationController
   end
 
   def destroy
-    #@opportunity.destroy
-    #respond_with(@opportunity)
   end
 
   def prev_stage

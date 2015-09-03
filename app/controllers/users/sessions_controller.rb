@@ -1,7 +1,7 @@
 class Users::SessionsController < Devise::SessionsController
-	layout 'start', only: [:new]
+  layout 'start', only: [:new]
 
-	def new
-		super		
-	end
+  def new
+    super		
+  end
 end

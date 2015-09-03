@@ -1,4 +1,5 @@
 class Opportunity < ActiveRecord::Base
+  include HasUser
   belongs_to :company
   belongs_to :person
   belongs_to :user

@@ -187,4 +187,10 @@ class OpportunityTest < ActiveSupport::TestCase
     assert_equal 1, opportunities.size
     assert opportunities.first.finish < Date.current
   end
+
+  test "should have user name" do
+    opportunity = opportunities(:one)
+    assert_equal users(:one).name, opportunity.user_name
+  end
+
 end
