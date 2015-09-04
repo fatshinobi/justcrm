@@ -5,6 +5,7 @@ class @LookUpView
     @text_field = @element.find('.look-up-search-text')
     @result_div = @element.find('.look-up-result')
     @result_id = @element.find('.look-up-result-id')
+    @result_name = @element.find('.look-up-result-name')
     @enable_button = @element.find('.look-up-button')
     @parent = parent
 
@@ -29,6 +30,8 @@ class @LookUpView
 
   set_search_data: () ->
     search_data = @text_field.val()
+    if (@result_name)
+      @result_name.val(search_data)
 
     if (search_data.length < 3)
       @result_div.html('')

@@ -18,6 +18,9 @@ describe "LookUpView", ->
   it "have result id input text", ->
     expect(@look_up.result_id.attr('type')).toEqual 'text'
 
+  it "have result name input text", ->
+    expect(@look_up.result_name.attr('type')).toEqual 'text'
+
   it "have enable buton", ->
     expect(@look_up.enable_button.attr('class')).toEqual 'look-up-button'
 
@@ -95,6 +98,9 @@ describe "LookUpView", ->
 
     it "result div have values", ->
       expect(@look_up.result_div.text()).toEqual 'test'
+
+    it "result name have right value", ->
+      expect(@look_up.result_name.val()).toEqual '123'
 
   describe "text field too short", ->
     beforeEach ->
