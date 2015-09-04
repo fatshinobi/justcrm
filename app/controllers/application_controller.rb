@@ -16,8 +16,8 @@ class ApplicationController < ActionController::Base
   load_and_authorize_resource unless: [:devise_controller?]
 
   rescue_from CanCan::AccessDenied do |exception|
-  	flash[:error] = exception.message
-  	render '/shared/access_denied'
+    flash[:error] = exception.message
+    render '/shared/access_denied'
   end
 
 end

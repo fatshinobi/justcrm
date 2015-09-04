@@ -86,8 +86,8 @@ class OpportunitiesController < ApplicationController
     end
 
     def set_opportunities_by_stage
-        @stage = params[:stage]
-        @opportunities = @stage ? Opportunity.by_stage(@stage.to_sym, current_user) : Opportunity.by_user(current_user)
+      @stage = params[:stage]
+      @opportunities = @stage ? Opportunity.by_stage(@stage.to_sym, current_user) : Opportunity.by_user(current_user)
     end
 
     def qty_by_stage(stage)

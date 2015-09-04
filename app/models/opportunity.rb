@@ -47,11 +47,11 @@ class Opportunity < ActiveRecord::Base
   ]
 
   def person_must_match_to_company
-  	return if !person
-  	company.company_people.each do |link|
-  		return if link.person == person
-  	end
-  	errors.add(:person, "Person must present the company")
+    return if !person
+    company.company_people.each do |link|
+      return if link.person == person
+    end
+    errors.add(:person, "Person must present the company")
   end
 
   def get_stage

@@ -115,15 +115,15 @@ module ApplicationHelper
   end
 
   def get_company_name(id)
-  	if id != nil
-  	  Company.find(id.to_i).name
-  	end
+    if id != nil
+      Company.find(id.to_i).name
+    end
   end
 
   def get_person_name(id)
-  	if id != nil
-  	  Person.find(id.to_i).name
-  	end
+    if id != nil
+      Person.find(id.to_i).name
+    end
   end
 
   def not_null_property(value, property_name)

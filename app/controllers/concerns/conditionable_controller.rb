@@ -1,7 +1,7 @@
 module ConditionableController
   def conditionable_init(resource, path_for_redirect)
-	@resource = resource 
-	@path_for_redirect = path_for_redirect
+    @resource = resource 
+    @path_for_redirect = path_for_redirect
   end
 
   def activate

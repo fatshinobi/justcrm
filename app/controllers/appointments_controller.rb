@@ -5,7 +5,7 @@ class AppointmentsController < ApplicationController
 
   def new
     @appointment = Appointment.new(user: current_user)
-	  respond_with(@appointment)
+    respond_with(@appointment)
   end
 
   def edit
@@ -39,7 +39,7 @@ class AppointmentsController < ApplicationController
   end
 
   def set_appointment
-      @appointment = Appointment.find(params[:id])
+    @appointment = Appointment.find(params[:id])
   end
 
   def set_parent
