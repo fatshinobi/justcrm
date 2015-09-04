@@ -4,7 +4,7 @@
 
 The mission of JustCRM to be simple (as far as it's possible).
 
-![Appointments](https://cloud.githubusercontent.com/assets/14085661/9677647/4b33be62-52e5-11e5-989c-9c7c0b1037aa.jpg)
+![Appointments](https://cloud.githubusercontent.com/assets/14085661/9677865/92285a38-52e7-11e5-822b-29ee7895158c.jpg)(https://cloud.githubusercontent.com/assets/14085661/9677647/4b33be62-52e5-11e5-989c-9c7c0b1037aa.jpg)
 
 ## System Requirements
   * Ruby 2.1
