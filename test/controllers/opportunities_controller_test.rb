@@ -32,7 +32,7 @@ class OpportunitiesControllerTest < ActionController::TestCase
       assert_select "a[class='index_show_button']", opportunity.title do |anchors|
         assert_equal 1, anchors.count
         anchor = anchors[0]
-        assert_equal opportunity_path(opportunity), anchor.attributes["href"]
+        assert_equal opportunity_path(opportunity), anchor.attributes["href"].value
       end
     end
   end
@@ -104,7 +104,7 @@ class OpportunitiesControllerTest < ActionController::TestCase
     assert_select 'a[title=?]', @opportunity.company.name do |anchors|
       assert_equal 1, anchors.count
       anchor = anchors[0]
-      assert_equal company_path(@opportunity.company), anchor.attributes["href"]
+      assert_equal company_path(@opportunity.company), anchor.attributes["href"].value
     end
 
   end
@@ -116,8 +116,8 @@ class OpportunitiesControllerTest < ActionController::TestCase
     assert_select 'form' do
       assert_select 'input#opportunity_title[value=?]', @opportunity.title
       assert_select 'textarea#opportunity_description', @opportunity.description
-      assert_select 'input#opportunity_company_id[value=?]', @opportunity.company.id
-      assert_select 'input#opportunity_person_id[value=?]', @opportunity.person.id
+      assert_select 'input#opportunity_company_id[value=?]', @opportunity.company.id.to_s
+      assert_select 'input#opportunity_person_id[value=?]', @opportunity.person.id.to_s
       assert_select 'select#opportunity_user_id' do
         assert_select 'option[selected="selected"]', :text => @opportunity.user.name
       end
@@ -202,21 +202,22 @@ class OpportunitiesControllerTest < ActionController::TestCase
     assert_select '.appointments_entry', 2
 
     appointments.each do |appointment|
-      assert_select 'h3', appointment.when.to_formatted_s(:long)
+      assert_select "a", appointment.when.to_formatted_s(:long)
+
       assert_select '.appointment_body_field', appointment.body
       assert_select '.appointment_curator_field', "Curator: " + appointment.user.name
 
       assert_select "a[class='appointment_show_button']", appointment.when.to_formatted_s(:long) do |anchors|
         assert_equal 1, anchors.count
         anchor = anchors[0]
-        assert_equal edit_appointments_from_opportunity_path(appointment, @opportunity), anchor.attributes["href"]        
+        assert_equal edit_appointments_from_opportunity_path(appointment, @opportunity), anchor.attributes["href"].value
       end
 
       if appointment.person then
         assert_select '.appointments_entry>a[title=?]', appointment.person.name do |anchors|
           assert_equal 1, anchors.count
           anchor = anchors[0]
-          assert_equal person_path(appointment.person), anchor.attributes["href"]
+          assert_equal person_path(appointment.person), anchor.attributes["href"].value
         end
       end
     end

@@ -28,7 +28,7 @@ class AppointmentsControllerTest < ActionController::TestCase
     assert_select "a", 'Back' do |anchors|
       assert_equal 1, anchors.count
       anchor = anchors[0]
-      assert_equal company_path(company), anchor.attributes["href"]
+      assert_equal company_path(company), anchor.attributes["href"].value
     end
 
   end
@@ -43,14 +43,15 @@ class AppointmentsControllerTest < ActionController::TestCase
     assert_template :edit
     assert_select 'form' do
       assert_select 'textarea#appointment_body', @appointment.body    	
-      assert_select 'input#appointment_company_id[value=?]', @appointment.company.id
+      assert_select 'input#appointment_company_id[value=?]', @appointment.company.id.to_s
       assert_select 'input#appointment_person_id', 1
 
       assert_select 'select#appointment_opportunity_id' do
         assert_select 'option[selected="selected"]', :text => @appointment.opportunity.title if @appointment.opportunity
       end
+
       assert_select 'select#appointment_communication_type' do
-        assert_select 'option[selected="selected"]', :text => @appointment.get_communication_type
+        assert_select 'option[selected="selected"]', :text => @appointment.get_communication_type.to_s
       end
       assert_select 'select#appointment_user_id' do
         assert_select 'option[selected="selected"]', :text => @appointment.user.name
@@ -60,7 +61,7 @@ class AppointmentsControllerTest < ActionController::TestCase
     assert_select "a", 'Back' do |anchors|
       assert_equal 1, anchors.count
       anchor = anchors[0]
-      assert_equal company_path(company), anchor.attributes["href"]
+      assert_equal company_path(company), anchor.attributes["href"].value
     end
     
   end

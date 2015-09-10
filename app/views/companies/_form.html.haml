@@ -21,7 +21,7 @@
   .field{:class=>"form_field form-group"}
     = f.text_field :web, :id=>"company_web"
   .field{:class=>"form_field form-group"}
-    = f.text_field :group_list, :label=>"List All Tags, separate each tag by a comma", :id=>"company_tags"
+    = f.text_field :group_list, :label=>"List All Tags, separate each tag by a comma", :value => @company.group_list.join(", "), :id=>"company_tags"
 
   .actions
     = f.submit 'Save', :class=>"form_accept_button btn btn-success"

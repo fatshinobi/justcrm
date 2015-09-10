@@ -25,7 +25,7 @@
   .field{:class=>"form_field form-group"}
     = f.text_field :web, :id=>"person_web"
   .field{:class=>"form_field form-group"}
-    = f.text_field :group_list, :label=>"List All Tags, separate each tag by a comma", :id=>"person_tags"
+    = f.text_field :group_list, :label=>"List All Tags, separate each tag by a comma", :value => @person.group_list.join(", "), :id=>"person_tags"
   %h2
     Companies:
   = f.fields_for :company_people do |c|

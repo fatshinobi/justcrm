@@ -20,23 +20,24 @@ class UsersControllerTest < ActionController::TestCase
     assigns(:users).each do |user|
       assert_select 'h2', user.name
       assert_select 'h4', user.email
-      assert_select "#?", user.id do
+      #assert_select "#?", user.id.to_s do
+      assert_select "##{user.id.to_s}" do
       	assert_select ".dropdown" do
       	  assert_select "ul.dropdown-menu" do
 	        assert_select "li>a", "Activate" do |anchors|
               anchor = anchors[0]
-              assert_equal activate_user_path(user), anchor.attributes["href"]
-              assert_equal "post", anchor.attributes["data-method"]        				
+              assert_equal activate_user_path(user), anchor.attributes["href"].value
+              assert_equal "post", anchor.attributes["data-method"].value
             end
             assert_select "li>a", "Stop" do |anchors|
               anchor = anchors[0]
-              assert_equal stop_user_path(user), anchor.attributes["href"]
-              assert_equal "post", anchor.attributes["data-method"]        				
+              assert_equal stop_user_path(user), anchor.attributes["href"].value
+              assert_equal "post", anchor.attributes["data-method"].value  				
             end
             assert_select "li>a", "Remove" do |anchors|
               anchor = anchors[0]
-              assert_equal user_path(user), anchor.attributes["href"]
-              assert_equal "delete", anchor.attributes["data-method"]
+              assert_equal user_path(user), anchor.attributes["href"].value
+              assert_equal "delete", anchor.attributes["data-method"].value
             end
           end
         end
@@ -45,7 +46,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_select "a", 'New User' do |anchors|
       assert_equal 1, anchors.count
       anchor = anchors[0]
-      assert_equal new_user_registration_path, anchor.attributes["href"]
+      assert_equal new_user_registration_path, anchor.attributes["href"].value
     end
   end
 

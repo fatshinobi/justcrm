@@ -47,14 +47,14 @@ class WorkspacesControllerTest < ActionController::TestCase
         assert_select '.short_appointments_entry>p>a[title=?]', overdue_appointment.person.name do |anchors|
           assert_equal 1, anchors.count
           anchor = anchors[0]
-          assert_equal person_path(overdue_appointment.person), anchor.attributes["href"]
+          assert_equal person_path(overdue_appointment.person), anchor.attributes["href"].value
         end
       end
       if overdue_appointment.company then
         assert_select '.short_appointments_entry>p>a[title=?]', overdue_appointment.company.name do |anchors|
           assert_equal 1, anchors.count
           anchor = anchors[0]
-          assert_equal company_path(overdue_appointment.company), anchor.attributes["href"]
+          assert_equal company_path(overdue_appointment.company), anchor.attributes["href"].value
         end
       end
     end

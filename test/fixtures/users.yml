@@ -8,10 +8,10 @@ one:
  id: 1
  name: User
  email: user1@test.eu
- encrypted_password: <%= Devise.bcrypt(User, 'password') %>
+ encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
 
 two:
  name: User2
  id: 2
  email: user2@test.eu
- encrypted_password: <%= Devise.bcrypt(User, 'password') %>
+ encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>

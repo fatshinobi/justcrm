@@ -23,13 +23,13 @@ class CompaniesControllerTest < ActionController::TestCase
       assert_select "a[class='index_show_button']", company.name do |anchors|
         assert_equal 1, anchors.count
         anchor = anchors[0]
-        assert_equal company_path(company), anchor.attributes["href"]
+        assert_equal company_path(company), anchor.attributes["href"].value
       end
 
       assert_select "a[title=?]", company.name do |anchors|
         assert_equal 1, anchors.count
         anchor = anchors[0]
-        assert_equal company_path(company), anchor.attributes["href"]
+        assert_equal company_path(company), anchor.attributes["href"].value
       end      
     end
   end
@@ -39,7 +39,7 @@ class CompaniesControllerTest < ActionController::TestCase
     assert_select "a", 'New Company' do |anchors|
       assert_equal 1, anchors.count
       anchor = anchors[0]
-      assert_equal new_company_path, anchor.attributes["href"]
+      assert_equal new_company_path, anchor.attributes["href"].value
     end
   end
 
@@ -86,7 +86,7 @@ class CompaniesControllerTest < ActionController::TestCase
     assert_select "a", 'Back' do |anchors|
       assert_equal 1, anchors.count
       anchor = anchors[0]
-      assert_equal companies_path, anchor.attributes["href"]
+      assert_equal companies_path, anchor.attributes["href"].value
     end
   end
 
@@ -154,12 +154,12 @@ class CompaniesControllerTest < ActionController::TestCase
     assert_select "a", 'Edit' do |anchors|
       assert_equal 1, anchors.count
       anchor = anchors[0]
-      assert_equal edit_company_path(@company), anchor.attributes["href"]
+      assert_equal edit_company_path(@company), anchor.attributes["href"].value
     end
     assert_select "a", 'Back' do |anchors|
       assert_equal 1, anchors.count
       anchor = anchors[0]
-      assert_equal companies_path, anchor.attributes["href"]
+      assert_equal companies_path, anchor.attributes["href"].value
     end
     assert_select 'p#show_tags_field' do
       @company.tags.each do |tag|
@@ -182,12 +182,12 @@ class CompaniesControllerTest < ActionController::TestCase
       assert_select "a", company_person.person.name do |anchors|
         assert_equal 1, anchors.count
         anchor = anchors[0]
-        assert_equal person_path(company_person.person), anchor.attributes["href"]
+        assert_equal person_path(company_person.person), anchor.attributes["href"].value
       end
       assert_select 'a[title=?]', company_person.person.name do |anchors|
         assert_equal 1, anchors.count
         anchor = anchors[0]
-        assert_equal person_path(company_person.person), anchor.attributes["href"]
+        assert_equal person_path(company_person.person), anchor.attributes["href"].value
       end
     end
   end
@@ -230,6 +230,9 @@ class CompaniesControllerTest < ActionController::TestCase
   test "should get edit" do
     @company.group_list.add 'tag 1, tag 2', parse: true
     @company.save
+
+    #p @company.group_list
+
     get :edit, id: @company
     assert_response :success
     assert_template :edit
@@ -243,7 +246,7 @@ class CompaniesControllerTest < ActionController::TestCase
       assert_select 'textarea#company_about', @company.about
       assert_select 'input#company_phone[value=?]', @company.phone
       assert_select 'input#company_web[value=?]', @company.web
-      assert_select 'input#company_tags[value=?]', @company.group_list
+      assert_select 'input#company_tags[value=?]', @company.group_list.to_s
       assert_select 'select#company_user_id' do
         assert_select 'option[selected="selected"]', :text => @company.user.name
       end
@@ -254,7 +257,7 @@ class CompaniesControllerTest < ActionController::TestCase
     patch :update, id: @company, company: { about: @company.about, name: "Adam", phone: @company.phone, web: @company.web }
 
     assert_redirected_to company_path(assigns(:company))
-    assert_equal 'Adam', Company.find(@company).name
+    assert_equal 'Adam', Company.find(@company.id).name
   end
 
   test "get show with appointments" do
@@ -277,21 +280,21 @@ class CompaniesControllerTest < ActionController::TestCase
     assert_select '.appointments_entry', 2
 
     appointments.each do |appointment|
-      assert_select 'h3', appointment.when.to_formatted_s(:long)
+      assert_select 'a', appointment.when.to_formatted_s(:long)
       assert_select '.appointment_body_field', appointment.body
       assert_select '.appointment_curator_field', "Curator: " + appointment.user.name
 
       assert_select "a[class='appointment_show_button']", appointment.when.to_formatted_s(:long) do |anchors|
         assert_equal 1, anchors.count
         anchor = anchors[0]
-        assert_equal edit_appointments_from_company_path(appointment, assigns(:company)), anchor.attributes["href"]        
+        assert_equal edit_appointments_from_company_path(appointment, assigns(:company)), anchor.attributes["href"].value
       end
 
       if appointment.person then
         assert_select '.appointments_entry>a[title=?]', appointment.person.name do |anchors|
           assert_equal 1, anchors.count
           anchor = anchors[0]
-          assert_equal person_path(appointment.person), anchor.attributes["href"]
+          assert_equal person_path(appointment.person), anchor.attributes["href"].value
         end
       end
     end
@@ -344,7 +347,7 @@ class CompaniesControllerTest < ActionController::TestCase
       assert_select "a[class='index_show_button']", opportunity.title do |anchors|
         assert_equal 1, anchors.count
         anchor = anchors[0]
-        assert_equal opportunity_path(opportunity), anchor.attributes["href"]
+        assert_equal opportunity_path(opportunity), anchor.attributes["href"].value
       end
     end
   end

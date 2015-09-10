@@ -35,11 +35,11 @@ class ApplicationHelperTest < ActionView::TestCase
 
     path_string = edit_appointments_from_company_path(appointment, appointment.company)
     caption = link_to(appointment.when.to_formatted_s(:long), path_string, :class => "appointment_show_button", :title => appointment.get_communication_type.to_s)
-    assert_equal "<p class=\"opened_caption\"><a class=\"appointment_show_button\" href=\"/appointments/#{appointment.id}/edit/companies/#{appointment.company.id}\" title=\"#{appointment.get_communication_type.to_s}\">#{appointment.when.to_formatted_s(:long)}</a></p>", statusable_caption(appointment, caption)
+    assert_equal "<p class=\"opened_caption\"><a class=\"appointment_show_button\" title=\"#{appointment.get_communication_type.to_s}\" href=\"/appointments/#{appointment.id}/edit/companies/#{appointment.company.id}\">#{appointment.when.to_formatted_s(:long)}</a></p>", statusable_caption(appointment, caption)    
 
     appointment.set_status :done
     caption = link_to(appointment.when.to_formatted_s(:long), path_string, :class => "appointment_show_button", :title => appointment.get_communication_type.to_s)
-    assert_equal "<p class=\"done_caption\"><a class=\"appointment_show_button\" href=\"/appointments/#{appointment.id}/edit/companies/#{appointment.company.id}\" title=\"#{appointment.get_communication_type.to_s}\">#{appointment.when.to_formatted_s(:long)}</a></p>", statusable_caption(appointment, caption)
+    assert_equal "<p class=\"done_caption\"><a class=\"appointment_show_button\" title=\"#{appointment.get_communication_type.to_s}\" href=\"/appointments/#{appointment.id}/edit/companies/#{appointment.company.id}\">#{appointment.when.to_formatted_s(:long)}</a></p>", statusable_caption(appointment, caption)    
   end
 
   test "statusable caption for opportinities" do

@@ -23,12 +23,12 @@ class PeopleControllerTest < ActionController::TestCase
       assert_select "a[class='index_show_button']", person.name do |anchors|
         assert_equal 1, anchors.count
         anchor = anchors[0]
-        assert_equal person_path(person), anchor.attributes["href"]
+        assert_equal person_path(person), anchor.attributes["href"].value
       end
       assert_select "a[title=?]", person.name do |anchors|
         assert_equal 1, anchors.count
         anchor = anchors[0]
-        assert_equal person_path(person), anchor.attributes["href"]
+        assert_equal person_path(person), anchor.attributes["href"].value
       end
     end
 
@@ -44,7 +44,7 @@ class PeopleControllerTest < ActionController::TestCase
     assert_select "a", 'New Person' do |anchors|
       assert_equal 1, anchors.count
       anchor = anchors[0]
-      assert_equal new_person_path, anchor.attributes["href"]
+      assert_equal new_person_path, anchor.attributes["href"].value
     end
   end
 
@@ -90,7 +90,7 @@ class PeopleControllerTest < ActionController::TestCase
     assert_select "a", 'Back' do |anchors|
       assert_equal 1, anchors.count
       anchor = anchors[0]
-      assert_equal people_path, anchor.attributes["href"]
+      assert_equal people_path, anchor.attributes["href"].value
     end
   end
 
@@ -152,12 +152,12 @@ class PeopleControllerTest < ActionController::TestCase
     assert_select "a", 'Edit' do |anchors|
       assert_equal 1, anchors.count
       anchor = anchors[0]
-      assert_equal edit_person_path(@person), anchor.attributes["href"]
+      assert_equal edit_person_path(@person), anchor.attributes["href"].value
     end
     assert_select "a", 'Back' do |anchors|
       assert_equal 1, anchors.count
       anchor = anchors[0]
-      assert_equal people_path, anchor.attributes["href"]
+      assert_equal people_path, anchor.attributes["href"].value
     end
     assert_select 'p#show_tags_field' do
       @person.tags.each do |tag|
@@ -198,12 +198,12 @@ class PeopleControllerTest < ActionController::TestCase
       assert_select "a", company_person.company.name do |anchors|
         assert_equal 1, anchors.count
         anchor = anchors[0]
-        assert_equal company_path(company_person.company), anchor.attributes["href"]
+        assert_equal company_path(company_person.company), anchor.attributes["href"].value
       end
       assert_select 'a[title=?]', company_person.company.name do |anchors|
         assert_equal 1, anchors.count
         anchor = anchors[0]
-        assert_equal company_path(company_person.company), anchor.attributes["href"]
+        assert_equal company_path(company_person.company), anchor.attributes["href"].value
       end      
     end    
   end
@@ -230,6 +230,11 @@ class PeopleControllerTest < ActionController::TestCase
   end
 
   test "should get edit" do
+    @person.facebook = "facebook_text"
+    @person.twitter = "twitter_text"
+    @person.group_list.add 'tag 1, tag 2', parse: true
+
+    @person.save
     get :edit, id: @person
     assert_response :success
     assert_template :edit
@@ -253,7 +258,7 @@ class PeopleControllerTest < ActionController::TestCase
       assert_select 'input#person_web[value=?]', @person.web
       assert_select 'input#person_twitter[value=?]', @person.twitter
       assert_select 'input#person_facebook[value=?]', @person.facebook
-      assert_select 'input#person_tags[value=?]', @person.group_list
+      assert_select 'input#person_tags[value=?]', @person.group_list.to_s
       assert_select 'select#person_user_id' do
         assert_select 'option[selected="selected"]', :text => @person.user.name
       end
@@ -264,7 +269,7 @@ class PeopleControllerTest < ActionController::TestCase
   test "should update person" do
     patch :update, id: @person, person: { about: @person.about, facebook: @person.facebook, name: @person.name, phone: @person.phone, twitter: @person.twitter, web: @person.web }
     assert_redirected_to person_path(assigns(:person))
-    assert_equal 'David', Person.find(@person).name
+    assert_equal 'David', Person.find(@person.id).name
   end
 
   test "get show with appointments" do
@@ -285,19 +290,19 @@ class PeopleControllerTest < ActionController::TestCase
     assert_select '.appointments_entry', 2
 
     appointments.each do |appointment|
-      assert_select 'h3', appointment.when.to_formatted_s(:long)
+      assert_select 'a', appointment.when.to_formatted_s(:long)
       assert_select '.appointment_body_field', appointment.body
 
       assert_select "a[class='appointment_show_button']", appointment.when.to_formatted_s(:long) do |anchors|
         assert_equal 1, anchors.count
         anchor = anchors[0]
-        assert_equal edit_appointments_from_person_path(appointment, assigns(:person)), anchor.attributes["href"]        
+        assert_equal edit_appointments_from_person_path(appointment, assigns(:person)), anchor.attributes["href"].value
       end
 
       if appointment.company then
         assert_select '.appointments_entry>a[title=?]', appointment.company.name do |anchors|
           anchor = anchors[0]
-          assert_equal company_path(appointment.company), anchor.attributes["href"]
+          assert_equal company_path(appointment.company), anchor.attributes["href"].value
         end
       end
     end
@@ -356,7 +361,7 @@ class PeopleControllerTest < ActionController::TestCase
       assert_select "a[class='index_show_button']", opportunity.title do |anchors|
         assert_equal 1, anchors.count
         anchor = anchors[0]
-        assert_equal opportunity_path(opportunity), anchor.attributes["href"]
+        assert_equal opportunity_path(opportunity), anchor.attributes["href"].value
       end
     end
   end  
@@ -365,7 +370,7 @@ class PeopleControllerTest < ActionController::TestCase
     @person.company_people.delete_all
     patch :update, id: @person, person: { about: @person.about, facebook: @person.facebook, name: @person.name, phone: @person.phone, twitter: @person.twitter, web: @person.web, :company_people_attributes=>{'0'=>{id: '', role: 'Manager', company_id: companies(:mycrosoft), new_company_name: 'New Company Name', _destroy: 'false'}}}
     assert_redirected_to person_path(assigns(:person))
-    assert_equal 'David', Person.find(@person).name
+    assert_equal 'David', Person.find(@person.id).name
     result_person = assigns(:person)
     assert_equal 1, result_person.company_people.size
     assert_equal companies(:mycrosoft), result_person.company_people.first.company
@@ -375,7 +380,7 @@ class PeopleControllerTest < ActionController::TestCase
     @person.company_people.delete_all
     patch :update, id: @person, person: { about: @person.about, facebook: @person.facebook, name: @person.name, phone: @person.phone, twitter: @person.twitter, web: @person.web, :company_people_attributes=>{'0'=>{id: '', role: 'Manager', company_id: '', new_company_name: 'New Company Name', _destroy: 'false'}}}
     assert_redirected_to person_path(assigns(:person))
-    assert_equal 'David', Person.find(@person).name
+    assert_equal 'David', Person.find(@person.id).name
     result_person = assigns(:person)
     assert_equal 1, result_person.company_people.size
     assert_equal 'New Company Name', result_person.company_people.first.company.name
@@ -409,7 +414,7 @@ class PeopleControllerTest < ActionController::TestCase
     @person.company_people.delete_all
     patch :update, id: @person, person: { about: @person.about, facebook: @person.facebook, name: @person.name, phone: @person.phone, twitter: @person.twitter, web: @person.web, :company_people_attributes=>{'0'=>{id: '', role: 'Manager', company_id: '', new_company_name: '', _destroy: 'false'}}}
     assert_redirected_to person_path(assigns(:person))
-    assert_equal 'David', Person.find(@person).name
+    assert_equal 'David', Person.find(@person.id).name
     result_person = assigns(:person)
     assert_equal 0, result_person.company_people.size
   end
