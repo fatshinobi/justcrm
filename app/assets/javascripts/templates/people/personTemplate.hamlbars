@@ -1,0 +1,2 @@
+.person-entry
+  = hb 'name'

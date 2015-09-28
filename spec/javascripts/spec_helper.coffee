@@ -14,6 +14,16 @@
 # You can require your own javascript files here. By default this will include everything in application, however you
 # may get better load performance if you require the specific files that are being used in the spec that tests them.
 #= require application
+#= require look_up_view
+#= require semaphore
+#= require underscore
+#= require backbone
+#= require handlebars.runtime
+#= require_tree ./../../app/assets/javascripts/templates/people
+#= require justcrm
+#= require_tree ./../../app/assets/javascripts/models
+#= require_tree ./../../app/assets/javascripts/collections
+#= require_tree ./../../app/assets/javascripts/views
 #= require support/jasmine-jquery-2.1.0
 #
 # Deferring execution

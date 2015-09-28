@@ -40,6 +40,10 @@ gem 'acts-as-taggable-on', '~> 3.4'
 gem 'cancan'
 gem 'rolify', '~> 3.5.0'
 gem 'figaro'
+gem 'backbone-on-rails'
+gem 'handlebars_assets'
+gem 'hamlbars', '~> 2.1'
+
 
 group :development, :test do
   gem "teaspoon-jasmine"

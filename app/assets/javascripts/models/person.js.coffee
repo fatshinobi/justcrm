@@ -1,0 +1,1 @@
+class Justcrm.Models.Person extends Backbone.Model

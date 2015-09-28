@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+%html
+  %head
+    %title
+      JustCrm mobile
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+    = js_include_tag_for_mobile
+    = csrf_meta_tags
+  %body
+    = yield
+ 

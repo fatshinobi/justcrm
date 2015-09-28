@@ -129,4 +129,21 @@ module ApplicationHelper
   def not_null_property(value, property_name)
     value ? value.send(property_name) : ''
   end
+
+  def js_include_tag_for_mobile
+    javascript_include_tag('application',
+      'look_up_view',
+      'semaphore',
+      'underscore',
+      'backbone',
+      'justcrm',
+      'handlebars.runtime',
+      'templates/people/personTemplate',
+      'models/person',
+      'collections/people',
+      'views/people',
+      'views/person',
+      'data-turbolinks-track' => true      
+    )
+  end
 end

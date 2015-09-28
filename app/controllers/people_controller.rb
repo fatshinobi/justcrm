@@ -3,7 +3,7 @@ class PeopleController < ApplicationController
   before_action :set_person, only: [:show, :edit, :update, :destroy, :activate, :stop]
   before_action :list_initialize, only: [:index]
 
-  respond_to :html
+  respond_to :html, :json
   
   def index
     case 
@@ -19,6 +19,10 @@ class PeopleController < ApplicationController
 
     @tags = Person.group_counts    
     respond_with(@people)
+  end
+
+  def mobile
+
   end
 
   def show
