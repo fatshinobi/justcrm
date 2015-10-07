@@ -19,4 +19,5 @@ class Person < ActiveRecord::Base
 
   scope :contains, -> name { where("name like ?", "%#{name}%")}	
   delegate :unremoved, to: :company_people, allow_nil: true, prefix: true	
+
 end

@@ -18,12 +18,16 @@
 #= require semaphore
 #= require underscore
 #= require backbone
+#= require backbone.marionette
 #= require handlebars.runtime
-#= require_tree ./../../app/assets/javascripts/templates/people
 #= require justcrm
+#= require justcrm_controller
+#= require justcrm_router
+#= require_tree ./../../app/assets/javascripts/templates/people
 #= require_tree ./../../app/assets/javascripts/models
 #= require_tree ./../../app/assets/javascripts/collections
-#= require_tree ./../../app/assets/javascripts/views
+#= require views/person
+#= require views/people
 #= require support/jasmine-jquery-2.1.0
 #
 # Deferring execution

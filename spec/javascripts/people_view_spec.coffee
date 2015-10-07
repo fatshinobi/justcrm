@@ -19,5 +19,6 @@ describe "People View", ->
 
     @peopleView.collection = peopleCollection
     @peopleView.render()
+    expect(@peopleView.children.length).toBe(2)
     expect(@peopleView.el.innerHTML).toContain('Vob Gucelli')
     expect(@peopleView.el.innerHTML).toContain('Cubbi Dolphin')

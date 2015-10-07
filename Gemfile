@@ -43,7 +43,7 @@ gem 'figaro'
 gem 'backbone-on-rails'
 gem 'handlebars_assets'
 gem 'hamlbars', '~> 2.1'
-
+gem 'marionette-rails'
 
 group :development, :test do
   gem "teaspoon-jasmine"

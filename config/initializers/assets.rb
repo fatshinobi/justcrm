@@ -12,15 +12,20 @@ Rails.application.config.assets.version = '1.0'
 
 Rails.application.config.assets.precompile += 
   [
+    'mobile.css',
+    'main.css',
   	'look_up_view.js', 
   	'semaphore.js', 
   	'underscore.js', 
-  	'backbone.js', 
+  	'backbone.js',
+    'backbone.marionette.js',    
   	'justcrm.js',
   	'handlebars.runtime.js',
+    'justcrm_controller.js',
+    'justcrm_router.js',
     'templates/people/personTemplate.js',
   	'models/person.js',
     'collections/people.js',
-    'views/people.js',
-    'views/person.js'
+    'views/person.js',    
+    'views/people.js'
   ]

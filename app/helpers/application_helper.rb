@@ -136,13 +136,16 @@ module ApplicationHelper
       'semaphore',
       'underscore',
       'backbone',
-      'justcrm',
+      'backbone.marionette',
       'handlebars.runtime',
+      'justcrm',
+      'justcrm_controller',
+      'justcrm_router',
       'templates/people/personTemplate',
       'models/person',
       'collections/people',
+      'views/person',      
       'views/people',
-      'views/person',
       'data-turbolinks-track' => true      
     )
   end

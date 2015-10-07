@@ -1,5 +1,6 @@
-class Justcrm.Views.PeopleView extends Backbone.View
+class Justcrm.Views.PeopleView extends Backbone.Marionette.CollectionView
   el: '#people',
+  childView: Justcrm.Views.PersonView,
 
   initialize: ->
     @collection = new Justcrm.Collections.People()
@@ -8,11 +9,3 @@ class Justcrm.Views.PeopleView extends Backbone.View
     @render()
 
     @listenTo(@collection, 'reset', this.render)    
-
-  render: ->
-    for person in @collection.models
-      @renderPerson(person)
-
-  renderPerson: (item) ->
-    personView = new Justcrm.Views.PersonView(model: item)
-    @$el.append(personView.render().el)

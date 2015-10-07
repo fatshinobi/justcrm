@@ -1,2 +1,12 @@
-.person-entry
-  = hb 'name'
+.person-entry.entry.thumbnail
+  = hb 'if ava.thumb.url' do
+    %img{:class=>"ava_pic", :src=>"#{hb 'ava.thumb.url'}"}
+    = hb 'else'
+    %img{:class=>"ava_pic", :src=>"thumb_anonymous.png"}
+
+  %h2
+    %a{:class=>"name_link"}
+      = hb 'name'
+
+  %p{:class=>"about_text"}
+    = hb 'about'
