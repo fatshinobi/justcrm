@@ -5,3 +5,5 @@ describe "Justcrm controller", ->
     expect(@controller).not.toBeNull()
   it "define people", ->
     expect(@controller.people).toBeDefined()
+  it "define person", ->
+    expect(@controller.person).toBeDefined()    

@@ -80,6 +80,7 @@ class PeopleControllerTest < ActionController::TestCase
       assert_select '.form_field', 'Web'
       assert_select '.form_field', 'Twitter'
       assert_select '.form_field', 'Facebook'
+      assert_select '.form_field', 'Email'      
       assert_select '.control-label', 'Curator'      
       assert_select '.form_field', 'List All Tags, separate each tag by a comma'
       assert_select ".form_accept_button" do
@@ -146,7 +147,9 @@ class PeopleControllerTest < ActionController::TestCase
     assert_select '.show_field', "About:\n" + assigns(:person).about
     assert_select '.show_field', "Facebook:\n" + assigns(:person).facebook
     assert_select '.show_field', "Twitter:\n" + assigns(:person).twitter
-    assert_select '.show_field', "Curator:\n" + assigns(:person).user.name    
+    assert_select '.show_field', "Curator:\n" + assigns(:person).user.name
+    assert_select '.show_field', "Email:\n" + assigns(:person).email
+
     assert_select '.ava_big_pic'
 
     assert_select "a", 'Edit' do |anchors|
@@ -463,6 +466,52 @@ class PeopleControllerTest < ActionController::TestCase
     get :live_search, q: "a", p: ""
     assert_equal 3, assigns(:people).size
       
+  end
+  
+  test "should get right json api index" do
+    get :index, format: :json
+
+    json = JSON.parse(response.body)
+
+    assert_equal 2, json.length
+    assert_equal 1, json.select {|person| person['name'].include?('Adam')}.length, 'Adam must be in json'
+    assert_equal 1, json.select {|person| person['name'].include?('David')}.length, 'David must be in json'
+
+    result = json.select {|person| person['id'] == @person.id}[0]
+
+    assert_equal @person.name, result['name']
+    assert_equal @person.about, result['about']    
+  end
+
+  test "should get right json api show" do
+    appointment = appointments(:one)
+    appointment.company = companies(:mycrosoft)
+    appointment.person = @person
+    appointment.save()
+
+    get :show, format: :json, id: @person
+
+    json = JSON.parse(response.body)
+    
+    assert_equal @person.name, json['name']
+    assert_equal @person.about, json['about']
+    assert_equal @person.phone, json['phone']
+    assert_equal @person.email, json['email']
+    assert_equal @person.facebook, json['facebook']
+    assert_equal @person.twitter, json['twitter']
+    assert_equal @person.web, json['web']
+
+    links = json['companies']
+    assert_equal 1, links.size
+    assert_equal companies(:mycrosoft).id, links[0]['company']['id']
+    assert_equal 'Owner', links[0]['role']
+
+    apps = json['appointments']
+    assert_equal 1, apps.size
+    assert_equal users(:one).id, apps[0]['user']['id']
+    assert_equal appointment.when.strftime('%m/%d/%Y %H:%M:%S'), apps[0]['when']
+    assert_equal appointment.status, apps[0]['status']
+    assert_equal appointment.body, apps[0]['body']
   end
 
 

@@ -7,6 +7,7 @@ one:
   facebook: MyString
   twitter: MyString
   web: MyString
+  email: emailString  
   ava: /test/test.jpg
   user_id: 1
 
@@ -16,6 +17,7 @@ two:
   phone: MyString
   facebook: MyString
   twitter: MyString
+  email: emailString2  
   web: MyString
   ava: /test/test2.jpg
   user_id: 1  

@@ -1,4 +1,4 @@
 json.array!(@people) do |person|
-  json.extract! person, :id, :name, :about, :phone, :facebook, :twitter, :web
+  json.extract! person, :id, :name, :about, :ava
   json.url person_url(person, format: :json)
 end

@@ -1,11 +1,11 @@
 describe "People View", ->
   beforeEach ->
-    $('body').append('<div id="people"></div>')
+    #$('body').append('<div id="people"></div>')
     @peopleView = new Justcrm.Views.PeopleView()
   
   afterEach ->
     @peopleView.remove()
-    $('#people').remove
+    #$('#people').remove
 
   it "have right dom element", ->
     expect(@peopleView.el.tagName.toLowerCase()).toBe('div')

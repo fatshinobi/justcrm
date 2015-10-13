@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get "mobile", to: 'workspaces#mobile', as: :mobile
+
   post "set_status/appointments/:id/:status_name", to: 'appointment_status#set_status', as: :appointment_set_status
   post "set_status/appointments/:id/:status_name/companies/:company_parent_id", to: 'appointment_status#set_status', as: :appointment_set_status_from_company
   post "set_status/appointments/:id/:status_name/people/:person_parent_id", to: 'appointment_status#set_status', as: :appointment_set_status_from_person
@@ -36,7 +38,6 @@ Rails.application.routes.draw do
     end
     collection do
       get "live_search", to: 'people#live_search', as: :live_search
-      get "mobile", to: 'people#mobile', as: :mobile
     end
   end
 

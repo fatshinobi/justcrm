@@ -134,6 +134,7 @@ module ApplicationHelper
     javascript_include_tag('application',
       'look_up_view',
       'semaphore',
+      'moment',      
       'underscore',
       'backbone',
       'backbone.marionette',
@@ -142,10 +143,14 @@ module ApplicationHelper
       'justcrm_controller',
       'justcrm_router',
       'templates/people/personTemplate',
+      'templates/people/personDetailsTemplate',      
+      'models/appointment',
+      'collections/appointments',
       'models/person',
       'collections/people',
-      'views/person',      
+      'views/person',
       'views/people',
+      'views/person_details',      
       'data-turbolinks-track' => true      
     )
   end

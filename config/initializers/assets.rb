@@ -17,6 +17,7 @@ Rails.application.config.assets.precompile +=
   	'look_up_view.js', 
   	'semaphore.js', 
   	'underscore.js', 
+    'moment.js',    
   	'backbone.js',
     'backbone.marionette.js',    
   	'justcrm.js',
@@ -24,8 +25,12 @@ Rails.application.config.assets.precompile +=
     'justcrm_controller.js',
     'justcrm_router.js',
     'templates/people/personTemplate.js',
+    'templates/people/personDetailsTemplate.js',    
+    'models/appointment.js',
+    'collections/appointments.js',    
   	'models/person.js',
     'collections/people.js',
     'views/person.js',    
-    'views/people.js'
+    'views/people.js',
+    'views/person_details.js'
   ]

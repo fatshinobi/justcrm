@@ -5,4 +5,8 @@ class WorkspacesController < ApplicationController
     @appointments = Appointment.current(Date.current, current_user)
     @overdue_appointments = Appointment.overdue(current_user)
   end
+
+  def mobile
+  end
+
 end

@@ -16,6 +16,7 @@
 #= require application
 #= require look_up_view
 #= require semaphore
+#= require moment
 #= require underscore
 #= require backbone
 #= require backbone.marionette
@@ -28,6 +29,7 @@
 #= require_tree ./../../app/assets/javascripts/collections
 #= require views/person
 #= require views/people
+#= require views/person_details
 #= require support/jasmine-jquery-2.1.0
 #
 # Deferring execution

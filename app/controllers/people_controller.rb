@@ -18,26 +18,14 @@ class PeopleController < ApplicationController
     end
 
     @tags = Person.group_counts
-    respond_to do |format|
-      format.html
-      format.json {render :json => @people}
-    end
-    
-    #respond_with(@people)
-  end
-
-  def mobile
-
+   
+    respond_with(@people)
   end
 
   def show
     @parent_person = @person
     @companies = @person.company_people_unremoved
-    #respond_with(@person)
-    respond_to do |format|
-      format.html
-      format.json {render :json => @person}
-    end
+    respond_with(@person)
   end
 
   def new

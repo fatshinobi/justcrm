@@ -1,11 +1,10 @@
 require 'test_helper'
 include Devise::TestHelpers
 
-class MobilePeopleControllerTest < ActionController::TestCase
-  tests PeopleController
+class MobileControllerTest < ActionController::TestCase
+  tests WorkspacesController
 
   setup do
-    @person = people(:one)
     sign_in users(:one)    
   end
 

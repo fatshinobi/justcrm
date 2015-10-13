@@ -1,8 +1,11 @@
 describe "Person View", ->
   beforeEach ->
-  beforeEach ->
-    spyOn(Justcrm.Views.PersonView.prototype, 'show_details')
-    @personView = new Justcrm.Views.PersonView({model: new Justcrm.Models.Person( name: 'test name', about: 'test about')})
+    @personView = new Justcrm.Views.PersonView(
+      model: new Justcrm.Models.Person( id: 1, name: 'test name', about: 'test about')
+    )
+
+  afterEach ->
+    @personView.remove()
 
   it "have model", ->
     expect(@personView.model).toBeDefined()
@@ -17,11 +20,11 @@ describe "Person View", ->
       expect(@personView.el.innerHTML).toContain('test name')
       expect(@personView.el.innerHTML).toContain('test about')      
       expect(@personView.el.innerHTML).toContain('<div class="person-entry entry thumbnail">')
-
-  describe "have dom event", ->
-    it "for name link that call Show details", ->
-      expect(@personView.show_details).toBeDefined()
+  
+  describe "name link", ->
+    it "define", ->
+      expect(@personView.ui.name_link).toBeDefined()
+    
+    it "have right href", ->
       @personView.render()
-      @personView.$('.name_link').click()
-
-      expect(@personView.show_details).toHaveBeenCalled()
+      expect(@personView.ui.name_link.attr('href')).toBe('/mobile#people#1')

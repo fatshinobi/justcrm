@@ -7,10 +7,17 @@ window.Justcrm =
   #initialize: ->
 
 $(document).ready ->
+  Handlebars.registerHelper('dateFormat', (dt)-> 
+    moment(dt).format("MMMM Do YYYY")
+  )
+
   m_app = new Backbone.Marionette.Application()
+  m_app.addRegions(
+    mainRegion: '#main'
+    )
 
   m_app.addInitializer( ->
-    controller = new Justcrm.Controllers.JustcrmController()
+    controller = new Justcrm.Controllers.JustcrmController(app: @)
     router = new Justcrm.Routers.JustcrmRouter(controller: controller)
   )
 

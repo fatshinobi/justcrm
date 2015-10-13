@@ -1,0 +1,61 @@
+.details
+  %h1
+    = hb 'name'
+  %a{:href=>'#people'}
+    People
+  %ul{:class=>'nav nav-tabs'}
+    %li{:id=>'details_tab', :class=>'active'}
+      %a{:id=>'details_link'}
+        Details
+    %li{:id=>'companies_tab'}
+      %a{:id=>'companies_link'}
+        Companies
+    %li{:id=>'tasks_tab'}
+      %a{:id=>'tasks_link'}
+        Tasks
+    %li{:id=>'opportunities_tab'}
+      %a{:id=>'opportunities_link'}
+        Opportunities
+
+  #details_div
+    = hb 'if ava.ava.thumb.url' do
+      %img{:class=>"ava_pic", :src=>"#{hb 'ava.ava.thumb.url'}"}
+      = hb 'else'
+      %img{:class=>"ava_pic", :src=>"assets/thumb_anonymous.png"}
+
+    %p{:class=>"about_text"}
+      = hb 'about'  
+    %h2 Contacts:
+    %p
+      phone: 
+      = hb 'phone'
+    %p
+      email: 
+      = hb 'email'
+    %p
+      facebook: 
+      = hb 'facebook'
+    %p
+      twitter: 
+      = hb 'twitter'
+  
+  #companies_div{:class=>'hiden_form_page'}
+    = hb 'each companies' do
+      .person_company_entry
+        = hb 'if company.ava.ava.thumb.url' do
+          %img{:class=>"ava_pic", :src=>"#{hb 'company.ava.ava.thumb.url'}"}
+          = hb 'else'
+          %img{:class=>"ava_pic", :src=>"assets/thumb_anonym_company.png"}
+
+        = hb 'company.name'
+        = hb 'role'
+
+  #tasks_div{:class=>'hiden_form_page'}
+    = hb 'each appointments' do
+      .person_appointments_entry
+        = hb 'dateFormat when'
+        = hb 'body'
+        = hb 'user.name'
+
+  #opportunities_div{:class=>'hiden_form_page'}
+    Opp
