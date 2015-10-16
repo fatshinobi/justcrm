@@ -53,9 +53,37 @@
   #tasks_div{:class=>'hiden_form_page'}
     = hb 'each appointments' do
       .person_appointments_entry
-        = hb 'dateFormat when'
-        = hb 'body'
-        = hb 'user.name'
+        = hb 'ifAppointmentIs "task"' do
+          %span{:class=>'glyphicon glyphicon-wrench icon-large float_pic', "aria-hidden" => "true"}
+
+        = hb 'ifAppointmentIs "call"' do
+          %span{:class=>'glyphicon glyphicon-phone-alt icon-large float_pic', "aria-hidden" => "true"}
+
+        = hb 'ifAppointmentIs "message"' do
+          %span{:class=>'glyphicon glyphicon-envelope icon-large float_pic', "aria-hidden" => "true"}
+
+        = hb 'ifAppointmentIs "meet"' do
+          %span{:class=>'glyphicon glyphicon-comment icon-large float_pic', "aria-hidden" => "true"}
+
+
+        %h3
+          = hb 'dateFormat when'
+        .appointment_curator_field
+          Curator:
+          = hb 'user.name'
+        
+        Company:
+        = hb 'company.name'
+
+        .well
+          %p{:class => "appointment_body_field"}
+            = hb 'body'
 
   #opportunities_div{:class=>'hiden_form_page'}
-    Opp
+    = hb 'each opportunities' do
+      .person_opportunity_entry
+        = hb 'OpportunityIco'
+        %h3
+          = hb 'title'
+        %p
+          = hb 'description'

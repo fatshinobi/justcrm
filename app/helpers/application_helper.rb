@@ -143,14 +143,17 @@ module ApplicationHelper
       'justcrm_controller',
       'justcrm_router',
       'templates/people/personTemplate',
-      'templates/people/personDetailsTemplate',      
+      'templates/people/personDetailsTemplate',
+      'models/opportunity',
+      'collections/opportunities',
       'models/appointment',
       'collections/appointments',
       'models/person',
       'collections/people',
       'views/person',
       'views/people',
-      'views/person_details',      
+      'views/person_details',
+      'helpers/application_helpers',
       'data-turbolinks-track' => true      
     )
   end

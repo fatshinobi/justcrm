@@ -26,11 +26,14 @@ Rails.application.config.assets.precompile +=
     'justcrm_router.js',
     'templates/people/personTemplate.js',
     'templates/people/personDetailsTemplate.js',    
+    'models/opportunity.js',
+    'collections/opportunities.js',    
     'models/appointment.js',
     'collections/appointments.js',    
   	'models/person.js',
     'collections/people.js',
     'views/person.js',    
     'views/people.js',
-    'views/person_details.js'
+    'views/person_details.js',
+    'helpers/application_helpers.js'
   ]

@@ -31,6 +31,18 @@ describe "Person Details View", ->
           communication_type: 1, 
           status: 0,
           user: {id: 1, name: 'test appointment user'}
+        }],
+        opportunities: [{
+          id: 1, 
+          title: 'test opportunity', 
+          description: 'test opportunity descr',
+          start: '02/21/2015', 
+          finish: '05/21/2015', 
+          stage: 1, 
+          status: 0,
+          amount: 20.5,
+          user: {id: 1, name: 'test opportunity user'},
+          company: {id: 1, name: 'test opportunity company'}
         }]
       )
     )
@@ -51,6 +63,13 @@ describe "Person Details View", ->
 
   it "have appointments", ->
     expect(@personDetailsView.model.appointments).toBeDefined()
+    expect(@personDetailsView.model.appointments.length).toBe(1)
+    expect(@personDetailsView.model.appointments.constructor.name).toBe('Appointments')
+
+  it "have opportunities", ->
+    expect(@personDetailsView.model.opportunities).toBeDefined()
+    expect(@personDetailsView.model.opportunities.length).toBe(1)
+    expect(@personDetailsView.model.opportunities.constructor.name).toBe('Opportunities')
 
   describe "rendering", ->
     it "return itself", ->
@@ -70,8 +89,12 @@ describe "Person Details View", ->
 
       expect(@personDetailsView.el.innerHTML).toContain('test appointment')
       expect(@personDetailsView.el.innerHTML).toContain('test appointment user')
-      expect(@personDetailsView.el.innerHTML).toContain('')  #02/21/2015 16:45:00
-  
+      expect(@personDetailsView.el.innerHTML).toContain('Feb 21st 2015 16:45')  #02/21/2015 16:45:00
+     
+      expect(@personDetailsView.el.innerHTML).toContain('test opportunity')
+      expect(@personDetailsView.el.innerHTML).toContain('test opportunity descr')
+
+
   describe "Tabs", ->
     beforeEach ->
       @personDetailsView.render()

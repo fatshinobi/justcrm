@@ -489,6 +489,10 @@ class PeopleControllerTest < ActionController::TestCase
     appointment.person = @person
     appointment.save()
 
+    opportunity = opportunities(:two)
+    opportunity.person = @person
+    opportunity.save()
+
     get :show, format: :json, id: @person
 
     json = JSON.parse(response.body)
@@ -509,9 +513,22 @@ class PeopleControllerTest < ActionController::TestCase
     apps = json['appointments']
     assert_equal 1, apps.size
     assert_equal users(:one).id, apps[0]['user']['id']
+    assert_equal companies(:mycrosoft).id, apps[0]['company']['id']
     assert_equal appointment.when.strftime('%m/%d/%Y %H:%M:%S'), apps[0]['when']
     assert_equal appointment.status, apps[0]['status']
     assert_equal appointment.body, apps[0]['body']
+
+    opps = json['opportunities']
+    assert_equal 1, opps.size
+    assert_equal opportunity.title, opps[0]['title']
+    assert_equal opportunity.description, opps[0]['description']
+    assert_equal opportunity.start.strftime('%m/%d/%Y'), opps[0]['start']
+    assert_equal opportunity.finish.strftime('%m/%d/%Y'), opps[0]['finish']    
+    assert_equal opportunity.stage, opps[0]['stage']
+    assert_equal opportunity.status, opps[0]['status']
+    assert_equal opportunity.amount, opps[0]['amount']    
+    assert_equal companies(:mycrosoft).id, opps[0]['company']['id']
+    assert_equal opportunity.user.id, opps[0]['user']['id']
   end
 
 

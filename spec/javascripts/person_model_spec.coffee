@@ -4,3 +4,4 @@ describe "Person model", ->
 
   it "should be defined", ->
     expect(@person).toBeDefined
+
