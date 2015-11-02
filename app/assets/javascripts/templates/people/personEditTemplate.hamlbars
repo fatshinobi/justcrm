@@ -1,0 +1,75 @@
+.edit
+  %a#details_btn.btn.btn-info{:href=>'#'}
+    To Details
+
+  %a#to_list_btn.btn.btn-primary{:href=>'#'}
+    To People List
+
+  %form
+    %p
+      %label
+        Name
+      %input#name.form-control{:name=>'name', :value=>"{{name}}"}
+    %p
+      %label
+        About
+      %textarea#about.form-control{:name=>'about', :rows=>'10'}
+        = hb 'about'
+    %p
+      %label
+        Phone
+      %input#phone.form-control{:name=>'phone', :value=>"{{phone}}"}
+    %p
+      %label
+        Facebook
+      %input#facebook.form-control{:name=>'facebook', :value=>"{{facebook}}"}
+    %p
+      %label
+        Twitter
+      %input#twitter.form-control{:name=>'twitter', :value=>"{{twitter}}"}
+    %p
+      %label
+        Email
+      %input#email.form-control{:name=>'email', :value=>"{{email}}"}
+
+    %p
+      %label
+        Curator
+      %select#curator_list.form-control{:name=>'user_id'}
+
+  #companies_look_up
+    %h2
+      Companies
+    %label
+      New company
+    .input-group
+      %input{:type=>"text", :id=>"new_company_name", :class=>"form-control  look-up-search-text", :autocomplete=>"off", :disabled=>"disabled"}
+  
+      %span{:class=>"input-group-btn live_search_span"}
+        %button{:class=>"glyphicon glyphicon-refresh btn btn-default look-up-button", :type=>"button"}
+    .look-up-result
+    %input{:id=>"new_company_id", :type=>"hidden", :class=>'look-up-result-id'}
+
+    %label
+      New role
+    %input{:id=>"add_role", :type=>"text", :class=>"form-control"}
+
+    %button#add_company_btn.btn.btn-xs.btn-primary
+      Add company
+
+  %h3
+    List Of Companies
+  
+  %ul#list_of_companies
+    = hb 'each companies' do
+      %li
+        .edit_company_entry
+          = hb 'company.name'
+          = hb 'role'
+          %button.delete_company_entry.btn.btn-xs.btn-danger{"data-button"=>"{{id}}"}
+            Delete
+
+  %button#submit.btn.btn-lg.btn-success
+    Save
+
+  %br/

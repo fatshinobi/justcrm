@@ -21,16 +21,21 @@
 #= require backbone
 #= require backbone.marionette
 #= require handlebars.runtime
+#= require backbone.syphon.min
+#= require backbone.paginator
 #= require justcrm
 #= require justcrm_controller
 #= require justcrm_router
 #= require_tree ./../../app/assets/javascripts/templates/people
+#= require_tree ./../../app/assets/javascripts/templates/appointments
+#= require_tree ./../../app/assets/javascripts/templates/opportunities
 #= require_tree ./../../app/assets/javascripts/models
 #= require_tree ./../../app/assets/javascripts/collections
 #= require_tree ./../../app/assets/javascripts/helpers
 #= require views/person
 #= require views/people
 #= require views/person_details
+#= require views/person_edit
 #= require support/jasmine-jquery-2.1.0
 #
 # Deferring execution

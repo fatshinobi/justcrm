@@ -1,5 +1,6 @@
 describe "Person View", ->
   beforeEach ->
+    spyOn(Justcrm.Views.PersonView.prototype, 'to_details')
     @personView = new Justcrm.Views.PersonView(
       model: new Justcrm.Models.Person( id: 1, name: 'test name', about: 'test about')
     )
@@ -22,9 +23,9 @@ describe "Person View", ->
       expect(@personView.el.innerHTML).toContain('<div class="person-entry entry thumbnail">')
   
   describe "name link", ->
-    it "define", ->
-      expect(@personView.ui.name_link).toBeDefined()
-    
-    it "have right href", ->
+    it "click go to details", ->
       @personView.render()
-      expect(@personView.ui.name_link.attr('href')).toBe('/mobile#people#1')
+      @personView.$('.name_link').click()
+
+      expect(@personView.to_details).toHaveBeenCalled()
+   

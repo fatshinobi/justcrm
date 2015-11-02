@@ -1,6 +1,7 @@
-json.extract! @person, :id, :name, :about, :phone, :facebook, :twitter, :web, :email, :ava, :created_at, :updated_at
+json.extract! @person, :id, :name, :about, :phone, :facebook, :twitter, :web, :email, :ava, :user_id
 
 json.companies @person.company_people do |link|
+  json.id link.id
   json.company link.company, :id, :name, :ava
   json.role link.role
 end

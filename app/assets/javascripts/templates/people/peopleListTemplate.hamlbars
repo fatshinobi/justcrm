@@ -1,0 +1,20 @@
+.input-group
+  %input#search_text.form-control{:placeholder=>"Search for..."}
+  %span.input-group-btn
+    %button#start_searching.btn.btn-default
+      Go!
+
+%h3#filter_message
+
+%button#clear_filters.btn.btn-default.btn-xs.hiden_elem
+  Clear
+
+#child_container
+
+%ul.pagination
+  %li
+    %a#prev_page
+      Prev Page
+  %li
+    %a#next_page
+      Next Page

@@ -1,0 +1,5 @@
+= hb 'OpportunityIco'
+%h3
+  = hb 'title'
+%p
+  = hb 'description'

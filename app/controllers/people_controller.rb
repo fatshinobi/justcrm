@@ -85,7 +85,7 @@ class PeopleController < ApplicationController
     end
 
     def person_params
-      params.require(:person).permit(:name, :about, :phone, :facebook, :twitter, :web, :ava, :group_list, :user_id, :company_people_attributes => [:id, :role, :company_id, :new_company_name, :_destroy])
+      params.require(:person).permit(:name, :about, :phone, :facebook, :twitter, :web, :ava, :group_list, :email, :user_id, :company_people_attributes => [:id, :role, :company_id, :new_company_name, :_destroy])
     end
 
     def list_initialize

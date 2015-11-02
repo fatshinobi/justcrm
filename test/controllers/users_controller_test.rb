@@ -115,4 +115,21 @@ class UsersControllerTest < ActionController::TestCase
     assert_not ability.can?(:access, Company), 'stoped user havent access to Company'
     assert_not ability.can?(:access, CompanyPerson), 'stoped user havent access to CompanyPerson'
   end
+
+  test "should get right json api index" do
+    get :index, format: :json
+
+    json = JSON.parse(response.body)
+
+    assert_equal 2, json.length
+    assert_equal 1, json.select {|user| user['name'].include?('User1')}.length, 'User must be in json'
+    assert_equal 1, json.select {|user| user['name'].include?('User2')}.length, 'User2 must be in json'
+
+    result = json.select {|user| user['id'] == @user.id}[0]
+
+    assert_equal @user.name, result['name']
+    assert_equal nil, result['email']
+    assert_equal nil, result['password']
+  end
+
 end

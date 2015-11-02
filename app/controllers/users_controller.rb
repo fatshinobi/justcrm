@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy, :activate, :stop]
   before_action :block_user, only: [:destroy, :stop]
   before_action :unblock_user, only: [:activate]	
-  respond_to :html
+  respond_to :html, :json
 
   def index
     @users = User.all.order(:created_at)		

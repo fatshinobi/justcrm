@@ -1,5 +1,20 @@
 @import "bootstrap-sprockets"
 @import "bootstrap"
 
-.hiden_form_page
+#main
+ margin-top: 60px
+
+.hiden_elem
  display: none
+
+.hiden_form_page
+ @extend .hiden_elem
+
+.list_content
+ background-color: #f5f5f5
+
+.new_edit_entry
+ color: green
+
+.deleted_edit_entry
+ color: red

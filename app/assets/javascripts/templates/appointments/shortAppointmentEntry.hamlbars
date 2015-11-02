@@ -1,0 +1,14 @@
+= hb 'AppointmentIco'
+
+%h3
+  = hb 'dateFormat when'
+.appointment_curator_field
+  Curator:
+  = hb 'user.name'
+        
+Company:
+= hb 'company.name'
+
+.well
+  %p{:class => "appointment_body_field"}
+    = hb 'body'

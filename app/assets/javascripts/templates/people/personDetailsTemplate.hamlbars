@@ -1,8 +1,12 @@
 .details
+  %a#to_list_btn.btn.btn-info{:href=>'#'}
+    People
+  %a#edit_btn.btn.btn-primary{:href=>'#'}
+    Edit
+
   %h1
     = hb 'name'
-  %a{:href=>'#people'}
-    People
+
   %ul{:class=>'nav nav-tabs'}
     %li{:id=>'details_tab', :class=>'active'}
       %a{:id=>'details_link'}
@@ -53,37 +57,9 @@
   #tasks_div{:class=>'hiden_form_page'}
     = hb 'each appointments' do
       .person_appointments_entry
-        = hb 'ifAppointmentIs "task"' do
-          %span{:class=>'glyphicon glyphicon-wrench icon-large float_pic', "aria-hidden" => "true"}
-
-        = hb 'ifAppointmentIs "call"' do
-          %span{:class=>'glyphicon glyphicon-phone-alt icon-large float_pic', "aria-hidden" => "true"}
-
-        = hb 'ifAppointmentIs "message"' do
-          %span{:class=>'glyphicon glyphicon-envelope icon-large float_pic', "aria-hidden" => "true"}
-
-        = hb 'ifAppointmentIs "meet"' do
-          %span{:class=>'glyphicon glyphicon-comment icon-large float_pic', "aria-hidden" => "true"}
-
-
-        %h3
-          = hb 'dateFormat when'
-        .appointment_curator_field
-          Curator:
-          = hb 'user.name'
-        
-        Company:
-        = hb 'company.name'
-
-        .well
-          %p{:class => "appointment_body_field"}
-            = hb 'body'
+        = hb '> short_appointment_entry'
 
   #opportunities_div{:class=>'hiden_form_page'}
     = hb 'each opportunities' do
       .person_opportunity_entry
-        = hb 'OpportunityIco'
-        %h3
-          = hb 'title'
-        %p
-          = hb 'description'
+        = hb '> short_opportunity_entry'

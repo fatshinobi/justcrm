@@ -45,6 +45,7 @@ gem 'handlebars_assets'
 gem 'hamlbars', '~> 2.1'
 gem 'marionette-rails'
 gem 'momentjs-rails'
+gem 'backbone-paginator-rails'
 
 group :development, :test do
   gem "teaspoon-jasmine"

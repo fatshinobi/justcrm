@@ -17,3 +17,18 @@ describe "People collection", ->
 
   it "have right url", ->
     expect(@people.url).toBe('/people')
+
+  it "have right pagging", ->
+    @people = new Justcrm.Collections.People([
+      {name: 'Den Pett'},
+      {name: 'Den Pett1'},
+      {name: 'Robb Guffet'},
+      {name: 'Zod McAlister'},
+      {name: 'Zet Brainus'}
+    ])
+
+    @people.setPageSize(3)
+    expect(@people.length).toBe(3)
+
+    @people.getNextPage()
+    expect(@people.length).toBe(2)

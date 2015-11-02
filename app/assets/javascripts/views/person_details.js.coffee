@@ -6,6 +6,9 @@ class Justcrm.Views.PersonDetailsView extends Backbone.Marionette.ItemView
     'click #details_link': 'show_details'
     'click #tasks_link': 'show_tasks'
     'click #opportunities_link': 'show_opportunities'
+    
+    'click #edit_btn': 'edit_peson'
+    'click #to_list_btn' : 'to_people'
 
   ui:
     companies_page: '#companies_div'
@@ -18,21 +21,26 @@ class Justcrm.Views.PersonDetailsView extends Backbone.Marionette.ItemView
     tasks_tab: '#tasks_tab'
     opportunities_tab: '#opportunities_tab'
 
+    edit_link: '#edit_btn'
+
   initialize: (options) ->
-  	@pages = [
+    @pages = [
       @ui.companies_page
       @ui.details_page
       @ui.tasks_page
       @ui.opportunities_page
     ]
-  	@tabs = [
+    @tabs = [
       @ui.companies_tab
       @ui.details_tab
       @ui.tasks_tab
       @ui.opportunities_tab
-  	]
+    ]
 
-  	if (!@model)
+    if (options.app)
+      @app = options.app
+
+    if (!@model)
       @model = new Justcrm.Models.Person(id: options.id)
     @listenTo(@model, 'change', @render)
     @model.fetch(error: @error_handler, reset: true)
@@ -69,3 +77,9 @@ class Justcrm.Views.PersonDetailsView extends Backbone.Marionette.ItemView
         @$(page).removeClass('hiden_form_page')
       else
         @$(page).addClass('hiden_form_page')
+
+  edit_peson: ->
+    Backbone.trigger('person_edit:open', @model.get('id'))
+
+  to_people: ->
+    Backbone.trigger('people:open')

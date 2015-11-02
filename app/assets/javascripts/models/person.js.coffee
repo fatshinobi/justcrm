@@ -16,3 +16,4 @@ class Justcrm.Models.Person extends Backbone.Model
 
   parse_opportunities: ->
     @opportunities = new Justcrm.Collections.Opportunities(@get('opportunities'))
+

@@ -21,20 +21,31 @@ class Justcrm.Helpers.ApplicationHelpers
       new Handlebars.SafeString(ret)
     )
 
-    Handlebars.registerHelper('ifAppointmentIs', (type, options) -> 
+    Handlebars.registerHelper('AppointmentIco', (type, options) -> 
       app = new Justcrm.Models.Appointment(@)
-      ret = false
-      if type == "message"
-        ret = app.is_message()
-      else if type == "call"
-        ret = app.is_call()
-      else if type == "meet"
-        ret = app.is_meet()
-      else if type == "task"
-        ret = app.is_task()
-      if ret
-        options.fn(@)
-      else
-        options.inverse(@)
+      ret = "<span class='glyphicon icon-large float_pic "
+      switch
+        when app.is_message()
+          ret += 'glyphicon-envelope'
+        when app.is_call()
+          ret += 'glyphicon-phone-alt'
+        when app.is_meet()
+          ret += 'glyphicon-comment'
+        when app.is_task()
+          ret += 'glyphicon-wrench'
+    
+      ret += " ', aria-hidden = 'true'> </span>"
+      new Handlebars.SafeString(ret)
     )
 
+    #partials
+    
+    Handlebars.registerPartial(
+      "short_appointment_entry", 
+      HandlebarsTemplates["appointments/shortAppointmentEntry"]
+    )
+
+    Handlebars.registerPartial(
+      "short_opportunity_entry", 
+      HandlebarsTemplates["opportunities/shortOpportunityEntry"]
+    )
