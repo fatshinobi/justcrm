@@ -32,6 +32,7 @@ Rails.application.config.assets.precompile +=
     'templates/people/personEditTemplate.js',    
     'templates/appointments/shortAppointmentEntry.js',
     'templates/opportunities/shortOpportunityEntry.js',
+    'templates/shared/statusButton.js',    
     'models/opportunity.js',
     'collections/opportunities.js',    
     'models/appointment.js',

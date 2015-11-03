@@ -150,6 +150,7 @@ module ApplicationHelper
       'templates/people/personEditTemplate',      
       'templates/appointments/shortAppointmentEntry',
       'templates/opportunities/shortOpportunityEntry',
+      'templates/shared/statusButton',
       'models/opportunity',
       'collections/opportunities',
       'models/appointment',

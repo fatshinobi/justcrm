@@ -22,13 +22,14 @@
         Opportunities
 
   #details_div
-    = hb 'if ava.ava.thumb.url' do
-      %img{:class=>"ava_pic", :src=>"#{hb 'ava.ava.thumb.url'}"}
-      = hb 'else'
-      %img{:class=>"ava_pic", :src=>"assets/thumb_anonymous.png"}
+    .entry
+      = hb 'if ava.ava.thumb.url' do
+        %img{:class=>"ava_pic", :src=>"#{hb 'ava.ava.thumb.url'}"}
+        = hb 'else'
+        %img{:class=>"ava_pic", :src=>"assets/thumb_anonymous.png"}
 
-    %p{:class=>"about_text"}
-      = hb 'about'  
+      %p{:class=>"about_text"}
+        = hb 'about'  
     %h2 Contacts:
     %p
       phone: 

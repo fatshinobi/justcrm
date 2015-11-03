@@ -22,8 +22,6 @@ class Justcrm.Views.PeopleView extends Backbone.Marionette.CompositeView
       @app.fullCollection = @collection.fullCollection.models.slice()
 
   onRender: ->
-    $('#main').addClass('list_content')
-    
     if @app.search_filter_message
       @ui.filter_message.text("Name contents '#{@app.search_filter_message}'")
       @ui.clear_filters_btn.removeClass('hiden_elem')

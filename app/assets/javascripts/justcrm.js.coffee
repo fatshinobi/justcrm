@@ -81,12 +81,15 @@ main_loading = ->
     , reset: true)
 
   m_app.show_edit_person = (model) ->
+    $('#main').removeClass('list_content')    
     @.mainRegion.show(new Justcrm.Views.PersonEditView(model: model, app: @))
 
   m_app.set_person = (id) ->
+    $('#main').removeClass('list_content')
     @.mainRegion.show(new Justcrm.Views.PersonDetailsView(id: id, app: @))
 
   m_app.set_people = (collection) ->
+    $('#main').addClass('list_content')
     @.mainRegion.show(new Justcrm.Views.PeopleView(collection: collection, app: @))
   
 

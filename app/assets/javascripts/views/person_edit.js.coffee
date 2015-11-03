@@ -17,6 +17,7 @@ class Justcrm.Views.PersonEditView extends Backbone.Marionette.ItemView
     'click .delete_company_entry': 'delete_company'
 
   initialize: (options) ->
+    _.bindAll(@, 'on_save')
     if (options.app)
       @app = options.app
 
@@ -41,22 +42,24 @@ class Justcrm.Views.PersonEditView extends Backbone.Marionette.ItemView
   save_person: (event) ->
     if (event)
       event.preventDefault()
-    data = Backbone.Syphon.serialize(@)
+    @data = Backbone.Syphon.serialize(@)
     companies = if @model.get('companies') then @model.get('companies') else []
 
-    data.company_people_attributes = companies.map( (link) ->
+    @data.company_people_attributes = companies.map( (link) ->
       {id: link.id, role: link.role, company_id: link.company.id, new_company_name: link.new_company_name, _destroy: if link.is_delete then '1' else 'false'}
     )
 
     if (@model.id != 0)
-      @model.save({person: data}, {success: @on_save}, {patch: true})
+      @model.save({person: @data}, {success: @on_save}, {patch: true})
     else
-      @model.save({person: data}, {success: @on_save})
+      @model.save({person: @data}, {success: @on_save})
 
   go_to_details: ->
     Backbone.trigger('person_details:open', @model.get('id'))
 
   on_save: (model, response) ->
+    cur_model = @app.people_collection.get(model.id)
+    cur_model.set(@data)
     Backbone.trigger('person_details:open', model.get('id'))
 
   add_new_company: ->

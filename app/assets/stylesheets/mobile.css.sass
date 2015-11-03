@@ -18,3 +18,41 @@
 
 .deleted_edit_entry
  color: red
+
+.base_entry
+ clear: left
+ img.ava_pic, div.ava_pic
+  float: left
+  vertical-align: top
+
+.entry
+ @extend .base_entry
+ padding: 10px  
+ min-height: 165px
+ overflow-x: hidden 
+ -o-text-overflow: ellipsis
+ text-overflow: ellipsis 
+ p.about_text
+  line-height: 1.25em
+  margin: 0 0 0 110px
+ h2
+  margin-top: 0
+  line-height: 1
+
+.short_text
+ position: relative
+ height: 7.4em
+ overflow: hidden 
+ -o-text-overflow: ellipsis
+ text-overflow: ellipsis
+
+.short_text:after
+ content: ""
+ text-align: right
+ position: absolute
+ bottom: 0
+ right: 0
+ width: 50%
+ height: 1.25em
+ background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%)
+

@@ -49,3 +49,8 @@ class Justcrm.Helpers.ApplicationHelpers
       "short_opportunity_entry", 
       HandlebarsTemplates["opportunities/shortOpportunityEntry"]
     )
+
+    Handlebars.registerPartial(
+      "status_button", 
+      HandlebarsTemplates["shared/statusButton"]
+    )

@@ -479,8 +479,12 @@ class PeopleControllerTest < ActionController::TestCase
 
     result = json.select {|person| person['id'] == @person.id}[0]
 
-    assert_equal @person.name, result['name']
-    assert_equal @person.about, result['about']    
+    assert_equal @person.name, result['name'], 'Person name must be in json'
+    assert_equal @person.about, result['about'], 'Person about must be in json'
+    assert_equal @person.phone, result['phone'], 'Person phone must be in json'
+    assert_equal @person.email, result['email'], 'Person email must be in json'
+    assert_equal @person.facebook, result['facebook'], 'Person facebook must be in json'
+    assert_equal @person.twitter, result['twitter'], 'Person twitter must be in json'
   end
 
   test "should get right json api show" do

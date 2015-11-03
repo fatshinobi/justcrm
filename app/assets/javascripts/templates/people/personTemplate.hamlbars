@@ -1,12 +1,34 @@
 .person-entry.entry.thumbnail
-  = hb 'if ava.ava.thumb.url' do
-    %img{:class=>"ava_pic", :src=>"#{hb 'ava.ava.thumb.url'}"}
-    = hb 'else'
-    %img{:class=>"ava_pic", :src=>"assets/thumb_anonymous.png"}
-
   %h2
-    %a{:class=>"name_link"}
+    %a.name_link
       = hb 'name'
 
-  %p{:class=>"about_text"}
+  = hb 'if ava.ava.thumb.url' do
+    %img.ava_pic{:src=>"#{hb 'ava.ava.thumb.url'}"}
+    = hb 'else'
+    %img.ava_pic{:src=>"assets/thumb_anonymous.png"}
+
+  %p.about_text.short_text
     = hb 'about'
+
+  .clearfix
+  .more_place.hiden_elem
+    %p
+      phone: 
+      = hb 'phone'
+    %p
+      email: 
+      = hb 'email'
+    %p
+      facebook: 
+      = hb 'facebook'
+    %p
+      twitter: 
+      = hb 'twitter'
+
+    %a.to_details_more_btn.btn.btn-info{:href=>'#'}
+      To details
+    = hb '> status_button'
+
+  %a.more_btn
+    more

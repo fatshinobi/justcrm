@@ -1,0 +1,14 @@
+.dropup.btn-group
+  %button.btn.btn-default.dropdown-toggle{:type => "button", "data-toggle" => "dropdown", "aria-expanded" => "false"}
+    %span.caret
+  %ul.dropdown-menu{:role=>'menu'}
+    %li
+      %a.activate_status_btn{:data => { :confirm => 'Are you sure?' }}
+        Activate
+    %li
+      %a.stop_status_btn{:data => { :confirm => 'Are you sure?' }}
+        Stop
+    %li
+      %a.remove_status_btn{:data => { :confirm => 'Are you sure?' }}
+        Remove
+

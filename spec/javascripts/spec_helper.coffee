@@ -29,6 +29,7 @@
 #= require_tree ./../../app/assets/javascripts/templates/people
 #= require_tree ./../../app/assets/javascripts/templates/appointments
 #= require_tree ./../../app/assets/javascripts/templates/opportunities
+#= require_tree ./../../app/assets/javascripts/templates/shared
 #= require_tree ./../../app/assets/javascripts/models
 #= require_tree ./../../app/assets/javascripts/collections
 #= require_tree ./../../app/assets/javascripts/helpers

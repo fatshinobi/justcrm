@@ -1,9 +1,13 @@
 describe "Person Edit View", ->
   beforeEach ->
+    @model_stab = {set: ->}
     @app_stab =
     {
       mainRegion: {show: 'stub'}
       users_collection: {models: [{id: 1, name: 'user1', get: -> 1}]}
+      people_collection: 
+        get: ->
+          
     }
 
     spyOn(Backbone, "trigger")
@@ -92,6 +96,7 @@ describe "Person Edit View", ->
       @personEditView.$('#about').text('about after submit')
 
       @personEditView.$('#submit').click()
+
     it "make right model changes", ->
       expect(@personEditView.model.save).toHaveBeenCalledWith(
         {person: {
@@ -107,6 +112,17 @@ describe "Person Edit View", ->
         jasmine.any(Object),
         jasmine.any(Object)
       )
+
+    it "refresh people collection", ->
+      spyOn(@app_stab.people_collection, 'get').and.returnValue(@model_stab)
+      spyOn(@model_stab, 'set')
+
+      @personEditView.data = {name: 'test name 23'}      
+      @personEditView.on_save(@personEditView.model)
+
+      expect(@app_stab.people_collection.get).toHaveBeenCalledWith(@personEditView.model.id)
+      expect(@model_stab.set).toHaveBeenCalledWith({name: 'test name 23'})
+
 
   describe "add new company", ->
     beforeEach ->
