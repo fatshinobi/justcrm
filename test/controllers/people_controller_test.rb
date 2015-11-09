@@ -485,6 +485,7 @@ class PeopleControllerTest < ActionController::TestCase
     assert_equal @person.email, result['email'], 'Person email must be in json'
     assert_equal @person.facebook, result['facebook'], 'Person facebook must be in json'
     assert_equal @person.twitter, result['twitter'], 'Person twitter must be in json'
+    assert_equal @person.condition, result['condition'], 'Person condition must be in json'
   end
 
   test "should get right json api show" do
@@ -508,6 +509,7 @@ class PeopleControllerTest < ActionController::TestCase
     assert_equal @person.facebook, json['facebook']
     assert_equal @person.twitter, json['twitter']
     assert_equal @person.web, json['web']
+    assert_equal @person.condition, json['condition']
 
     links = json['companies']
     assert_equal 1, links.size
@@ -534,6 +536,5 @@ class PeopleControllerTest < ActionController::TestCase
     assert_equal companies(:mycrosoft).id, opps[0]['company']['id']
     assert_equal opportunity.user.id, opps[0]['user']['id']
   end
-
 
 end

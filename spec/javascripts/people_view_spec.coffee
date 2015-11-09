@@ -77,3 +77,15 @@ describe "People View", ->
       expect(@app.people_collection.fullCollection.length).toBe(5)
       expect(Backbone.trigger).toHaveBeenCalledWith('people:open')
       expect(@app.search_filter_message).toBeNull()
+
+  describe "tagging", ->
+    it "get tags", ->
+      spyOn($, "getJSON")      
+      @peopleView.render()
+
+      expect($.getJSON).toHaveBeenCalledWith(
+        "/people/tags", 
+        jasmine.any(Function)
+      )
+
+

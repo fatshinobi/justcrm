@@ -14,6 +14,9 @@ window.Justcrm =
 
 $(document).ready ->
   main_loading()
+  $(".navbar-nav a.collapsed").click((event) ->
+    $(".navbar-collapse").collapse('hide')
+  )
 
 main_loading = ->
   helpers = new Justcrm.Helpers.ApplicationHelpers()
@@ -70,6 +73,9 @@ main_loading = ->
         app.show_edit_person(new_person)
     )
 
+    Backbone.on('actions:show_tags', () ->
+      $('#tags_holder').show("slow")
+    )
   )
 
   m_app.set_edit_person = (id) ->

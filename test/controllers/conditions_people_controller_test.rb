@@ -130,4 +130,28 @@ class ConditionsPeopleControllerTest < ActionController::TestCase
     assert_equal 1, assigns(:people).size
   end
 
+  test "delete action dont redirect for json" do
+    delete :destroy, format: :json, id: @person
+    
+    assert_response :success
+
+    assert_equal '', response.body, 'render must be nothing'
+  end
+
+  test "stop action dont redirect for json" do
+    post :stop, format: :json, id: @person
+    
+    assert_response :success
+
+    assert_equal '', response.body, 'render must be nothing'
+  end
+
+  test "activate action dont redirect for json" do
+    post :activate, format: :json, id: @person
+    
+    assert_response :success
+
+    assert_equal '', response.body, 'render must be nothing'
+  end
+
 end

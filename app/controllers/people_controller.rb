@@ -64,6 +64,12 @@ class PeopleController < ApplicationController
     render :layout => false
   end
 
+  def tags
+    respond_to do |format|
+      format.json{ @tags = Person.group_counts }
+    end
+  end
+
   private
     def set_new_company_if_id_is_nill(person)
       person.company_people.each do |link|

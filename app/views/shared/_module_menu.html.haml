@@ -7,14 +7,13 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      %a{:class => "navbar-brand #{'color_menu' if controller_name == 'workspaces'}", :href=> "/mobile"}
+      %a{:class => "navbar-brand #{'color_menu' if controller_name == 'workspaces'}", :href=> '#'}
         JustCRM
     .collapse.navbar-collapse
       %ul.nav.navbar-nav
         %li{:class=>"#{'active' if controller_name == 'people'}"}
-          %a#to_people{:href => '#'}
+          %a#to_people.collapsed{:href => '#'}
             People
-
 
         %li.dropdown
           %a.dropdown-toggle{'data-toggle' => 'dropdown', :href => '#'}
@@ -23,8 +22,16 @@
           
           %ul.dropdown-menu
             %li
-              %a#add_person{:href => '#'}
+              %a#add_person.collapsed{:href => '#'}
                 Add Person
+
+        %li.nav-divider
+
+        %li
+          %a.show_tags.collapsed{:href => '#'}
+            Tags
+
+        %li.nav-divider
 
         - if user_signed_in?
           %li

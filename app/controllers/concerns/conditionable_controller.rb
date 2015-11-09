@@ -7,19 +7,28 @@ module ConditionableController
   def activate
     @resource.set_condition(:active)
     @resource.save
-    redirect_to @path_for_redirect
+    respond_to do |format|
+      format.html{ redirect_to @path_for_redirect }
+      format.json{ render :nothing => true, :status => 200 }
+    end
   end
 
   def stop
     @resource.set_condition(:stoped)
     @resource.save
-    redirect_to @path_for_redirect
+    respond_to do |format|
+      format.html{ redirect_to @path_for_redirect }
+      format.json{ render :nothing => true, :status => 200 }
+    end
   end
 
   def destroy
     @resource.set_condition(:removed)
     @resource.save
-    redirect_to @path_for_redirect
+    respond_to do |format|
+      format.html{ redirect_to @path_for_redirect }
+      format.json{ render :nothing => true, :status => 200 }
+    end
   end
 
 end

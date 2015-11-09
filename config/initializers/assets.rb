@@ -22,6 +22,7 @@ Rails.application.config.assets.precompile +=
     'backbone.marionette.js',
     'backbone.paginator.js',
     'libs/backbone.syphon.js',
+    'libs/jquery.tagcloud.js',
   	'justcrm.js',
   	'handlebars.runtime.js',
     'justcrm_controller.js',

@@ -18,3 +18,7 @@
   %li
     %a#next_page
       Next Page
+
+#tags_holder.dropdown_div
+  %a#close_tags_btn.btn.btn-default.to_right
+    %span.glyphicon.glyphicon-remove

@@ -1,5 +1,8 @@
 describe "Person View", ->
   beforeEach ->
+    spyOn(Justcrm.Models.Person.prototype, 'activate')
+    spyOn(Justcrm.Models.Person.prototype, 'stop')
+    spyOn(Justcrm.Models.Person.prototype, 'destroy')    
     spyOn(Justcrm.Views.PersonView.prototype, 'to_details')
     @personView = new Justcrm.Views.PersonView(
       model: new Justcrm.Models.Person( id: 1, name: 'test name', about: 'test about')
@@ -54,6 +57,38 @@ describe "Person View", ->
 
   describe "statuses", ->
     beforeEach ->
+      spyOn(window, 'confirm').and.returnValue(true)
       @personView.render()
 
-    it "click active button", ->
+    describe "conditional caption", ->
+      it "stoped have right class", ->
+        @personView.model.set('condition', 1)
+        @personView.render()
+        expect(@personView.$('.name_link')).toHaveClass("stoped_caption")
+
+      it "removed have right class", ->
+        @personView.model.set('condition', 2)
+        @personView.render()
+        expect(@personView.$('.name_link')).toHaveClass("removed_caption")
+
+      it "active have right class", ->
+        @personView.model.set('condition', 0)
+        @personView.render()
+        expect(@personView.$('.name_link')).not.toHaveClass('removed_caption')
+        expect(@personView.$('.name_link')).not.toHaveClass('stoped_caption')
+
+    it "click activate button activate model", ->
+      @personView.$('.name_link').addClass('stoped_caption')
+      @personView.$('.activate_status_btn').click()
+      expect(@personView.model.activate).toHaveBeenCalled()
+      expect(@personView.$('.name_link')).not.toHaveClass('stoped_caption')
+
+    it "click stop button stop model", ->
+      @personView.$('.stop_status_btn').click()
+      expect(@personView.model.stop).toHaveBeenCalled()
+      expect(@personView.$('.name_link')).toHaveClass("stoped_caption")
+
+    it "click remove button destroy model", ->
+      @personView.$('.remove_status_btn').click()
+      expect(@personView.model.destroy).toHaveBeenCalled()
+      

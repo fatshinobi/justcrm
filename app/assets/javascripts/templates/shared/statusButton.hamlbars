@@ -3,12 +3,12 @@
     %span.caret
   %ul.dropdown-menu{:role=>'menu'}
     %li
-      %a.activate_status_btn{:data => { :confirm => 'Are you sure?' }}
+      %a.activate_status_btn
         Activate
     %li
-      %a.stop_status_btn{:data => { :confirm => 'Are you sure?' }}
+      %a.stop_status_btn
         Stop
     %li
-      %a.remove_status_btn{:data => { :confirm => 'Are you sure?' }}
+      %a.remove_status_btn
         Remove
 

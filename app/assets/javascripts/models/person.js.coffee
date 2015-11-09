@@ -2,6 +2,8 @@ class Justcrm.Models.Person extends Backbone.Model
   urlRoot: '/people'
 
   initialize: ->
+    @CONDITIONS_LIST = ["active", "stoped", "removed"]
+
     @.on('change:companies', @parse_companies)
     @.on('change:appointments', @parse_appointments)
     @parse_companies()
@@ -17,3 +19,28 @@ class Justcrm.Models.Person extends Backbone.Model
   parse_opportunities: ->
     @opportunities = new Justcrm.Collections.Opportunities(@get('opportunities'))
 
+  post_status: (action) ->
+    $.ajax
+      url: "#{@url()}/#{action}"
+      type: 'POST'
+      dataType: 'json'
+      success: ->
+        console.log('sync success')
+
+  activate: ->
+    @post_status('activate')
+
+  stop: ->
+    @post_status('stop')
+
+  get_condition: ->
+    @CONDITIONS_LIST[@get('condition')]  
+
+  is_active: ->
+    @get_condition() == "active"
+    
+  is_stoped: ->
+    @get_condition() == "stoped"
+
+  is_removed: ->
+    @get_condition() == "removed"

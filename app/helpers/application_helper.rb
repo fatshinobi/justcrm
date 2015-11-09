@@ -141,6 +141,7 @@ module ApplicationHelper
       'backbone.paginator',
       'handlebars.runtime',
       'libs/backbone.syphon',
+      'libs/jquery.tagcloud',
       'justcrm',
       'justcrm_controller',
       'justcrm_router',

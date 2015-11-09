@@ -23,6 +23,7 @@
 #= require handlebars.runtime
 #= require backbone.syphon.min
 #= require backbone.paginator
+#= require ./../../app/assets/javascripts/libs/jquery.tagcloud
 #= require justcrm
 #= require justcrm_controller
 #= require justcrm_router

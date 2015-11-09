@@ -5,6 +5,7 @@ class Justcrm.Views.MenuView extends Backbone.Marionette.ItemView
   events: 
     'click #add_person': 'add_person'
     'click #to_people': 'to_people'
+    'click .show_tags': 'show_tags'
 
   initialize: (options) ->
     @app = options.app
@@ -14,3 +15,6 @@ class Justcrm.Views.MenuView extends Backbone.Marionette.ItemView
 
   to_people: ->
     Backbone.trigger('people:open')
+
+  show_tags: ->
+    Backbone.trigger('actions:show_tags')
