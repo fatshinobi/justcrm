@@ -34,6 +34,7 @@
 #= require_tree ./../../app/assets/javascripts/models
 #= require_tree ./../../app/assets/javascripts/collections
 #= require_tree ./../../app/assets/javascripts/helpers
+#= require views/menu
 #= require views/person
 #= require views/people
 #= require views/person_details

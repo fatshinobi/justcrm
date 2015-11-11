@@ -486,6 +486,7 @@ class PeopleControllerTest < ActionController::TestCase
     assert_equal @person.facebook, result['facebook'], 'Person facebook must be in json'
     assert_equal @person.twitter, result['twitter'], 'Person twitter must be in json'
     assert_equal @person.condition, result['condition'], 'Person condition must be in json'
+    assert_equal @person.group_list, result['group_list'], 'Person tags must be in json'
   end
 
   test "should get right json api show" do

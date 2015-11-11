@@ -28,8 +28,16 @@ class Justcrm.Views.PeopleView extends Backbone.Marionette.CompositeView
     _.bindAll(@, 'apply_tag')
 
   onRender: ->
+    filter_message = ''
     if @app.search_filter_message
-      @ui.filter_message.text("Name contents '#{@app.search_filter_message}'")
+      filter_message = "Name contents '#{@app.search_filter_message}'"
+
+    if @app.people_tag
+      filter_message += ' and ' if filter_message.length > 0
+      filter_message += "Tag: '#{@app.people_tag}'"
+
+    if filter_message.length > 0
+      @ui.filter_message.text(filter_message)
       @ui.clear_filters_btn.removeClass('hiden_elem')
 
     $.fn.tagcloud.defaults = 
@@ -52,27 +60,45 @@ class Justcrm.Views.PeopleView extends Backbone.Marionette.CompositeView
     @collection.getPreviousPage()    
 
   searching: ->
-    if (val = @ui.search_text.val())
-      filtered = @app.fullCollection.filter( (item) ->
+    if (!@ui.search_text.val()) && (!@app.people_tag)
+      return
+    
+    val = @ui.search_text.val()
+    tag = @app.people_tag
+
+    filtered = @app.fullCollection.slice()
+
+    if @app.people_tag
+      filtered = filtered.filter( (item) ->
+        tag in item.get('group_list')
+      )
+    
+    if @ui.search_text.val()
+      filtered = filtered.filter( (item) ->
         item.get('name').toLowerCase().indexOf(val.toLowerCase()) >= 0
       )
-      @app.search_filter_message = val
-      @app.people_collection = new Justcrm.Collections.People(filtered)
-      Backbone.trigger('people:open')
+
+    @app.search_filter_message = val if val
+
+    @app.people_collection = new Justcrm.Collections.People(filtered)
+    Backbone.trigger('people:open')
 
   clear_filters: ->
     if (@app.fullCollection)
       @app.search_filter_message = null
+      @app.people_tag = null
       old = new Justcrm.Collections.People(@app.fullCollection)
       @app.people_collection = old
       Backbone.trigger('people:open')
-
+      
   close_tags: ->
     @ui.tags_holder.slideUp("slow")
 
   apply_tag: (event) ->
     btn = $(event.target)
     tag_name = btn.data('button')
-
-    console.log("apply_tag: #{tag_name}")
-    @close_tags()
+    @app.people_tag = tag_name
+    that = @
+    @ui.tags_holder.slideUp("slow", ->
+      that.searching()
+    )
