@@ -44,3 +44,14 @@ class Justcrm.Models.Person extends Backbone.Model
 
   is_removed: ->
     @get_condition() == "removed"
+
+  sync: (method, model, options) ->
+    if (method == 'update') || (method == 'create')
+      _.defaults(options || (options = {}), {
+        data: model.get('person'),
+        processData: false,
+        contentType: false,
+        cache: false
+      })
+    
+    Backbone.sync.call(@, method, model, options)

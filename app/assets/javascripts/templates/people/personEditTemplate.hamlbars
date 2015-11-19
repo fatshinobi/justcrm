@@ -6,36 +6,46 @@
     To People List
 
   %form
-    %p
-      %label
+    .form-group
+      %label.control-label
+        Ava
+      %input#ava.form-control{:type=>'file'}
+      
+    .form-group
+      %label.control-label
         Name
       %input#name.form-control{:name=>'name', :value=>"{{name}}"}
-    %p
-      %label
+    .form-group
+      %label.control-label
         About
       %textarea#about.form-control{:name=>'about', :rows=>'10'}
         = hb 'about'
-    %p
-      %label
+    .form-group
+      %label.control-label
         Phone
       %input#phone.form-control{:name=>'phone', :value=>"{{phone}}"}
-    %p
-      %label
+    .form-group
+      %label.control-label
         Facebook
       %input#facebook.form-control{:name=>'facebook', :value=>"{{facebook}}"}
-    %p
-      %label
+    .form-group
+      %label.control-label
         Twitter
       %input#twitter.form-control{:name=>'twitter', :value=>"{{twitter}}"}
-    %p
-      %label
+    .form-group
+      %label.control-label
         Email
       %input#email.form-control{:name=>'email', :value=>"{{email}}"}
 
-    %p
-      %label
+    .form-group
+      %label.control-label
         Curator
       %select#curator_list.form-control{:name=>'user_id'}
+
+    .form-group
+      %label.control-label
+        Tags (separate each tag by a comma)
+      %input#tag_list.form-control{:name=>'group_list', :value=>"{{group_list}}"}
 
   #companies_look_up
     %h2
@@ -69,7 +79,7 @@
           %button.delete_company_entry.btn.btn-xs.btn-danger{"data-button"=>"{{id}}"}
             Delete
 
-  %button#submit.btn.btn-lg.btn-success
+  %button#submit.btn.btn-lg.btn-success{:type=>'submit'}
     Save
 
   %br/

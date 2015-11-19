@@ -7,6 +7,8 @@ describe "Person Edit View", ->
       users_collection: {models: [{id: 1, name: 'user1', get: -> 1}]}
       people_collection: 
         get: ->
+        fullCollection:
+          add: ->
           
     }
 
@@ -25,6 +27,7 @@ describe "Person Edit View", ->
         user_id: 1,
         facebook: 'test facebook',
         twitter: 'test twitter',
+        group_list: 'test_tag1, test_tag2',
         companies: [{id: 1, company:{id:1, name:'test company name'}, role: 'test role', new_company_name: ''}],
         appointments: [{
           id: 1, 
@@ -71,6 +74,7 @@ describe "Person Edit View", ->
       expect(@personEditView.el.innerHTML).toContain('test email')
       expect(@personEditView.el.innerHTML).toContain('test facebook')
       expect(@personEditView.el.innerHTML).toContain('test twitter')
+      expect(@personEditView.el.innerHTML).toContain('test_tag1, test_tag2')
 
       expect(@personEditView.el.innerHTML).toContain('test company name')
       expect(@personEditView.el.innerHTML).toContain('test role')
@@ -99,16 +103,18 @@ describe "Person Edit View", ->
 
     it "make right model changes", ->
       expect(@personEditView.model.save).toHaveBeenCalledWith(
-        {person: {
-          name: 'name after submit', 
-          about: 'about after submit', 
-          phone: 'phone after submit', 
-          facebook: 'facebook after submit', 
-          twitter: 'twitter after submit', 
-          email: 'email after submit',
-          user_id: '1',
-          company_people_attributes: [{ id: 1, role: 'test role', company_id: 1, new_company_name: '',  _destroy: 'false' }] 
-        }},
+      #  {person: {
+      #    name: 'name after submit', 
+      #    about: 'about after submit', 
+      #    phone: 'phone after submit', 
+      #    facebook: 'facebook after submit', 
+      #    twitter: 'twitter after submit', 
+      #    email: 'email after submit',
+      #    user_id: '1',
+      #    group_list: 'test_tag1, test_tag2'
+      #    company_people_attributes: [{ id: 1, role: 'test role', company_id: 1, new_company_name: '',  _destroy: 'false' }] 
+      #  }},
+        {person: jasmine.any(FormData)},
         jasmine.any(Object),
         jasmine.any(Object)
       )
@@ -122,6 +128,21 @@ describe "Person Edit View", ->
 
       expect(@app_stab.people_collection.get).toHaveBeenCalledWith(@personEditView.model.id)
       expect(@model_stab.set).toHaveBeenCalledWith({name: 'test name 23'})
+
+    it "after update refresh ava in collection", ->
+      spyOn(@app_stab.people_collection, 'get').and.returnValue(@model_stab)
+
+      @personEditView.model.new_file = {name: 'ava_test'}
+      @personEditView.on_save(@personEditView.model)
+      expect(@personEditView.data.ava.ava.thumb.url).toBe('/uploads/test/person/ava/1/thumb_ava_test')
+
+    it "after create refresh ava in collection", ->
+      spyOn(@app_stab.people_collection, 'get').and.returnValue(null)
+      spyOn(@app_stab.people_collection.fullCollection, 'add')
+
+      @personEditView.model.new_file = {name: 'ava_test'}
+      @personEditView.on_save(@personEditView.model)
+      expect(@personEditView.model.get('ava').ava.thumb.url).toBe('/uploads/test/person/ava/1/thumb_ava_test')
 
 
   describe "add new company", ->

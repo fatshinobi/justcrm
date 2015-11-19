@@ -490,6 +490,9 @@ class PeopleControllerTest < ActionController::TestCase
   end
 
   test "should get right json api show" do
+    @person.group_list = ['tag1', 'tag2']
+    @person.save()
+
     appointment = appointments(:one)
     appointment.company = companies(:mycrosoft)
     appointment.person = @person
@@ -502,7 +505,7 @@ class PeopleControllerTest < ActionController::TestCase
     get :show, format: :json, id: @person
 
     json = JSON.parse(response.body)
-    
+
     assert_equal @person.name, json['name']
     assert_equal @person.about, json['about']
     assert_equal @person.phone, json['phone']
@@ -511,6 +514,7 @@ class PeopleControllerTest < ActionController::TestCase
     assert_equal @person.twitter, json['twitter']
     assert_equal @person.web, json['web']
     assert_equal @person.condition, json['condition']
+    assert_equal @person.group_list.join(', '), json['group_list']
 
     links = json['companies']
     assert_equal 1, links.size

@@ -49,17 +49,48 @@ class Justcrm.Views.PersonEditView extends Backbone.Marionette.ItemView
       {id: link.id, role: link.role, company_id: link.company.id, new_company_name: link.new_company_name, _destroy: if link.is_delete then '1' else 'false'}
     )
 
-    if (@model.id != 0)
-      @model.save({person: @data}, {success: @on_save}, {patch: true})
-    else
-      @model.save({person: @data}, {success: @on_save})
+    that = @
+    @model.on('error', (model, response) ->
+      attributes_with_errors = JSON.parse(response.responseText)
+      for err_field in Object.keys(attributes_with_errors.errors)
+        that.$("input##{err_field}").parent().addClass('has-error')
+        for error_message in attributes_with_errors.errors[err_field]
+          that.$("input##{err_field}").parent().append("<span class='help-block'>#{error_message}</span>")
+    )
 
+    f_data = new FormData()
+    if @$('form #ava')[0].files[0]
+      f_data.append('person[ava]', @$('form #ava')[0].files[0])
+      @model.new_file = @$('form #ava')[0].files[0]
+
+    for key in Object.keys(@data)
+      if (@data[key] instanceof Array)
+        for elem in @data[key]
+          for child_key in Object.keys(elem)
+            child_val = if elem[child_key] then elem[child_key] else ''
+            f_data.append("person[#{key}][#{child_key}]", child_val)
+      else
+        f_data.append("person[#{key}]", @data[key])
+
+    if (@model.id != 0)
+      @model.save({person: f_data}, {success: @on_save}, {patch: true})
+    else
+      @model.save({person: f_data}, {success: @on_save})
+   
   go_to_details: ->
     Backbone.trigger('person_details:open', @model.get('id'))
 
   on_save: (model, response) ->
     cur_model = @app.people_collection.get(model.id)
-    cur_model.set(@data)
+    if cur_model
+      if model.new_file
+        @data.ava = {ava: {thumb: url : "/uploads/test/person/ava/#{model.id}/thumb_#{model.new_file.name}"}}
+      cur_model.set(@data)
+    else
+      if model.new_file
+        model.set('ava', {ava: {thumb: url : "/uploads/test/person/ava/#{model.id}/thumb_#{model.new_file.name}"}})
+      @app.people_collection.fullCollection.add(model)
+
     Backbone.trigger('person_details:open', model.get('id'))
 
   add_new_company: ->

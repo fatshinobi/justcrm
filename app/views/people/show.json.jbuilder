@@ -1,5 +1,7 @@
 json.extract! @person, :id, :name, :about, :phone, :facebook, :twitter, :web, :email, :ava, :user_id, :condition
 
+json.group_list @person.group_list.join(', ')
+
 json.companies @person.company_people do |link|
   json.id link.id
   json.company link.company, :id, :name, :ava
