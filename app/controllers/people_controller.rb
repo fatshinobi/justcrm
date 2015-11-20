@@ -2,23 +2,12 @@ class PeopleController < ApplicationController
   include ConditionableController  
   before_action :set_person, only: [:show, :edit, :update, :destroy, :activate, :stop]
   before_action :list_initialize, only: [:index]
+  before_action :set_people, only: [:index], if: -> { request.format.html? }
+  before_action :set_people_without_pages, only: [:index], if: -> { request.format.json? }
 
   respond_to :html, :json
   
   def index
-    case 
-    when params[:tag]
-      @people = Person.unremoved.tagged_with(params[:tag], :on => :groups).order(:created_at).page(params[:page])      
-    when params[:contains]
-      @people = Person.unremoved.contains(params[:contains]).order(:created_at).page(params[:page])  
-    when params[:removed]
-      @people = Person.removed.order(:created_at).page(params[:page])  
-    else
-      @people = Person.unremoved.order(:created_at).page(params[:page])
-    end
-
-    @tags = Person.group_counts
-   
     respond_with(@people)
   end
 
@@ -96,5 +85,24 @@ class PeopleController < ApplicationController
 
     def list_initialize
       @is_list = true
+    end
+
+    def set_people
+      case 
+      when params[:tag]
+        @people = Person.unremoved.tagged_with(params[:tag], :on => :groups).order(:created_at).page(params[:page])      
+      when params[:contains]
+        @people = Person.unremoved.contains(params[:contains]).order(:created_at).page(params[:page])  
+      when params[:removed]
+        @people = Person.removed.order(:created_at).page(params[:page])  
+      else
+        @people = Person.unremoved.order(:created_at).page(params[:page])
+      end
+
+      @tags = Person.group_counts
+    end
+
+    def set_people_without_pages
+      @people = Person.unremoved.order(:created_at)
     end
 end

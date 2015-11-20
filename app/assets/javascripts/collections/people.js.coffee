@@ -5,4 +5,4 @@ class Justcrm.Collections.People extends Backbone.PageableCollection
   mode: "client"
 
   state:
-    pageSize: 3
+    pageSize: 10

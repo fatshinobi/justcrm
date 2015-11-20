@@ -1,6 +1,9 @@
 describe "People View", ->
   beforeEach ->
     @app = {}
+    
+    Justcrm.Collections.People.prototype.state.pageSize = 3    
+    
     spyOn(Justcrm.Collections.People.prototype, 'getNextPage')
     spyOn(Justcrm.Collections.People.prototype, 'getPreviousPage')
 
@@ -111,6 +114,16 @@ describe "People View", ->
 
     it "do with search and tags", ->
       @peopleView.$('#search_text').val('b')
+      @app.people_tag = 'tag1'
+      @peopleView.searching()
+      expect(@app.people_collection.length).toBe(1)
+      expect(@app.people_collection.fullCollection.length).toBe(1)
+
+    it "do with tag after search", ->
+      @peopleView.$('#search_text').val('b')
+      @peopleView.searching()
+      expect(@app.people_collection.fullCollection.length).toBe(2)
+
       @app.people_tag = 'tag1'
       @peopleView.searching()
       expect(@app.people_collection.length).toBe(1)

@@ -1,5 +1,6 @@
 describe "People collection", ->
   beforeEach ->
+    Justcrm.Collections.People.prototype.state.pageSize = 3
     @people = new Justcrm.Collections.People()
 
   it "should be defined", ->

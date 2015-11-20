@@ -542,4 +542,16 @@ class PeopleControllerTest < ActionController::TestCase
     assert_equal opportunity.user.id, opps[0]['user']['id']
   end
 
+  test "should get index json without pagination" do
+    15.times do |i|
+      pers = Person.create(name: "test" + i.to_s, user: users(:one))
+    end
+    get :index, format: :json
+
+    json = JSON.parse(response.body)
+
+    assert_equal 17, json.length
+  end
+
+
 end

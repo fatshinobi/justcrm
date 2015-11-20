@@ -60,10 +60,15 @@ class Justcrm.Views.PeopleView extends Backbone.Marionette.CompositeView
     @collection.getPreviousPage()    
 
   searching: ->
-    if (!@ui.search_text.val()) && (!@app.people_tag)
+
+    @app.search_filter_message = @ui.search_text.val() if @ui.search_text.val()
+    
+    val = @app.search_filter_message
+
+    if (!val) && (!@app.people_tag)
       return
     
-    val = @ui.search_text.val()
+    #val = @ui.search_text.val()
     tag = @app.people_tag
 
     filtered = @app.fullCollection.slice()
@@ -73,12 +78,12 @@ class Justcrm.Views.PeopleView extends Backbone.Marionette.CompositeView
         tag in item.get('group_list')
       )
     
-    if @ui.search_text.val()
+    if val
       filtered = filtered.filter( (item) ->
         item.get('name').toLowerCase().indexOf(val.toLowerCase()) >= 0
       )
 
-    @app.search_filter_message = val if val
+    #@app.search_filter_message = val if val
 
     @app.people_collection = new Justcrm.Collections.People(filtered)
     Backbone.trigger('people:open')
