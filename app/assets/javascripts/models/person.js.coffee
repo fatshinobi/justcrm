@@ -1,57 +1,62 @@
-class Justcrm.Models.Person extends Backbone.Model
-  urlRoot: '/people'
+define ['backbone', 'collections/appointments',
+    'collections/opportunities'
+  ], (Backbone, Appointments, Opportunities) ->
 
-  initialize: ->
-    @CONDITIONS_LIST = ["active", "stoped", "removed"]
+  class Person extends Backbone.Model
+    urlRoot: '/people'
 
-    @.on('change:companies', @parse_companies)
-    @.on('change:appointments', @parse_appointments)
-    @parse_companies()
-    @parse_appointments()
-    @parse_opportunities()
+    initialize: ->
+      @CONDITIONS_LIST = ["active", "stoped", "removed"]
 
-  parse_companies: ->
-    @companies = @get('companies')
+      @.on('change:companies', @parse_companies)
+      @.on('change:appointments', @parse_appointments)
+      @parse_companies()
+      @parse_appointments()
+      @parse_opportunities()
 
-  parse_appointments: ->
-    @appointments = new Justcrm.Collections.Appointments(@get('appointments'))
+    parse_companies: ->
+      @companies = @get('companies')
 
-  parse_opportunities: ->
-    @opportunities = new Justcrm.Collections.Opportunities(@get('opportunities'))
+    parse_appointments: ->
+      @appointments = new Appointments(@get('appointments'))
 
-  post_status: (action) ->
-    $.ajax
-      url: "#{@url()}/#{action}"
-      type: 'POST'
-      dataType: 'json'
-      success: ->
-        console.log('sync success')
+    parse_opportunities: ->
+      @opportunities = new Opportunities(@get('opportunities'))
 
-  activate: ->
-    @post_status('activate')
+    post_status: (action) ->
+      $.ajax
+        url: "#{@url()}/#{action}"
+        type: 'POST'
+        dataType: 'json'
+        success: ->
+          console.log('sync success')
 
-  stop: ->
-    @post_status('stop')
+    activate: ->
+      @post_status('activate')
 
-  get_condition: ->
-    @CONDITIONS_LIST[@get('condition')]  
+    stop: ->
+      @post_status('stop')
 
-  is_active: ->
-    @get_condition() == "active"
+    get_condition: ->
+      @CONDITIONS_LIST[@get('condition')]  
+
+    is_active: ->
+      @get_condition() == "active"
     
-  is_stoped: ->
-    @get_condition() == "stoped"
+    is_stoped: ->
+      @get_condition() == "stoped"
 
-  is_removed: ->
-    @get_condition() == "removed"
+    is_removed: ->
+      @get_condition() == "removed"
 
-  sync: (method, model, options) ->
-    if (method == 'update') || (method == 'create')
-      _.defaults(options || (options = {}), {
-        data: model.get('person'),
-        processData: false,
-        contentType: false,
-        cache: false
-      })
+    sync: (method, model, options) ->
+      if (method == 'update') || (method == 'create')
+        _.defaults(options || (options = {}), {
+          data: model.get('person'),
+          processData: false,
+          contentType: false,
+          cache: false
+        })
     
-    Backbone.sync.call(@, method, model, options)
+      Backbone.sync.call(@, method, model, options)
+      

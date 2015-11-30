@@ -4,7 +4,8 @@
     %title
       JustCrm mobile
     = stylesheet_link_tag 'application', 'mobile', media: 'all', 'data-turbolinks-track' => true
-    = js_include_tag_for_mobile
+    = requirejs_include_tag "justcrm"    
+
     = csrf_meta_tags
     %meta{:name=>"viewport", :content=>"width=device-width, initial-scale=1"}
   %body

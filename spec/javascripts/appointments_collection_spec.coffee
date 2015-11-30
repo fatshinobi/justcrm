@@ -1,16 +1,17 @@
-describe "Appointments collection", ->
-  beforeEach ->
-    @appointments = new Justcrm.Collections.Appointments()
+define ['collections/appointments'], (Appointments) ->
+  describe "Appointments collection", ->
+    beforeEach ->
+      @appointments = new Appointments()
 
-  it "should be defined", ->
-    expect(@appointments).toBeDefined()
+    it "should be defined", ->
+      expect(@appointments).toBeDefined()
 
-  it "can add models", ->
-    expect(@appointments.length).toBe(0)
-    @appointments.add({body: 'call to Den Pett'})
-    expect(@appointments.length).toBe(1)
-    @appointments.add([
-      {body: 'call to Luci Vasale'},
-      {body: 'email to Ger Iffy'}
-    ])
-    expect(@appointments.length).toBe(3)
+    it "can add models", ->
+      expect(@appointments.length).toBe(0)
+      @appointments.add({body: 'call to Den Pett'})
+      expect(@appointments.length).toBe(1)
+      @appointments.add([
+        {body: 'call to Luci Vasale'},
+        {body: 'email to Ger Iffy'}
+      ])
+      expect(@appointments.length).toBe(3)

@@ -1,5 +1,5 @@
-class Justcrm.Routers.JustcrmRouter extends Backbone.Marionette.AppRouter
-  controller : Justcrm.Controllers.JustcrmController,
+#class JustcrmRouter extends Backbone.Marionette.AppRouter
+#  controller : JustcrmController,
   #appRoutes: 
     #"": "people",
     #"people": "people",

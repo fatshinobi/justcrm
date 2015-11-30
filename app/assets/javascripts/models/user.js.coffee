@@ -1,1 +1,2 @@
-class Justcrm.Models.User extends Backbone.Model
+define ['backbone'], (Backbone) ->
+  class User extends Backbone.Model

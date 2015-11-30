@@ -1,4 +1,5 @@
-class Justcrm.Controllers.JustcrmController extends Backbone.Marionette.Controller
+###
+class JustcrmController extends Backbone.Marionette.Controller
   initialize: (options) ->
     _.bindAll(@, "load_people")
 
@@ -7,4 +8,4 @@ class Justcrm.Controllers.JustcrmController extends Backbone.Marionette.Controll
   people: ->
 
   person: (id) ->
-
+###

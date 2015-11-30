@@ -130,43 +130,4 @@ module ApplicationHelper
     value ? value.send(property_name) : ''
   end
 
-  def js_include_tag_for_mobile
-    javascript_include_tag('application',
-      'look_up_view',
-      'semaphore',
-      'moment',      
-      'underscore',
-      'backbone',
-      'backbone.marionette',
-      'backbone.paginator',
-      'handlebars.runtime',
-      'libs/backbone.syphon',
-      'libs/jquery.tagcloud',
-      'justcrm',
-      'justcrm_controller',
-      'justcrm_router',
-      'templates/people/peopleListTemplate',
-      'templates/people/personTemplate',
-      'templates/people/personDetailsTemplate',
-      'templates/people/personEditTemplate',      
-      'templates/appointments/shortAppointmentEntry',
-      'templates/opportunities/shortOpportunityEntry',
-      'templates/shared/statusButton',
-      'models/opportunity',
-      'collections/opportunities',
-      'models/appointment',
-      'collections/appointments',
-      'models/person',
-      'collections/people',
-      'models/user',
-      'collections/users',
-      'views/person',
-      'views/people',
-      'views/person_details',
-      'views/person_edit',
-      'views/menu',
-      'helpers/application_helpers',
-      'data-turbolinks-track' => true      
-    )
-  end
 end

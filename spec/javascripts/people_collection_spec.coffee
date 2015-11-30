@@ -1,35 +1,36 @@
-describe "People collection", ->
-  beforeEach ->
-    Justcrm.Collections.People.prototype.state.pageSize = 3
-    @people = new Justcrm.Collections.People()
+define ['collections/people'], (People) ->
+  describe "People collection", ->
+    beforeEach ->
+      People.prototype.state.pageSize = 3
+      @people = new People()
 
-  it "should be defined", ->
-    expect(@people).toBeDefined
+    it "should be defined", ->
+      expect(@people).toBeDefined
 
-  it "can add models", ->
-    expect(@people.length).toBe(0)
-    @people.add({name: 'Den Pett'})
-    expect(@people.length).toBe(1)
-    @people.add([
-      {name: 'Luci Vasale'},
-      {name: 'Ger Iffy'}
-    ])
-    expect(@people.length).toBe(3)
+    it "can add models", ->
+      expect(@people.length).toBe(0)
+      @people.add({name: 'Den Pett'})
+      expect(@people.length).toBe(1)
+      @people.add([
+        {name: 'Luci Vasale'},
+        {name: 'Ger Iffy'}
+      ])
+      expect(@people.length).toBe(3)
 
-  it "have right url", ->
-    expect(@people.url).toBe('/people')
+    it "have right url", ->
+      expect(@people.url).toBe('/people')
 
-  it "have right pagging", ->
-    @people = new Justcrm.Collections.People([
-      {name: 'Den Pett'},
-      {name: 'Den Pett1'},
-      {name: 'Robb Guffet'},
-      {name: 'Zod McAlister'},
-      {name: 'Zet Brainus'}
-    ])
+    it "have right pagging", ->
+      @people = new People([
+        {name: 'Den Pett'},
+        {name: 'Den Pett1'},
+        {name: 'Robb Guffet'},
+        {name: 'Zod McAlister'},
+        {name: 'Zet Brainus'}
+      ])
 
-    @people.setPageSize(3)
-    expect(@people.length).toBe(3)
+      @people.setPageSize(3)
+      expect(@people.length).toBe(3)
 
-    @people.getNextPage()
-    expect(@people.length).toBe(2)
+      @people.getNextPage()
+      expect(@people.length).toBe(2)

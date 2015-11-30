@@ -13,33 +13,8 @@
 #
 # You can require your own javascript files here. By default this will include everything in application, however you
 # may get better load performance if you require the specific files that are being used in the spec that tests them.
-#= require application
-#= require look_up_view
-#= require semaphore
-#= require moment
-#= require underscore
-#= require backbone
-#= require backbone.marionette
-#= require handlebars.runtime
-#= require backbone.syphon.min
-#= require backbone.paginator
-#= require ./../../app/assets/javascripts/libs/jquery.tagcloud
+#= require require
 #= require justcrm
-#= require justcrm_controller
-#= require justcrm_router
-#= require_tree ./../../app/assets/javascripts/templates/people
-#= require_tree ./../../app/assets/javascripts/templates/appointments
-#= require_tree ./../../app/assets/javascripts/templates/opportunities
-#= require_tree ./../../app/assets/javascripts/templates/shared
-#= require_tree ./../../app/assets/javascripts/models
-#= require_tree ./../../app/assets/javascripts/collections
-#= require_tree ./../../app/assets/javascripts/helpers
-#= require views/menu
-#= require views/person
-#= require views/people
-#= require views/person_details
-#= require views/person_edit
-#= require support/jasmine-jquery-2.1.0
 #
 # Deferring execution
 # If you're using CommonJS, RequireJS or some other asynchronous library you can defer execution. Call

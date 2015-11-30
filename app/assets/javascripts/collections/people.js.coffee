@@ -1,8 +1,11 @@
-class Justcrm.Collections.People extends Backbone.PageableCollection
-  model: Justcrm.Models.Person
-  url: '/people'
+define ['backbone', 'models/person',
+    'backbone.paginator'
+  ], (Backbone, Person, pages) ->
+  class People extends Backbone.PageableCollection
+    model: Person
+    url: '/people'
 
-  mode: "client"
+    mode: "client"
 
-  state:
-    pageSize: 10
+    state:
+      pageSize: 10

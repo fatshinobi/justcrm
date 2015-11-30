@@ -1,4 +1,4 @@
-.input-group
+.input-group.test
   %input#search_text.form-control{:placeholder=>"Search for..."}
   %span.input-group-btn
     %button#start_searching.btn.btn-default

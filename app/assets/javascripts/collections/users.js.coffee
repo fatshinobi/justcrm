@@ -1,3 +1,4 @@
-class Justcrm.Collections.Users extends Backbone.Collection
-  model: Justcrm.Models.User
-  url: '/users'
+define ['backbone', 'models/user'], (Backbone, User) ->
+  class Users extends Backbone.Collection
+    model: User
+    url: '/users'

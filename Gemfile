@@ -40,12 +40,15 @@ gem 'acts-as-taggable-on', '~> 3.4'
 gem 'cancan'
 gem 'rolify', '~> 3.5.0'
 gem 'figaro'
+
+# front-end
 gem 'backbone-on-rails'
-gem 'handlebars_assets'
+gem 'handlebars_assets'#, github: 'acquaintable/handlebars_assets'
 gem 'hamlbars', '~> 2.1'
 gem 'marionette-rails'
 gem 'momentjs-rails'
 gem 'backbone-paginator-rails'
+gem 'requirejs-rails'
 
 group :development, :test do
   gem "teaspoon-jasmine"
