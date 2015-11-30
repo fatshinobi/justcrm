@@ -52,7 +52,7 @@ define [
 
       if (!@model)
         @model = new Person(id: options.id)
-      #@listenTo(@model, 'change', @render)
+      @listenTo(@model, 'change', @render)
       @model.fetch(error: @error_handler, reset: true)
 
     error_handler: (model, response, options) ->
