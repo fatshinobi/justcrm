@@ -1,6 +1,6 @@
 .details
   %a#to_list_btn.btn.btn-info{:href=>'#'}
-    People
+    Companies
   %a#edit_btn.btn.btn-primary{:href=>'#'}
     Edit
 
@@ -11,9 +11,9 @@
     %li{:id=>'details_tab', :class=>'active'}
       %a{:id=>'details_link'}
         Details
-    %li{:id=>'companies_tab'}
-      %a{:id=>'companies_link'}
-        Companies
+    %li{:id=>'people_tab'}
+      %a{:id=>'people_link'}
+        People
     %li{:id=>'tasks_tab'}
       %a{:id=>'tasks_link'}
         Tasks
@@ -26,7 +26,7 @@
       = hb 'if ava.ava.thumb.url' do
         %img{:class=>"ava_pic", :src=>"#{hb 'ava.ava.thumb.url'}"}
         = hb 'else'
-        %img{:class=>"ava_pic", :src=>"assets/thumb_anonymous.png"}
+        %img{:class=>"ava_pic", :src=>"assets/thumb_anonym_company.png"}
 
       %p{:class=>"about_text"}
         = hb 'about'  
@@ -35,26 +35,19 @@
       phone: 
       = hb 'phone'
     %p
-      email: 
-      = hb 'email'
-    %p
-      facebook: 
-      = hb 'facebook'
-    %p
-      twitter: 
-      = hb 'twitter'
+      web: 
+      = hb 'web'
   
-  #companies_div{:class=>'hiden_form_page'}
-    = hb 'each companies' do
+  #people_div{:class=>'hiden_form_page'}
+    = hb 'each people' do
       .person_company_entry
-        %a.company_link{"data-button"=>"{{company.id}}"}
-          = hb 'if company.ava.ava.thumb.url' do
-            %img{:class=>"ava_pic", :src=>"#{hb 'company.ava.ava.thumb.url'}"}
+        %a.person_link{"data-button"=>"{{person.id}}"}      
+          = hb 'if person.ava.ava.thumb.url' do
+            %img{:class=>"ava_pic", :src=>"#{hb 'person.ava.ava.thumb.url'}"}
             = hb 'else'
             %img{:class=>"ava_pic", :src=>"assets/thumb_anonym_company.png"}
 
-          = hb 'company.name'
-
+          = hb 'person.name'
         = hb 'role'
 
   #tasks_div{:class=>'hiden_form_page'}

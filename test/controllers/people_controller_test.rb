@@ -553,5 +553,4 @@ class PeopleControllerTest < ActionController::TestCase
     assert_equal 17, json.length
   end
 
-
 end

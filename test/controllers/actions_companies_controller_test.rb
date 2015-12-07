@@ -113,4 +113,27 @@ class ActionsCompaniesControllerTest < ActionController::TestCase
     assert_equal 1, assigns(:companies).size
   end
 
+  test "should get right json api tags" do
+    company = Company.new(name: 'Test 1', user: users(:one))
+    company.group_list.add('MyTag 1')
+    company.save
+
+    company = Company.new(name: 'Test 2', user: users(:one))
+    company.group_list.add('MyTag 2, MyTag 1', parse: true)
+    company.save
+
+    get :tags, format: :json
+
+    json = JSON.parse(response.body)
+
+    assert_equal 2, json.length
+    assert_equal 1, json.select {|tag| tag['name'].include?('MyTag 1')}.length, 'First Tag must be in json'
+    assert_equal 1, json.select {|tag| tag['name'].include?('MyTag 2')}.length, 'Second Tag must be in json'
+
+    result = json.select {|tag| tag['name'] == 'MyTag 1'}[0]
+
+    assert_equal 'MyTag 1', result['name'], 'Tag name must be in json'
+    assert_equal 2, result['taggings_count'], 'Tag count must be in json'    
+  end
+
 end

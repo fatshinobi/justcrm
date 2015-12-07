@@ -1,0 +1,45 @@
+.edit
+  %a#details_btn.btn.btn-info{:href=>'#'}
+    To Details
+
+  %a#to_list_btn.btn.btn-primary{:href=>'#'}
+    To Companies List
+
+  %form
+    .form-group
+      %label.control-label
+        Ava
+      %input#ava.form-control{:type=>'file'}
+      
+    .form-group
+      %label.control-label
+        Name
+      %input#name.form-control{:name=>'name', :value=>"{{name}}"}
+    .form-group
+      %label.control-label
+        About
+      %textarea#about.form-control{:name=>'about', :rows=>'10'}
+        = hb 'about'
+    .form-group
+      %label.control-label
+        Phone
+      %input#phone.form-control{:name=>'phone', :value=>"{{phone}}"}
+    .form-group
+      %label.control-label
+        Web
+      %input#web.form-control{:name=>'web', :value=>"{{web}}"}
+
+    .form-group
+      %label.control-label
+        Curator
+      %select#curator_list.form-control{:name=>'user_id'}
+
+    .form-group
+      %label.control-label
+        Tags (separate each tag by a comma)
+      %input#tag_list.form-control{:name=>'group_list', :value=>"{{group_list}}"}
+
+  %button#submit.btn.btn-lg.btn-success{:type=>'submit'}
+    Save
+
+  %br/

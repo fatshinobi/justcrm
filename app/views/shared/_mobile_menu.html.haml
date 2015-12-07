@@ -15,6 +15,10 @@
           %a#to_people.collapsed{:href => '#'}
             People
 
+        %li{:class=>"#{'active' if controller_name == 'companies'}"}
+          %a#to_companies.collapsed{:href => '#'}
+            Companies
+
         %li.dropdown
           %a.dropdown-toggle{'data-toggle' => 'dropdown', :href => '#'}
             Actions
@@ -24,6 +28,10 @@
             %li
               %a#add_person.collapsed{:href => '#'}
                 Add Person
+
+            %li
+              %a#add_company.collapsed{:href => '#'}
+                Add Company
 
         %li.nav-divider
 

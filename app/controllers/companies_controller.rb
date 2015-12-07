@@ -2,22 +2,12 @@ class CompaniesController < ApplicationController
   include ConditionableController
   before_action :set_company, only: [:show, :edit, :update, :destroy, :activate, :stop]
   before_action :list_initialize, only: [:index]
+  before_action :set_companies, only: [:index], if: -> { request.format.html? }
+  before_action :set_companies_without_pages, only: [:index], if: -> { request.format.json? }
 
-  respond_to :html
+  respond_to :html, :json
     
   def index
-    case
-    when params[:tag]
-      @companies = Company.unremoved.tagged_with(params[:tag], :on => :groups).order(:created_at).page(params[:page])      
-    when params[:contains]
-      @companies = Company.unremoved.contains(params[:contains]).order(:created_at).page(params[:page])  
-    when params[:removed]      
-      @companies = Company.removed.order(:created_at).page(params[:page])
-    else
-      @companies = Company.unremoved.order(:created_at).page(params[:page])      
-    end
-
-    @tags = Company.group_counts
     respond_with(@companies)
   end
 
@@ -55,6 +45,12 @@ class CompaniesController < ApplicationController
     render :layout => false
   end
 
+  def tags
+    respond_to do |format|
+      format.json{ @tags = Company.group_counts }
+    end
+  end
+
   private
     def list_initialize
       @is_list = true
@@ -67,5 +63,24 @@ class CompaniesController < ApplicationController
 
     def company_params
       params.require(:company).permit(:name, :about, :phone, :web, :ava, :group_list, :user_id)
+    end
+
+    def set_companies
+      case
+      when params[:tag]
+        @companies = Company.unremoved.tagged_with(params[:tag], :on => :groups).order(:created_at).page(params[:page])      
+      when params[:contains]
+        @companies = Company.unremoved.contains(params[:contains]).order(:created_at).page(params[:page])  
+      when params[:removed]      
+        @companies = Company.removed.order(:created_at).page(params[:page])
+      else
+        @companies = Company.unremoved.order(:created_at).page(params[:page])      
+      end
+
+      @tags = Company.group_counts
+    end
+
+    def set_companies_without_pages
+      @companies = Company.unremoved.order(:created_at)
     end
 end

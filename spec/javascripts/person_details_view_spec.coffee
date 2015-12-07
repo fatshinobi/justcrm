@@ -165,3 +165,20 @@ define ['jquery', 'backbone',
         it "click event works", ->
           @personDetailsView.$('#opportunities_link').click()
           expect(@personDetailsView.$('#opportunities_div')).not.toHaveClass("hiden_form_page")
+
+    describe "List companies", ->
+      beforeEach ->
+        @personDetailsView.render()
+
+      it "have links", ->
+        expect(@personDetailsView.$('.company_link').length).toBe(1)
+      
+      it "links has a right data", ->
+        link = @personDetailsView.$('.company_link').first()
+        expect(link.get(0).dataset.button).toBe('1')
+
+      it "after click open company detail", ->
+        spyOn(Backbone, "trigger")        
+        @personDetailsView.$('.company_link').first().click()
+        expect(Backbone.trigger).toHaveBeenCalledWith('company_details:open', '1')
+    

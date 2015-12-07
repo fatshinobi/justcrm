@@ -1,0 +1,27 @@
+.company-entry.entry.thumbnail
+  %h2
+    %a.name_link
+      = hb 'name'
+
+  = hb 'if ava.ava.thumb.url' do
+    %img.ava_pic{:src=>"#{hb 'ava.ava.thumb.url'}"}
+    = hb 'else'
+    %img.ava_pic{:src=>"assets/thumb_anonym_company.png"}
+
+  %p.about_text.short_text
+    = hb 'about'
+  .clearfix
+  .more_place.hiden_elem
+    %p
+      phone: 
+      = hb 'phone'
+    %p
+      web: 
+      = hb 'web'
+
+    %a.to_details_more_btn.btn.btn-info{:href=>'#'}
+      To details
+    = hb '> status_button'
+    
+  %a.more_btn
+    more

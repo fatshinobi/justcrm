@@ -49,6 +49,7 @@ Rails.application.routes.draw do
     end
     collection do
       get "live_search", to: 'companies#live_search', as: :live_search
+      get "tags", to: 'companies#tags', as: :tags      
     end
   end
 

@@ -371,4 +371,86 @@ class CompaniesControllerTest < ActionController::TestCase
     end
   end
 
+  test "should get right json api index" do
+    get :index, format: :json
+
+    json = JSON.parse(response.body)
+
+    assert_equal 2, json.length
+    assert_equal 1, json.select {|company| company['name'].include?('Mycrosoft')}.length, 'Mycrosoft must be in json'
+    assert_equal 1, json.select {|company| company['name'].include?('Goggle')}.length, 'Goggle must be in json'
+
+    result = json.select {|company| company['id'] == @company.id}[0]
+
+    assert_equal @company.name, result['name'], 'Company name must be in json'
+    assert_equal @company.about, result['about'], 'Company about must be in json'
+    assert_equal @company.phone, result['phone'], 'Company phone must be in json'
+    assert_equal @company.web, result['web'], 'Company web must be in json'
+    assert_equal @company.condition, result['condition'], 'Company condition must be in json'
+    assert_equal @company.group_list, result['group_list'], 'Company tags must be in json'
+
+  end
+
+  test "should get right json api show" do
+    @company.group_list = ['tag1', 'tag2']
+    @company.save()
+
+    appointment = appointments(:one)
+    appointment.company = @company
+    appointment.person = people(:one)
+    appointment.save()
+
+    opportunity = opportunities(:two)
+    opportunity.person = people(:one)
+    opportunity.save()
+
+    get :show, format: :json, id: @company
+
+    json = JSON.parse(response.body)
+
+    assert_equal @company.name, json['name']
+    assert_equal @company.about, json['about']
+    assert_equal @company.phone, json['phone']
+    assert_equal @company.web, json['web']
+    assert_equal @company.condition, json['condition']
+    assert_equal @company.group_list.join(', '), json['group_list']
+
+    links = json['people']
+    assert_equal 2, links.size
+    assert_equal people(:two).id, links[0]['person']['id']
+    assert_equal 'Administrator', links[0]['role']
+
+    apps = json['appointments']
+    assert_equal 1, apps.size
+    assert_equal users(:one).id, apps[0]['user']['id']
+    assert_equal people(:one).id, apps[0]['person']['id']
+    assert_equal appointment.when.strftime('%m/%d/%Y %H:%M:%S'), apps[0]['when']
+    assert_equal appointment.status, apps[0]['status']
+    assert_equal appointment.body, apps[0]['body']
+
+    opps = json['opportunities']
+    assert_equal 1, opps.size
+    assert_equal opportunity.title, opps[0]['title']
+    assert_equal opportunity.description, opps[0]['description']
+    assert_equal opportunity.start.strftime('%m/%d/%Y'), opps[0]['start']
+    assert_equal opportunity.finish.strftime('%m/%d/%Y'), opps[0]['finish']    
+    assert_equal opportunity.stage, opps[0]['stage']
+    assert_equal opportunity.status, opps[0]['status']
+    assert_equal opportunity.amount, opps[0]['amount']    
+    assert_equal people(:one).id, opps[0]['person']['id']
+    assert_equal opportunity.user.id, opps[0]['user']['id']
+
+  end
+
+  test "should get index json without pagination" do
+    15.times do |i|
+      pers = Company.create(name: "test" + i.to_s, user: users(:one))
+    end
+    get :index, format: :json
+
+    json = JSON.parse(response.body)
+
+    assert_equal 17, json.length
+  end
+
 end
