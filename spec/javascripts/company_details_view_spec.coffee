@@ -113,7 +113,7 @@ define ['jquery', 'backbone',
           @companyDetailsView.$('#people_div').addClass('hiden_form_page')
 
         it "make people div active", ->
-          @companyDetailsView.show_people()
+          @companyDetailsView.$el.trigger("show_people")
 
           check_active_div(@divs, '#people_div', @companyDetailsView)
           check_active_page(@tabs, '#people_tab', @companyDetailsView)
@@ -128,7 +128,7 @@ define ['jquery', 'backbone',
           @companyDetailsView.$('#people_tab').addClass('active')
 
         it "make details div active", ->
-          @companyDetailsView.show_details()
+          @companyDetailsView.$el.trigger("show_details")
 
           check_active_div(@divs, '#details_div', @companyDetailsView)
           check_active_page(@tabs, '#details_tab', @companyDetailsView)
@@ -142,7 +142,7 @@ define ['jquery', 'backbone',
           @companyDetailsView.$('#tasks_div').addClass('hiden_form_page')
 
         it "make tasks div active", ->
-          @companyDetailsView.show_tasks()        
+          @companyDetailsView.$el.trigger('show_tasks')
           check_active_div(@divs, '#tasks_div', @companyDetailsView)
           check_active_page(@tabs, '#tasks_tab', @companyDetailsView)
 
@@ -155,7 +155,7 @@ define ['jquery', 'backbone',
           @companyDetailsView.$('#opportunities_div').addClass('hiden_form_page')
 
         it "make opportunities div active", ->
-          @companyDetailsView.show_opportunities()
+          @companyDetailsView.$el.trigger('show_opportunities')
           check_active_div(@divs, '#opportunities_div', @companyDetailsView)
           check_active_page(@tabs, '#opportunities_tab', @companyDetailsView)
 
@@ -164,7 +164,7 @@ define ['jquery', 'backbone',
         @companyDetailsView.render()
 
       it "have links", ->
-        expect(@companyDetailsView.$('.person_link').length).toBe(1)
+        expect(@companyDetailsView.$('.person_link').length).toBe(2)
       
       it "links has a right data", ->
         link = @companyDetailsView.$('.person_link').first()

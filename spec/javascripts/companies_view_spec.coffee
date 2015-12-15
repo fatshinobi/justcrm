@@ -71,24 +71,24 @@ define ['jquery', 'backbone',
 
       it "have rigt page size", ->
         @companiesView.$('#search_text').val('Z')
-        @companiesView.searching()
+        @companiesView.$el.trigger("searching")
         expect(@app.companies_collection.length).toBe(2)
         expect(Backbone.trigger).toHaveBeenCalledWith('companies:open')
 
       it "search in other register", ->
         @companiesView.$('#search_text').val('z')
-        @companiesView.searching()
+        @companiesView.$el.trigger("searching")
         expect(@app.companies_collection.length).toBe(2)
 
       it "have search message", ->
         @companiesView.$('#search_text').val('src msg')
-        @companiesView.searching()
+        @companiesView.$el.trigger("searching")
         expect(@app.search_companies_filter_message).toBe('src msg')
 
       it "correct crlear", ->
         @app.companies_tag = 'tag1'
         @app.search_companies_filter_message = 'src msg'
-        @companiesView.clear_filters()
+        @companiesView.$el.trigger("clear_filters")
         expect(@app.companies_collection.length).toBe(3)
         expect(@app.companies_collection.fullCollection.length).toBe(5)
         expect(Backbone.trigger).toHaveBeenCalledWith('companies:open')
@@ -97,36 +97,36 @@ define ['jquery', 'backbone',
 
       it "do with tags", ->
         @app.companies_tag = 'tag2'
-        @companiesView.searching()
+        @companiesView.$el.trigger("searching")
         expect(@app.companies_collection.length).toBe(2)
         expect(@app.companies_collection.fullCollection.length).toBe(2)
 
         @app.companies_tag = 'tag1'
-        @companiesView.searching()
+        @companiesView.$el.trigger("searching")
         expect(@app.companies_collection.length).toBe(3)
         expect(@app.companies_collection.fullCollection.length).toBe(4)
 
       it "do with search and tags", ->
         @companiesView.$('#search_text').val('b')
         @app.companies_tag = 'tag1'
-        @companiesView.searching()
+        @companiesView.$el.trigger("searching")
         expect(@app.companies_collection.length).toBe(1)
         expect(@app.companies_collection.fullCollection.length).toBe(1)
 
       it "do with tag after search", ->
         @companiesView.$('#search_text').val('b')
-        @companiesView.searching()
+        @companiesView.$el.trigger("searching")
         expect(@app.companies_collection.fullCollection.length).toBe(2)
 
         @app.companies_tag = 'tag1'
-        @companiesView.searching()
+        @companiesView.$el.trigger("searching")
         expect(@app.companies_collection.length).toBe(1)
         expect(@app.companies_collection.fullCollection.length).toBe(1)
 
     describe "tagging", ->
       beforeEach ->
         spyOn($, "getJSON")      
-        spyOn(CompaniesView.prototype, 'searching')
+        spyOn(CompaniesView.prototype.behaviors.ElemListView.behaviorClass.prototype, 'searching')
         @companiesView = new CompaniesView(collection: @companiesCollection, app: @app)
         @companiesView.render()
 
@@ -137,7 +137,7 @@ define ['jquery', 'backbone',
         )
 
       it "apply tag set tag filter value", ->
-        @companiesView.ui.tags_holder.append("<a rel='1' title='1' class='tag' data-button='test_tag1'>test_tag1</a> ")
+        @companiesView.$('#tags_holder').append("<a rel='1' title='1' class='tag' data-button='test_tag1'>test_tag1</a> ")
       
         @companiesView.$('#tags_holder a.tag').first().click()
         expect(@app.companies_tag).toBe('test_tag1')

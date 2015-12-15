@@ -49,6 +49,7 @@ gem 'marionette-rails'
 gem 'momentjs-rails'
 gem 'backbone-paginator-rails'
 gem 'requirejs-rails'
+gem 'backbone-cocktail-rails'
 
 group :development, :test do
   gem "teaspoon-jasmine"

@@ -41,14 +41,17 @@
   #people_div{:class=>'hiden_form_page'}
     = hb 'each people' do
       .person_company_entry
-        %a.person_link{"data-button"=>"{{person.id}}"}      
+        %a.person_link.thumb_ava{"data-button"=>"{{person.id}}"}
           = hb 'if person.ava.ava.thumb.url' do
             %img{:class=>"ava_pic", :src=>"#{hb 'person.ava.ava.thumb.url'}"}
             = hb 'else'
             %img{:class=>"ava_pic", :src=>"assets/thumb_anonym_company.png"}
-
-          = hb 'person.name'
-        = hb 'role'
+        
+        %h3
+          %a.person_link{"data-button"=>"{{person.id}}"}
+            = hb 'person.name'
+        %p
+          = hb 'role'
 
   #tasks_div{:class=>'hiden_form_page'}
     = hb 'each appointments' do

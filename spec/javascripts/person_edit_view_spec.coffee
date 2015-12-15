@@ -108,6 +108,8 @@ define ['jquery', 'backbone',
 
         @personEditView.$('#submit').click()
 
+        @behavior = $.grep(@personEditView._behaviors, (elem) -> elem.constructor.name=='EditView')[0]
+
       it "make right model changes", ->
         expect(@personEditView.model.save).toHaveBeenCalledWith(
         #  {person: {
@@ -130,8 +132,8 @@ define ['jquery', 'backbone',
         spyOn(@app_stab.people_collection, 'get').and.returnValue(@model_stab)
         spyOn(@model_stab, 'set')
 
-        @personEditView.data = {name: 'test name 23'}      
-        @personEditView.on_save(@personEditView.model)
+        @behavior.data = {name: 'test name 23'}      
+        @personEditView.triggerMethod('_save', @personEditView.model)
 
         expect(@app_stab.people_collection.get).toHaveBeenCalledWith(@personEditView.model.id)
         expect(@model_stab.set).toHaveBeenCalledWith({name: 'test name 23'})
@@ -140,17 +142,18 @@ define ['jquery', 'backbone',
         spyOn(@app_stab.people_collection, 'get').and.returnValue(@model_stab)
 
         @personEditView.model.new_file = {name: 'ava_test'}
-        @personEditView.on_save(@personEditView.model)
-        expect(@personEditView.data.ava.ava.thumb.url).toBe('/uploads/test/person/ava/1/thumb_ava_test')
+        #@personEditView.on_save(@personEditView.model)
+        @personEditView.triggerMethod('_save', @personEditView.model)
+
+        expect(@behavior.data.ava.ava.thumb.url).toBe('/uploads/test/person/ava/1/thumb_ava_test')
 
       it "after create refresh ava in collection", ->
         spyOn(@app_stab.people_collection, 'get').and.returnValue(null)
         spyOn(@app_stab.people_collection.fullCollection, 'add')
 
         @personEditView.model.new_file = {name: 'ava_test'}
-        @personEditView.on_save(@personEditView.model)
+        @personEditView.triggerMethod('_save', @personEditView.model)
         expect(@personEditView.model.get('ava').ava.thumb.url).toBe('/uploads/test/person/ava/1/thumb_ava_test')
-
 
     describe "add new company", ->
       beforeEach ->

@@ -2,7 +2,6 @@ requirejs.config({
   paths: {
     lookUpView: 'look_up_view'
     #personTemplate: 'templates/people/personTemplate',
-    #peopleListTemplate: 'templates/people/peopleListTemplate'
   },
   shim: {
     lookUpView: {
@@ -16,6 +15,7 @@ requirejs.config({
 require ['jquery', 'backbone',
     'backbone.marionette',
     'bootstrap-sprockets',
+    'cocktail_backbone_patch',
     'views/menu',
     'collections/users',
     'collections/people',
@@ -30,12 +30,16 @@ require ['jquery', 'backbone',
     'views/person_edit',
     'views/company_edit'
   ], (
-    $, Backbone, Marionette, bs,
+    $, Backbone, Marionette, bs, CocktailPath,
     MenuView, Users, People, Companies,
     PeopleView, CompaniesView, ApplicationHelpers, 
     PersonDetailsView, CompanyDetailsView, Person,
     Company, PersonEditView, CompanyEditView
   ) ->
+
+  window.Behaviors = {}
+  Marionette.Behaviors.behaviorsLookup = ->
+    window.Behaviors
 
   main_loading = ->
     helpers = new ApplicationHelpers()
@@ -182,6 +186,7 @@ require ['jquery', 'backbone',
     m_app.start()
 
   $(document).ready ->
+    #Cocktail.patch(Backbone)
     main_loading()
     $(".navbar-nav a.collapsed").click((event) ->
       $(".navbar-collapse").collapse('hide')

@@ -97,6 +97,7 @@ define ['jquery', 'backbone',
         @companyEditView.$('#about').text('about after submit')
 
         @companyEditView.$('#submit').click()
+        @behavior = $.grep(@companyEditView._behaviors, (elem) -> elem.constructor.name=='EditView')[0]
 
       it "make right model changes", ->
         expect(@companyEditView.model.save).toHaveBeenCalledWith(
@@ -109,8 +110,8 @@ define ['jquery', 'backbone',
         spyOn(@app_stab.companies_collection, 'get').and.returnValue(@model_stab)
         spyOn(@model_stab, 'set')
 
-        @companyEditView.data = {name: 'test name 23'}
-        @companyEditView.on_save(@companyEditView.model)
+        @behavior.data = {name: 'test name 23'}
+        @companyEditView.triggerMethod('_save', @companyEditView.model)
 
         expect(@app_stab.companies_collection.get).toHaveBeenCalledWith(@companyEditView.model.id)
         expect(@model_stab.set).toHaveBeenCalledWith({name: 'test name 23'})
@@ -119,6 +120,6 @@ define ['jquery', 'backbone',
         spyOn(@app_stab.companies_collection, 'get').and.returnValue(@model_stab)
 
         @companyEditView.model.new_file = {name: 'ava_test'}
-        @companyEditView.on_save(@companyEditView.model)
-        expect(@companyEditView.data.ava.ava.thumb.url).toBe('/uploads/test/company/ava/1/thumb_ava_test')
+        @companyEditView.triggerMethod('_save', @companyEditView.model)        
+        expect(@behavior.data.ava.ava.thumb.url).toBe('/uploads/test/company/ava/1/thumb_ava_test')
 

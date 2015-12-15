@@ -47,15 +47,16 @@
   #companies_div{:class=>'hiden_form_page'}
     = hb 'each companies' do
       .person_company_entry
-        %a.company_link{"data-button"=>"{{company.id}}"}
+        %a.company_link.thumb_ava{"data-button"=>"{{company.id}}"}
           = hb 'if company.ava.ava.thumb.url' do
             %img{:class=>"ava_pic", :src=>"#{hb 'company.ava.ava.thumb.url'}"}
             = hb 'else'
             %img{:class=>"ava_pic", :src=>"assets/thumb_anonym_company.png"}
-
-          = hb 'company.name'
-
-        = hb 'role'
+        %h3
+          %a.company_link{"data-button"=>"{{company.id}}"}        
+            = hb 'company.name'
+        %p
+          = hb 'role'
 
   #tasks_div{:class=>'hiden_form_page'}
     = hb 'each appointments' do

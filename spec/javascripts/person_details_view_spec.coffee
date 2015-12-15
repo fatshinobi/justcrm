@@ -116,7 +116,7 @@ define ['jquery', 'backbone',
           @personDetailsView.$('#companies_div').addClass('hiden_form_page')
 
         it "make companies div active", ->
-          @personDetailsView.show_companies()
+          @personDetailsView.$el.trigger('show_companies')
 
           check_active_div(@divs, '#companies_div', @personDetailsView)
           check_active_page(@tabs, '#companies_tab', @personDetailsView)
@@ -131,8 +131,7 @@ define ['jquery', 'backbone',
           @personDetailsView.$('#companies_tab').addClass('active')
 
         it "make details div active", ->
-          @personDetailsView.show_details()
-
+          @personDetailsView.$el.trigger('show_details')
           check_active_div(@divs, '#details_div', @personDetailsView)
           check_active_page(@tabs, '#details_tab', @personDetailsView)
 
@@ -145,7 +144,7 @@ define ['jquery', 'backbone',
           @personDetailsView.$('#tasks_div').addClass('hiden_form_page')        
 
         it "make tasks div active", ->
-          @personDetailsView.show_tasks()        
+          @personDetailsView.$el.trigger('show_tasks')
           check_active_div(@divs, '#tasks_div', @personDetailsView)
           check_active_page(@tabs, '#tasks_tab', @personDetailsView)
 
@@ -158,7 +157,7 @@ define ['jquery', 'backbone',
           @personDetailsView.$('#opportunities_div').addClass('hiden_form_page')
 
         it "make opportunities div active", ->
-          @personDetailsView.show_opportunities()
+          @personDetailsView.$el.trigger('show_opportunities')          
           check_active_div(@divs, '#opportunities_div', @personDetailsView)
           check_active_page(@tabs, '#opportunities_tab', @personDetailsView)
 
@@ -171,7 +170,7 @@ define ['jquery', 'backbone',
         @personDetailsView.render()
 
       it "have links", ->
-        expect(@personDetailsView.$('.company_link').length).toBe(1)
+        expect(@personDetailsView.$('.company_link').length).toBe(2)
       
       it "links has a right data", ->
         link = @personDetailsView.$('.company_link').first()
