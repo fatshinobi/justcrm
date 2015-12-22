@@ -236,5 +236,14 @@ class PersonTest < ActiveSupport::TestCase
     assert_equal users(:one).name, person.user_name
   end
 
+  test "should have default order" do
+    person = people(:one)
+    person.created_at = DateTime.now.prev_day
+    person.save
+
+    people = Person.all
+    assert_equal people[0].id, person.id
+  end
+
 end
 

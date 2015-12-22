@@ -8,7 +8,6 @@ class Opportunity < ActiveRecord::Base
   
   validates :title, presence: true
   validates :title, length: {minimum: 4}
-  validates :user, presence: true
   validates :company, presence: true
 
   validate :person_must_match_to_company

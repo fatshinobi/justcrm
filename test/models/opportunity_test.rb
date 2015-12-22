@@ -17,7 +17,7 @@ class OpportunityTest < ActiveSupport::TestCase
   test "user cant be empty" do
     opportunity = Opportunity.new(title: 'Test', company: companies(:goggle))
     assert opportunity.invalid?, 'User cant be empty'
-    assert opportunity.errors[:user].any?    	
+    assert opportunity.errors[:user_id].any?    	
   end
 
   test "company cant be empty" do

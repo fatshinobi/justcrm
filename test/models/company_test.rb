@@ -246,4 +246,13 @@ class CompanyTest < ActiveSupport::TestCase
     assert_equal users(:one).name, company.user_name
   end
 
+  test "should have default order" do
+    company = companies(:goggle)
+    company.created_at = DateTime.now.prev_day
+    company.save
+
+    companies = Company.all
+    assert_equal companies[0].id, company.id
+  end
+
 end

@@ -43,9 +43,9 @@ class PeopleController < ApplicationController
     if params[:q] != ''
       if (params[:p].present?)
         company = Company.find(params[:p])
-        @people = company.people.unremoved.contains(params[:q]).order(:created_at)
+        @people = company.people.contains(params[:q])
       else
-        @people = Person.unremoved.contains(params[:q]).order(:created_at) 
+        @people = Person.unremoved.contains(params[:q])
       end
     else
       @people = []
@@ -90,19 +90,20 @@ class PeopleController < ApplicationController
     def set_people
       case 
       when params[:tag]
-        @people = Person.unremoved.tagged_with(params[:tag], :on => :groups).order(:created_at).page(params[:page])      
+        selection = Person.unremoved.tagged_with(params[:tag], :on => :groups)
       when params[:contains]
-        @people = Person.unremoved.contains(params[:contains]).order(:created_at).page(params[:page])  
+        selection = Person.unremoved.contains(params[:contains])
       when params[:removed]
-        @people = Person.removed.order(:created_at).page(params[:page])  
+        selection = Person.removed
       else
-        @people = Person.unremoved.order(:created_at).page(params[:page])
+        selection = Person.unremoved
       end
 
+      @people = selection.page(params[:page])
       @tags = Person.group_counts
     end
 
     def set_people_without_pages
-      @people = Person.unremoved.order(:created_at)
+      @people = Person.unremoved
     end
 end

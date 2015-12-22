@@ -38,7 +38,7 @@ class CompaniesController < ApplicationController
 
   def live_search
     if params[:q] != ''
-      @companies = Company.unremoved.contains(params[:q]).order(:created_at) 
+      @companies = Company.unremoved.contains(params[:q])
     else
       @companies = []
     end
@@ -68,19 +68,20 @@ class CompaniesController < ApplicationController
     def set_companies
       case
       when params[:tag]
-        @companies = Company.unremoved.tagged_with(params[:tag], :on => :groups).order(:created_at).page(params[:page])      
+        selection = Company.unremoved.tagged_with(params[:tag], :on => :groups)
       when params[:contains]
-        @companies = Company.unremoved.contains(params[:contains]).order(:created_at).page(params[:page])  
-      when params[:removed]      
-        @companies = Company.removed.order(:created_at).page(params[:page])
+        selection = Company.unremoved.contains(params[:contains])
+      when params[:removed]
+        selection = Company.removed
       else
-        @companies = Company.unremoved.order(:created_at).page(params[:page])      
+        selection = Company.unremoved
       end
-
+      
+      @companies = selection.page(params[:page])
       @tags = Company.group_counts
     end
 
     def set_companies_without_pages
-      @companies = Company.unremoved.order(:created_at)
+      @companies = Company.unremoved
     end
 end

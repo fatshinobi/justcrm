@@ -12,12 +12,13 @@ class Person < ActiveRecord::Base
 		
   validates :name, presence: true
   validates :name, length: {minimum: 3}
-  validates :user_id, presence: true
 	
   mount_uploader :ava, AvaUploader
   paginates_per 10	
 
   scope :contains, -> name { where("name like ?", "%#{name}%")}	
+  default_scope {order(:created_at)}
+  
   delegate :unremoved, to: :company_people, allow_nil: true, prefix: true	
 
 end

@@ -9,7 +9,6 @@ class Appointment < ActiveRecord::Base
 
   validate :person_must_match_to_company
   validates :company, presence: true
-  validates :user, presence: true
 
   delegate :name, to: :person, allow_nil: true, prefix: true
   delegate :name, to: :company, allow_nil: true, prefix: true
@@ -34,6 +33,18 @@ class Appointment < ActiveRecord::Base
   STATUS_LIST = [Open, Done]  
 
   COMMUNICATION_TYPES_LIST = [:message, :call, :task, :meet]
+
+  COMMUNICATION_TYPES_LIST.each do |type_sym|
+    define_method "is_#{type_sym.to_s}?" do
+      get_communication_type == type_sym
+    end
+  end
+
+  STATUS_LIST.each do |status|
+    define_method "is_#{status.value.to_s}?" do
+      get_status == status.value
+    end
+  end
 
   default_scope {order('`when` DESC')} 
   scope :current, ->(date, user) {where(user: user).where("`when` > ? and `when` <= ?", DateTime.new(date.year, date.month, date.day, 0, 0, 1), DateTime.new(date.year, date.month, date.day, 0, 0, 0) + 1.day).order('`when`')}
@@ -87,30 +98,6 @@ class Appointment < ActiveRecord::Base
     else
       raise IndexError
     end
-  end
-
-  def is_message?
-    get_communication_type == :message
-  end
-
-  def is_call?
-    get_communication_type == :call
-  end
-
-  def is_task?
-    get_communication_type == :task
-  end
-
-  def is_meet?
-    get_communication_type == :meet
-  end
-
-  def is_open?
-    get_status == :open
-  end
-
-  def is_done?
-    get_status == :done
   end
 
   def self.statuses
