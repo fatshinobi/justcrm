@@ -2,8 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  layout 'edit', only: [:edit, :new]  
-  layout 'mobile', only: [:mobile]  
+  layout :set_layout
 
   before_action :authenticate_user!
 
@@ -21,4 +20,16 @@ class ApplicationController < ActionController::Base
     render '/shared/access_denied'
   end
 
+  private
+
+    def set_layout
+      case action_name
+      when 'edit', 'new'
+        'edit'
+      when 'mobile'
+        'mobile'
+      else
+        'application'
+      end
+    end
 end

@@ -160,4 +160,23 @@ class AppointmentsControllerTest < ActionController::TestCase
     assert_equal assigns(:appointment).user.id, users(:two).id
 
   end
+
+  test "should edit have data_controller attr" do
+    get :edit, id: @appointment
+    assert_response :success
+    assert_template :edit
+    assert_template layout: 'layouts/edit'
+
+    assert_select 'body[data_controller=?]', 'appointments'
+  end
+
+  test "should new have data_controller attr" do
+    get :new
+    assert_response :success
+    assert_template :new
+    assert_template layout: 'layouts/edit'
+
+    assert_select 'body[data_controller=?]', 'appointments'
+  end
+
 end

@@ -223,4 +223,29 @@ class OpportunitiesControllerTest < ActionController::TestCase
     end
   end
 
+  test "should edit have data_controller attr" do
+    get :edit, id: @opportunity
+    assert_response :success
+    assert_template :edit
+    assert_template layout: 'layouts/edit'
+
+    assert_select 'body[data_controller=?]', 'opportunities'
+  end
+
+  test "should new have data_controller attr" do
+    get :new
+    assert_response :success
+    assert_template :new
+    assert_template layout: 'layouts/edit'
+
+    assert_select 'body[data_controller=?]', 'opportunities'
+  end
+
+  test "should index have right layout" do
+    get :index
+    assert_response :success
+    assert_template :index
+    assert_template layout: 'layouts/application'
+  end
+
 end
